@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="NsService" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="NsService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="NsService">
+      <s:element name="QueryCinema">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="soap" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CinemaCode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="QueryCinemaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="QueryCinemaResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="QuerySeat">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="soap" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CinemaCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ScreenCode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="QuerySeatResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="QuerySeatResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="QueryFilm">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="soap" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="StartDate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="EndDate" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="QueryFilmResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="QueryFilmResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="QuerySession">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="soap" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CinemaCode" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="StartDate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="EndDate" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="QuerySessionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="QuerySessionResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="QuerySessionSeat">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="soap" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CinemaCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SessionCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Status" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="QuerySessionSeatResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="QuerySessionSeatResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LockSeat">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="soap" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CinemaCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SessionCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Seats" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LockSeatResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LockSeatResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReleaseSeat">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="soap" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CinemaCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SessionCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="OrderCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Seats" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReleaseSeatResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReleaseSeatResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SubmitOrder">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="soap" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CinemaCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SessionCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="OrderCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Seats" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Prices" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SubmitOrderResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SubmitOrderResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="QueryPrint">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="soap" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CinemaCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PrintNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="VerifyCode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="QueryPrintResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="QueryPrintResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RefundTicket">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="soap" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CinemaCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PrintNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="VerifyCode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RefundTicketResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RefundTicketResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="QueryOrder">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="soap" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CinemaCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="OrderCode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="QueryOrderResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="QueryOrderResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="QueryCinemaSoapIn">
+    <wsdl:part name="parameters" element="tns:QueryCinema" />
+  </wsdl:message>
+  <wsdl:message name="QueryCinemaSoapOut">
+    <wsdl:part name="parameters" element="tns:QueryCinemaResponse" />
+  </wsdl:message>
+  <wsdl:message name="QuerySeatSoapIn">
+    <wsdl:part name="parameters" element="tns:QuerySeat" />
+  </wsdl:message>
+  <wsdl:message name="QuerySeatSoapOut">
+    <wsdl:part name="parameters" element="tns:QuerySeatResponse" />
+  </wsdl:message>
+  <wsdl:message name="QueryFilmSoapIn">
+    <wsdl:part name="parameters" element="tns:QueryFilm" />
+  </wsdl:message>
+  <wsdl:message name="QueryFilmSoapOut">
+    <wsdl:part name="parameters" element="tns:QueryFilmResponse" />
+  </wsdl:message>
+  <wsdl:message name="QuerySessionSoapIn">
+    <wsdl:part name="parameters" element="tns:QuerySession" />
+  </wsdl:message>
+  <wsdl:message name="QuerySessionSoapOut">
+    <wsdl:part name="parameters" element="tns:QuerySessionResponse" />
+  </wsdl:message>
+  <wsdl:message name="QuerySessionSeatSoapIn">
+    <wsdl:part name="parameters" element="tns:QuerySessionSeat" />
+  </wsdl:message>
+  <wsdl:message name="QuerySessionSeatSoapOut">
+    <wsdl:part name="parameters" element="tns:QuerySessionSeatResponse" />
+  </wsdl:message>
+  <wsdl:message name="LockSeatSoapIn">
+    <wsdl:part name="parameters" element="tns:LockSeat" />
+  </wsdl:message>
+  <wsdl:message name="LockSeatSoapOut">
+    <wsdl:part name="parameters" element="tns:LockSeatResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReleaseSeatSoapIn">
+    <wsdl:part name="parameters" element="tns:ReleaseSeat" />
+  </wsdl:message>
+  <wsdl:message name="ReleaseSeatSoapOut">
+    <wsdl:part name="parameters" element="tns:ReleaseSeatResponse" />
+  </wsdl:message>
+  <wsdl:message name="SubmitOrderSoapIn">
+    <wsdl:part name="parameters" element="tns:SubmitOrder" />
+  </wsdl:message>
+  <wsdl:message name="SubmitOrderSoapOut">
+    <wsdl:part name="parameters" element="tns:SubmitOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="QueryPrintSoapIn">
+    <wsdl:part name="parameters" element="tns:QueryPrint" />
+  </wsdl:message>
+  <wsdl:message name="QueryPrintSoapOut">
+    <wsdl:part name="parameters" element="tns:QueryPrintResponse" />
+  </wsdl:message>
+  <wsdl:message name="RefundTicketSoapIn">
+    <wsdl:part name="parameters" element="tns:RefundTicket" />
+  </wsdl:message>
+  <wsdl:message name="RefundTicketSoapOut">
+    <wsdl:part name="parameters" element="tns:RefundTicketResponse" />
+  </wsdl:message>
+  <wsdl:message name="QueryOrderSoapIn">
+    <wsdl:part name="parameters" element="tns:QueryOrder" />
+  </wsdl:message>
+  <wsdl:message name="QueryOrderSoapOut">
+    <wsdl:part name="parameters" element="tns:QueryOrderResponse" />
+  </wsdl:message>
+  <wsdl:portType name="NsServiceSoap">
+    <wsdl:operation name="QueryCinema">
+      <wsdl:input message="tns:QueryCinemaSoapIn" />
+      <wsdl:output message="tns:QueryCinemaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="QuerySeat">
+      <wsdl:input message="tns:QuerySeatSoapIn" />
+      <wsdl:output message="tns:QuerySeatSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryFilm">
+      <wsdl:input message="tns:QueryFilmSoapIn" />
+      <wsdl:output message="tns:QueryFilmSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="QuerySession">
+      <wsdl:input message="tns:QuerySessionSoapIn" />
+      <wsdl:output message="tns:QuerySessionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="QuerySessionSeat">
+      <wsdl:input message="tns:QuerySessionSeatSoapIn" />
+      <wsdl:output message="tns:QuerySessionSeatSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="LockSeat">
+      <wsdl:input message="tns:LockSeatSoapIn" />
+      <wsdl:output message="tns:LockSeatSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReleaseSeat">
+      <wsdl:input message="tns:ReleaseSeatSoapIn" />
+      <wsdl:output message="tns:ReleaseSeatSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SubmitOrder">
+      <wsdl:input message="tns:SubmitOrderSoapIn" />
+      <wsdl:output message="tns:SubmitOrderSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryPrint">
+      <wsdl:input message="tns:QueryPrintSoapIn" />
+      <wsdl:output message="tns:QueryPrintSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RefundTicket">
+      <wsdl:input message="tns:RefundTicketSoapIn" />
+      <wsdl:output message="tns:RefundTicketSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryOrder">
+      <wsdl:input message="tns:QueryOrderSoapIn" />
+      <wsdl:output message="tns:QueryOrderSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NsServiceSoap" type="tns:NsServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="QueryCinema">
+      <soap:operation soapAction="NsService/QueryCinema" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QuerySeat">
+      <soap:operation soapAction="NsService/QuerySeat" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryFilm">
+      <soap:operation soapAction="NsService/QueryFilm" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QuerySession">
+      <soap:operation soapAction="NsService/QuerySession" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QuerySessionSeat">
+      <soap:operation soapAction="NsService/QuerySessionSeat" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LockSeat">
+      <soap:operation soapAction="NsService/LockSeat" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReleaseSeat">
+      <soap:operation soapAction="NsService/ReleaseSeat" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SubmitOrder">
+      <soap:operation soapAction="NsService/SubmitOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryPrint">
+      <soap:operation soapAction="NsService/QueryPrint" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RefundTicket">
+      <soap:operation soapAction="NsService/RefundTicket" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryOrder">
+      <soap:operation soapAction="NsService/QueryOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="NsServiceSoap12" type="tns:NsServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="QueryCinema">
+      <soap12:operation soapAction="NsService/QueryCinema" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QuerySeat">
+      <soap12:operation soapAction="NsService/QuerySeat" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryFilm">
+      <soap12:operation soapAction="NsService/QueryFilm" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QuerySession">
+      <soap12:operation soapAction="NsService/QuerySession" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QuerySessionSeat">
+      <soap12:operation soapAction="NsService/QuerySessionSeat" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LockSeat">
+      <soap12:operation soapAction="NsService/LockSeat" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReleaseSeat">
+      <soap12:operation soapAction="NsService/ReleaseSeat" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SubmitOrder">
+      <soap12:operation soapAction="NsService/SubmitOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryPrint">
+      <soap12:operation soapAction="NsService/QueryPrint" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RefundTicket">
+      <soap12:operation soapAction="NsService/RefundTicket" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryOrder">
+      <soap12:operation soapAction="NsService/QueryOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="NsService">
+    <wsdl:port name="NsServiceSoap" binding="tns:NsServiceSoap">
+      <soap:address location="http://zjpt.80piao.com:81/NsService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="NsServiceSoap12" binding="tns:NsServiceSoap12">
+      <soap12:address location="http://zjpt.80piao.com:81/NsService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

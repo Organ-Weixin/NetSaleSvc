@@ -1,0 +1,2661 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://soap.ws.tsp.oristartech.com/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="TspSoapServiceImplService" targetNamespace="http://soap.ws.tsp.oristartech.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema elementFormDefault="unqualified" targetNamespace="http://soap.ws.tsp.oristartech.com/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="ActivityInvokeMember" type="tns:ActivityInvokeMember" />
+      <xs:element name="ActivityInvokeMemberResponse" type="tns:ActivityInvokeMemberResponse" />
+      <xs:element name="ApplyFetchTicket" type="tns:ApplyFetchTicket" />
+      <xs:element name="ApplyFetchTicketResponse" type="tns:ApplyFetchTicketResponse" />
+      <xs:element name="CancelOrder" type="tns:CancelOrder" />
+      <xs:element name="CancelOrderResponse" type="tns:CancelOrderResponse" />
+      <xs:element name="CheckMemberByLoginPwd" type="tns:CheckMemberByLoginPwd" />
+      <xs:element name="CheckMemberByLoginPwdResponse" type="tns:CheckMemberByLoginPwdResponse" />
+      <xs:element name="CreateMerOrder" type="tns:CreateMerOrder" />
+      <xs:element name="CreateMerOrderResponse" type="tns:CreateMerOrderResponse" />
+      <xs:element name="ExtractRetailTicket" type="tns:ExtractRetailTicket" />
+      <xs:element name="ExtractRetailTicketResponse" type="tns:ExtractRetailTicketResponse" />
+      <xs:element name="FetchTicket" type="tns:FetchTicket" />
+      <xs:element name="FetchTicketResponse" type="tns:FetchTicketResponse" />
+      <xs:element name="GeneralInvoker" type="tns:GeneralInvoker" />
+      <xs:element name="GeneralInvokerResponse" type="tns:GeneralInvokerResponse" />
+      <xs:element name="GetCinemaAllPlan" type="tns:GetCinemaAllPlan" />
+      <xs:element name="GetCinemaAllPlanResponse" type="tns:GetCinemaAllPlanResponse" />
+      <xs:element name="GetFilmInfo" type="tns:GetFilmInfo" />
+      <xs:element name="GetFilmInfoResponse" type="tns:GetFilmInfoResponse" />
+      <xs:element name="GetIntegralOrderInfoByOrderNum" type="tns:GetIntegralOrderInfoByOrderNum" />
+      <xs:element name="GetIntegralOrderInfoByOrderNumResponse" type="tns:GetIntegralOrderInfoByOrderNumResponse" />
+      <xs:element name="GetMoneyOrderByOrderNum" type="tns:GetMoneyOrderByOrderNum" />
+      <xs:element name="GetMoneyOrderByOrderNumResponse" type="tns:GetMoneyOrderByOrderNumResponse" />
+      <xs:element name="GetPlanSeatState" type="tns:GetPlanSeatState" />
+      <xs:element name="GetPlanSeatStateResponse" type="tns:GetPlanSeatStateResponse" />
+      <xs:element name="GiveIntegral" type="tns:GiveIntegral" />
+      <xs:element name="GiveIntegralResponse" type="tns:GiveIntegralResponse" />
+      <xs:element name="GiveTicket" type="tns:GiveTicket" />
+      <xs:element name="GiveTicketResponse" type="tns:GiveTicketResponse" />
+      <xs:element name="IntegralConsume" type="tns:IntegralConsume" />
+      <xs:element name="IntegralConsumeResponse" type="tns:IntegralConsumeResponse" />
+      <xs:element name="IntegralRefund" type="tns:IntegralRefund" />
+      <xs:element name="IntegralRefundResponse" type="tns:IntegralRefundResponse" />
+      <xs:element name="IntegralTransactionCancel" type="tns:IntegralTransactionCancel" />
+      <xs:element name="IntegralTransactionCancelResponse" type="tns:IntegralTransactionCancelResponse" />
+      <xs:element name="LockSeat" type="tns:LockSeat" />
+      <xs:element name="LockSeatResponse" type="tns:LockSeatResponse" />
+      <xs:element name="MemberCharge" type="tns:MemberCharge" />
+      <xs:element name="MemberChargeResponse" type="tns:MemberChargeResponse" />
+      <xs:element name="MemberConsume" type="tns:MemberConsume" />
+      <xs:element name="MemberConsumeOrder" type="tns:MemberConsumeOrder" />
+      <xs:element name="MemberConsumeOrderResponse" type="tns:MemberConsumeOrderResponse" />
+      <xs:element name="MemberConsumeResponse" type="tns:MemberConsumeResponse" />
+      <xs:element name="MemberConsumeV2p0" type="tns:MemberConsumeV2p0" />
+      <xs:element name="MemberConsumeV2p0Response" type="tns:MemberConsumeV2p0Response" />
+      <xs:element name="MemberRefund" type="tns:MemberRefund" />
+      <xs:element name="MemberRefundOrder" type="tns:MemberRefundOrder" />
+      <xs:element name="MemberRefundOrderResponse" type="tns:MemberRefundOrderResponse" />
+      <xs:element name="MemberRefundResponse" type="tns:MemberRefundResponse" />
+      <xs:element name="MemberRefundV2p0" type="tns:MemberRefundV2p0" />
+      <xs:element name="MemberRefundV2p0Response" type="tns:MemberRefundV2p0Response" />
+      <xs:element name="MemberTransactionCancel" type="tns:MemberTransactionCancel" />
+      <xs:element name="MemberTransactionCancelResponse" type="tns:MemberTransactionCancelResponse" />
+      <xs:element name="ModifyActivityExeTime" type="tns:ModifyActivityExeTime" />
+      <xs:element name="ModifyActivityExeTimeResponse" type="tns:ModifyActivityExeTimeResponse" />
+      <xs:element name="ModifyMemberInfo" type="tns:ModifyMemberInfo" />
+      <xs:element name="ModifyMemberInfoResponse" type="tns:ModifyMemberInfoResponse" />
+      <xs:element name="ModifyMemberLoginPassword" type="tns:ModifyMemberLoginPassword" />
+      <xs:element name="ModifyMemberLoginPasswordResponse" type="tns:ModifyMemberLoginPasswordResponse" />
+      <xs:element name="ModifyMemberPassword" type="tns:ModifyMemberPassword" />
+      <xs:element name="ModifyMemberPasswordResponse" type="tns:ModifyMemberPasswordResponse" />
+      <xs:element name="PhoneNumReg" type="tns:PhoneNumReg" />
+      <xs:element name="PhoneNumRegAndCharge" type="tns:PhoneNumRegAndCharge" />
+      <xs:element name="PhoneNumRegAndChargeResponse" type="tns:PhoneNumRegAndChargeResponse" />
+      <xs:element name="PhoneNumRegResponse" type="tns:PhoneNumRegResponse" />
+      <xs:element name="PreordainRetailTicket" type="tns:PreordainRetailTicket" />
+      <xs:element name="PreordainRetailTicketResponse" type="tns:PreordainRetailTicketResponse" />
+      <xs:element name="PreordainRetailTicketRevocation" type="tns:PreordainRetailTicketRevocation" />
+      <xs:element name="PreordainRetailTicketRevocationResponse" type="tns:PreordainRetailTicketRevocationResponse" />
+      <xs:element name="QueryAvailCinema" type="tns:QueryAvailCinema" />
+      <xs:element name="QueryAvailCinemaResponse" type="tns:QueryAvailCinemaResponse" />
+      <xs:element name="QueryChargeActivity" type="tns:QueryChargeActivity" />
+      <xs:element name="QueryChargeActivityResponse" type="tns:QueryChargeActivityResponse" />
+      <xs:element name="QueryCinemaBusinessStatus" type="tns:QueryCinemaBusinessStatus" />
+      <xs:element name="QueryCinemaBusinessStatusResponse" type="tns:QueryCinemaBusinessStatusResponse" />
+      <xs:element name="QueryCinemaInfo" type="tns:QueryCinemaInfo" />
+      <xs:element name="QueryCinemaInfoResponse" type="tns:QueryCinemaInfoResponse" />
+      <xs:element name="QueryCinemaList" type="tns:QueryCinemaList" />
+      <xs:element name="QueryCinemaListResponse" type="tns:QueryCinemaListResponse" />
+      <xs:element name="QueryDeliveryStatus" type="tns:QueryDeliveryStatus" />
+      <xs:element name="QueryDeliveryStatusResponse" type="tns:QueryDeliveryStatusResponse" />
+      <xs:element name="QueryDiscountActivity" type="tns:QueryDiscountActivity" />
+      <xs:element name="QueryDiscountActivityResponse" type="tns:QueryDiscountActivityResponse" />
+      <xs:element name="QueryFavorableActivity" type="tns:QueryFavorableActivity" />
+      <xs:element name="QueryFavorableActivityResponse" type="tns:QueryFavorableActivityResponse" />
+      <xs:element name="QueryFavorablePrice" type="tns:QueryFavorablePrice" />
+      <xs:element name="QueryFavorablePriceResponse" type="tns:QueryFavorablePriceResponse" />
+      <xs:element name="QueryFilmInfo" type="tns:QueryFilmInfo" />
+      <xs:element name="QueryFilmInfoByDatePeriod" type="tns:QueryFilmInfoByDatePeriod" />
+      <xs:element name="QueryFilmInfoByDatePeriodResponse" type="tns:QueryFilmInfoByDatePeriodResponse" />
+      <xs:element name="QueryFilmInfoResponse" type="tns:QueryFilmInfoResponse" />
+      <xs:element name="QueryIntegralFlowInfo" type="tns:QueryIntegralFlowInfo" />
+      <xs:element name="QueryIntegralFlowInfoResponse" type="tns:QueryIntegralFlowInfoResponse" />
+      <xs:element name="QueryMemberFlowInfo" type="tns:QueryMemberFlowInfo" />
+      <xs:element name="QueryMemberFlowInfoResponse" type="tns:QueryMemberFlowInfoResponse" />
+      <xs:element name="QueryMemberInfo" type="tns:QueryMemberInfo" />
+      <xs:element name="QueryMemberInfoResponse" type="tns:QueryMemberInfoResponse" />
+      <xs:element name="QueryMemberLevel" type="tns:QueryMemberLevel" />
+      <xs:element name="QueryMemberLevelResponse" type="tns:QueryMemberLevelResponse" />
+      <xs:element name="QueryMemberTickets" type="tns:QueryMemberTickets" />
+      <xs:element name="QueryMemberTicketsResponse" type="tns:QueryMemberTicketsResponse" />
+      <xs:element name="QueryMerchandise" type="tns:QueryMerchandise" />
+      <xs:element name="QueryMerchandiseResponse" type="tns:QueryMerchandiseResponse" />
+      <xs:element name="QueryOrderDetail" type="tns:QueryOrderDetail" />
+      <xs:element name="QueryOrderDetailResponse" type="tns:QueryOrderDetailResponse" />
+      <xs:element name="QueryOrderStatus" type="tns:QueryOrderStatus" />
+      <xs:element name="QueryOrderStatusResponse" type="tns:QueryOrderStatusResponse" />
+      <xs:element name="QueryOrders" type="tns:QueryOrders" />
+      <xs:element name="QueryOrdersResponse" type="tns:QueryOrdersResponse" />
+      <xs:element name="QueryPlanInfo" type="tns:QueryPlanInfo" />
+      <xs:element name="QueryPlanInfoByDatePeriod" type="tns:QueryPlanInfoByDatePeriod" />
+      <xs:element name="QueryPlanInfoByDatePeriodResponse" type="tns:QueryPlanInfoByDatePeriodResponse" />
+      <xs:element name="QueryPlanInfoResponse" type="tns:QueryPlanInfoResponse" />
+      <xs:element name="QueryPlanSeat" type="tns:QueryPlanSeat" />
+      <xs:element name="QueryPlanSeatResponse" type="tns:QueryPlanSeatResponse" />
+      <xs:element name="QueryRetailTicketInfo" type="tns:QueryRetailTicketInfo" />
+      <xs:element name="QueryRetailTicketInfoResponse" type="tns:QueryRetailTicketInfoResponse" />
+      <xs:element name="QuerySeatInfo" type="tns:QuerySeatInfo" />
+      <xs:element name="QuerySeatInfoResponse" type="tns:QuerySeatInfoResponse" />
+      <xs:element name="QueryTicketInfo" type="tns:QueryTicketInfo" />
+      <xs:element name="QueryTicketInfoResponse" type="tns:QueryTicketInfoResponse" />
+      <xs:element name="QueryTicketOfMarketing" type="tns:QueryTicketOfMarketing" />
+      <xs:element name="QueryTicketOfMarketingResponse" type="tns:QueryTicketOfMarketingResponse" />
+      <xs:element name="ReleaseSeat" type="tns:ReleaseSeat" />
+      <xs:element name="ReleaseSeatResponse" type="tns:ReleaseSeatResponse" />
+      <xs:element name="SubmitMerOrder" type="tns:SubmitMerOrder" />
+      <xs:element name="SubmitMerOrderResponse" type="tns:SubmitMerOrderResponse" />
+      <xs:element name="SubmitOrder" type="tns:SubmitOrder" />
+      <xs:element name="SubmitOrderResponse" type="tns:SubmitOrderResponse" />
+      <xs:element name="TicketCheckUnlock" type="tns:TicketCheckUnlock" />
+      <xs:element name="TicketCheckUnlockResponse" type="tns:TicketCheckUnlockResponse" />
+      <xs:element name="TicketConsume" type="tns:TicketConsume" />
+      <xs:element name="TicketConsumeResponse" type="tns:TicketConsumeResponse" />
+      <xs:element name="TicketReturnProcess" type="tns:TicketReturnProcess" />
+      <xs:element name="TicketReturnProcessResponse" type="tns:TicketReturnProcessResponse" />
+      <xs:element name="VerficationOfMany" type="tns:VerficationOfMany" />
+      <xs:element name="VerficationOfManyResponse" type="tns:VerficationOfManyResponse" />
+      <xs:element name="VerficationOfOne" type="tns:VerficationOfOne" />
+      <xs:element name="VerficationOfOneResponse" type="tns:VerficationOfOneResponse" />
+      <xs:element name="VerifyMemberLogin" type="tns:VerifyMemberLogin" />
+      <xs:element name="VerifyMemberLoginResponse" type="tns:VerifyMemberLoginResponse" />
+      <xs:complexType name="MemberTransactionCancel">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pOldTransactionNo" type="xs:string" />
+          <xs:element minOccurs="0" name="pTransactionNo" type="xs:string" />
+          <xs:element minOccurs="0" name="pChannelType" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MemberTransactionCancelResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GiveTicket">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pArrayIn" type="xs:string" />
+          <xs:element minOccurs="0" name="pLoginNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pChannel" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GiveTicketResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MemberConsumeOrder">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pLoginNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pOrderCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pOrderFormNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pTransactionTime" type="xs:string" />
+          <xs:element minOccurs="0" name="pAmount" type="xs:float" />
+          <xs:element minOccurs="0" name="pGoodsCategory" type="xs:string" />
+          <xs:element minOccurs="0" name="pTicketAmount" type="xs:float" />
+          <xs:element minOccurs="0" name="pGoodsAmount" type="xs:float" />
+          <xs:element minOccurs="0" name="pTicketNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pSessionNumAndDiscountNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pTicketIntegralAmount" type="xs:float" />
+          <xs:element minOccurs="0" name="pGoodsIntegralAmount" type="xs:float" />
+          <xs:element minOccurs="0" name="pIntegralMultiple" type="xs:float" />
+          <xs:element minOccurs="0" name="pRuleIdsAndRunTimes" type="xs:string" />
+          <xs:element minOccurs="0" name="pOrderPay" type="xs:string" />
+          <xs:element minOccurs="0" name="pOrderGoods" type="xs:string" />
+          <xs:element minOccurs="0" name="pChannel" type="xs:string" />
+          <xs:element minOccurs="0" name="pOperator" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MemberConsumeOrderResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ModifyActivityExeTime">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pRuleIds" type="xs:string" />
+          <xs:element minOccurs="0" name="pAmounts" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ModifyActivityExeTimeResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryOrderStatus">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pOrderCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryOrderStatusResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryMerchandise">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pPageSize" type="xs:string" />
+          <xs:element minOccurs="0" name="pPageNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryMerchandiseResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetIntegralOrderInfoByOrderNum">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pOrderFormNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pTerminalFlowNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetIntegralOrderInfoByOrderNumResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SubmitOrder">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="SubmitOrderXml" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SubmitOrderResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryFilmInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pPlanDate" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryFilmInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ReleaseSeat">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ReleaseSeatXml" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ReleaseSeatResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryIntegralFlowInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pLoginNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pStartDate" type="xs:string" />
+          <xs:element minOccurs="0" name="pEndDate" type="xs:string" />
+          <xs:element minOccurs="0" name="pPageSize" type="xs:string" />
+          <xs:element minOccurs="0" name="pPageNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryIntegralFlowInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CreateMerOrder">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CreateMerOrderXml" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CreateMerOrderResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ApplyFetchTicket">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ApplyFetchTicketXml" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ApplyFetchTicketResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryCinemaInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryCinemaInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryDiscountActivity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pFacts" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryDiscountActivityResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryMemberInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pLoginNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pLmsPassword" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryMemberInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryPlanInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pPlanDate" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryPlanInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ModifyMemberPassword">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pLoginNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pOldPassword" type="xs:string" />
+          <xs:element minOccurs="0" name="pNewPassword" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ModifyMemberPasswordResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="VerficationOfOne">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pTicketNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pPasswd" type="xs:string" />
+          <xs:element minOccurs="0" name="pDataPacket" type="xs:string" />
+          <xs:element minOccurs="0" name="pLoginNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pChannel" type="xs:string" />
+          <xs:element minOccurs="0" name="pTerminalNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="VerficationOfOneResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryOrderDetail">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pOrderCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryOrderDetailResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryRetailTicketInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryRetailTicketInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryTicketOfMarketing">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryTicketOfMarketingResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="FetchTicket">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="FetchTicketXml" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="FetchTicketResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MemberRefund">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pFlowNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pTransactionNo" type="xs:string" />
+          <xs:element minOccurs="0" name="pAmount" type="xs:float" />
+          <xs:element minOccurs="0" name="pTicketAmount" type="xs:float" />
+          <xs:element minOccurs="0" name="pGoodsAmount" type="xs:float" />
+          <xs:element minOccurs="0" name="pChannelType" type="xs:string" />
+          <xs:element minOccurs="0" name="pGoods" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MemberRefundResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MemberConsumeV2p0">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pLoginNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pLmsPassword" type="xs:string" />
+          <xs:element minOccurs="0" name="pOrderCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pTransactionNo" type="xs:string" />
+          <xs:element minOccurs="0" name="pAmount" type="xs:float" />
+          <xs:element minOccurs="0" name="pGoodsCategory" type="xs:string" />
+          <xs:element minOccurs="0" name="pTicketAmount" type="xs:float" />
+          <xs:element minOccurs="0" name="pGoodsAmount" type="xs:float" />
+          <xs:element minOccurs="0" name="pTicketNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pChannelType" type="xs:string" />
+          <xs:element minOccurs="0" name="pOperator" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MemberConsumeV2p0Response">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryMemberFlowInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pLoginNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pStartDate" type="xs:string" />
+          <xs:element minOccurs="0" name="pEndDate" type="xs:string" />
+          <xs:element minOccurs="0" name="pPageSize" type="xs:string" />
+          <xs:element minOccurs="0" name="pPageNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryMemberFlowInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ModifyMemberInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pLoginNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pPassword" type="xs:string" />
+          <xs:element minOccurs="0" name="pMobileNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pUserName" type="xs:string" />
+          <xs:element minOccurs="0" name="pSex" type="xs:string" />
+          <xs:element minOccurs="0" name="pBirthday" type="xs:string" />
+          <xs:element minOccurs="0" name="pCreditNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pEmail" type="xs:string" />
+          <xs:element minOccurs="0" name="pOperator" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ModifyMemberInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetMoneyOrderByOrderNum">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pOrderFormNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pTerminalFlowNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetMoneyOrderByOrderNumResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MemberConsume">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pLoginNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pLmsPassword" type="xs:string" />
+          <xs:element minOccurs="0" name="pChannelType" type="xs:string" />
+          <xs:element minOccurs="0" name="pAmount" type="xs:float" />
+          <xs:element minOccurs="0" name="pOrderCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pTransactionNo" type="xs:string" />
+          <xs:element minOccurs="0" name="pTicketAmount" type="xs:float" />
+          <xs:element minOccurs="0" name="pGoodsAmount" type="xs:float" />
+          <xs:element minOccurs="0" name="pIntegralAmount" type="xs:float" />
+          <xs:element minOccurs="0" name="pIntegralMultiple" type="xs:float" />
+          <xs:element minOccurs="0" name="pGoods" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MemberConsumeResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryAvailCinema">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pLoginNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryAvailCinemaResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryFavorableActivity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pFacts" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryFavorableActivityResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryOrders">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pTransactionType" type="xs:string" />
+          <xs:element minOccurs="0" name="pOrderSource" type="xs:string" />
+          <xs:element minOccurs="0" name="pIsShowDetail" type="xs:string" />
+          <xs:element minOccurs="0" name="pTransactionDate" type="xs:string" />
+          <xs:element minOccurs="0" name="pPageSize" type="xs:string" />
+          <xs:element minOccurs="0" name="pPageNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryOrdersResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PreordainRetailTicketRevocation">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pArrayIn" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PreordainRetailTicketRevocationResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="IntegralTransactionCancel">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pOldTransactionNo" type="xs:string" />
+          <xs:element minOccurs="0" name="pTransactionNo" type="xs:string" />
+          <xs:element minOccurs="0" name="pChannelType" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="IntegralTransactionCancelResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetFilmInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pPublishDateStart" type="xs:string" />
+          <xs:element minOccurs="0" name="pPublishDateEnd" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetFilmInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MemberCharge">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pLoginNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pChargeType" type="xs:string" />
+          <xs:element minOccurs="0" name="pChargeTypeName" type="xs:string" />
+          <xs:element minOccurs="0" name="pChannelType" type="xs:string" />
+          <xs:element minOccurs="0" name="pAccountType" type="xs:string" />
+          <xs:element minOccurs="0" name="pChargeAmount" type="xs:float" />
+          <xs:element minOccurs="0" name="pChargeActivityId" type="xs:string" />
+          <xs:element minOccurs="0" name="pChargeClass" type="xs:string" />
+          <xs:element minOccurs="0" name="pOrderCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pTransactionNo" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MemberChargeResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="LockSeat">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="LockSeatXml" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="LockSeatResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryTicketInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="QueryTicketInfoXml" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryTicketInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ModifyMemberLoginPassword">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pLoginNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pOldLoginPassword" type="xs:string" />
+          <xs:element minOccurs="0" name="pNewLoginPassword" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ModifyMemberLoginPasswordResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryDeliveryStatus">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pPrintNo" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryDeliveryStatusResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="TicketConsume">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pTicketNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pPasswd" type="xs:string" />
+          <xs:element minOccurs="0" name="pRuleId" type="xs:string" />
+          <xs:element minOccurs="0" name="pChannel" type="xs:string" />
+          <xs:element minOccurs="0" name="pTerminalFlowNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pTicketSaleOrderNo" type="xs:string" />
+          <xs:element minOccurs="0" name="pCreditPrice" type="xs:float" />
+          <xs:element minOccurs="0" name="pAmount" type="xs:float" />
+          <xs:element minOccurs="0" name="pTerminalNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pConsumeTime" type="xs:string" />
+          <xs:element minOccurs="0" name="pTicketOrderGoods" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="TicketConsumeResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryPlanInfoByDatePeriod">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pPlanStartDate" type="xs:string" />
+          <xs:element minOccurs="0" name="pPlanEndDate" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryPlanInfoByDatePeriodResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="TicketCheckUnlock">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pTicketNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pChannel" type="xs:string" />
+          <xs:element minOccurs="0" name="pTerminalNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="TicketCheckUnlockResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PhoneNumRegAndCharge">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pMobileNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pLmsPassword" type="xs:string" />
+          <xs:element minOccurs="0" name="pLoginPasswd" type="xs:string" />
+          <xs:element minOccurs="0" name="pLevelCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pRegCinemaMember" type="xs:string" />
+          <xs:element minOccurs="0" name="pName" type="xs:string" />
+          <xs:element minOccurs="0" name="pSex" type="xs:string" />
+          <xs:element minOccurs="0" name="pBirthday" type="xs:string" />
+          <xs:element minOccurs="0" name="pCreditNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pEmail" type="xs:string" />
+          <xs:element minOccurs="0" name="pOrderCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pTransactionNo" type="xs:string" />
+          <xs:element minOccurs="0" name="pChargeAmount" type="xs:float" />
+          <xs:element minOccurs="0" name="pChargeType" type="xs:string" />
+          <xs:element minOccurs="0" name="pChargeTypeName" type="xs:string" />
+          <xs:element minOccurs="0" name="pAccountType" type="xs:string" />
+          <xs:element minOccurs="0" name="pChannelType" type="xs:string" />
+          <xs:element minOccurs="0" name="pCheckAmountLimit" type="xs:string" />
+          <xs:element minOccurs="0" name="pOperator" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PhoneNumRegAndChargeResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryPlanSeat">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pFeatureAppNo" type="xs:string" />
+          <xs:element minOccurs="0" name="pStatus" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryPlanSeatResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CancelOrder">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pPrintNo" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CancelOrderResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="IntegralRefund">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pConsumeType" type="xs:string" />
+          <xs:element minOccurs="0" name="pFlowNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pTransactionNo" type="xs:string" />
+          <xs:element minOccurs="0" name="pAmount" type="xs:float" />
+          <xs:element minOccurs="0" name="pChannelType" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="IntegralRefundResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PreordainRetailTicket">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pArrayIn" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PreordainRetailTicketResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="VerifyMemberLogin">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pLoginNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pLmsPassword" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="VerifyMemberLoginResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MemberRefundV2p0">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pFlowNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pTransactionNo" type="xs:string" />
+          <xs:element minOccurs="0" name="pAmount" type="xs:float" />
+          <xs:element minOccurs="0" name="pGoodsCategory" type="xs:string" />
+          <xs:element minOccurs="0" name="pTicketAmount" type="xs:float" />
+          <xs:element minOccurs="0" name="pGoodsAmount" type="xs:float" />
+          <xs:element minOccurs="0" name="pTicketNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pChannelType" type="xs:string" />
+          <xs:element minOccurs="0" name="pOperator" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MemberRefundV2p0Response">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryMemberTickets">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pLoginNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pLmsPassword" type="xs:string" />
+          <xs:element minOccurs="0" name="pTicketStatus" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryMemberTicketsResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GiveIntegral">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pLoginNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pChannelType" type="xs:string" />
+          <xs:element minOccurs="0" name="pAmount" type="xs:float" />
+          <xs:element minOccurs="0" name="pOrderCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pTransactionNo" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GiveIntegralResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SubmitMerOrder">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="SubmitMerOrderXml" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SubmitMerOrderResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryCinemaList">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryCinemaListResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QuerySeatInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pScreenCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QuerySeatInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="VerficationOfMany">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pTicketNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pPasswd" type="xs:string" />
+          <xs:element minOccurs="0" name="pTicketSaleOrderNo" type="xs:string" />
+          <xs:element minOccurs="0" name="pLoginNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pChannel" type="xs:string" />
+          <xs:element minOccurs="0" name="pTerminalNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="VerficationOfManyResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ActivityInvokeMember">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pLoginNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pRuleId" type="xs:string" />
+          <xs:element minOccurs="0" name="pActionId" type="xs:string" />
+          <xs:element minOccurs="0" name="pOldTransactionNo" type="xs:string" />
+          <xs:element minOccurs="0" name="pChannelType" type="xs:string" />
+          <xs:element minOccurs="0" name="pTransactionNo" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ActivityInvokeMemberResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MemberRefundOrder">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pOrderCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pOrderFormNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pOldOrderCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pTransactionTime" type="xs:string" />
+          <xs:element minOccurs="0" name="pAmount" type="xs:float" />
+          <xs:element minOccurs="0" name="pGoodsCategory" type="xs:string" />
+          <xs:element minOccurs="0" name="pTicketAmount" type="xs:float" />
+          <xs:element minOccurs="0" name="pGoodsAmount" type="xs:float" />
+          <xs:element minOccurs="0" name="pTicketNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pSessionNumAndDiscountNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pTicketIntegralAmount" type="xs:float" />
+          <xs:element minOccurs="0" name="pGoodsIntegralAmount" type="xs:float" />
+          <xs:element minOccurs="0" name="pCancelMarketingActivity" type="xs:string" />
+          <xs:element minOccurs="0" name="pOrderPay" type="xs:string" />
+          <xs:element minOccurs="0" name="pOrderGoods" type="xs:string" />
+          <xs:element minOccurs="0" name="pChannel" type="xs:string" />
+          <xs:element minOccurs="0" name="pOperator" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MemberRefundOrderResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="IntegralConsume">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pLoginNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pLmsPassword" type="xs:string" />
+          <xs:element minOccurs="0" name="pChannelType" type="xs:string" />
+          <xs:element minOccurs="0" name="pConsumeType" type="xs:string" />
+          <xs:element minOccurs="0" name="pAmount" type="xs:float" />
+          <xs:element minOccurs="0" name="pOrderCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pTransactionNo" type="xs:string" />
+          <xs:element minOccurs="0" name="pGoods" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="IntegralConsumeResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CheckMemberByLoginPwd">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pLoginNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pLoginPasswd" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CheckMemberByLoginPwdResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryChargeActivity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pLoginNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryChargeActivityResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetCinemaAllPlan">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetCinemaAllPlanResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryMemberLevel">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryMemberLevelResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryFilmInfoByDatePeriod">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pPlanStartDate" type="xs:string" />
+          <xs:element minOccurs="0" name="pPlanEndDate" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryFilmInfoByDatePeriodResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetPlanSeatState">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pFeatureAppNo" type="xs:string" />
+          <xs:element minOccurs="0" name="pStatus" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetPlanSeatStateResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryFavorablePrice">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pFacts" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryFavorablePriceResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PhoneNumReg">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pMobileNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pLmsPassword" type="xs:string" />
+          <xs:element minOccurs="0" name="pLoginPasswd" type="xs:string" />
+          <xs:element minOccurs="0" name="pName" type="xs:string" />
+          <xs:element minOccurs="0" name="pSex" type="xs:string" />
+          <xs:element minOccurs="0" name="pBirthday" type="xs:string" />
+          <xs:element minOccurs="0" name="pCreditNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pEmail" type="xs:string" />
+          <xs:element minOccurs="0" name="pOperator" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PhoneNumRegResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryCinemaBusinessStatus">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pBusinessType" type="xs:string" />
+          <xs:element minOccurs="0" name="pBusinessDate" type="xs:string" />
+          <xs:element minOccurs="0" name="pBusinessStatus" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryCinemaBusinessStatusResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="TicketReturnProcess">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pTicketNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pChannel" type="xs:string" />
+          <xs:element minOccurs="0" name="pTerminalNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="TicketReturnProcessResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ExtractRetailTicket">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pArrayIn" type="xs:string" />
+          <xs:element minOccurs="0" name="pMobileNum" type="xs:string" />
+          <xs:element minOccurs="0" name="pIsSendMsg" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ExtractRetailTicketResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GeneralInvoker">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="pAppCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pCinemaCode" type="xs:string" />
+          <xs:element minOccurs="0" name="pActionName" type="xs:string" />
+          <xs:element minOccurs="0" name="pUUID" type="xs:string" />
+          <xs:element minOccurs="0" name="pActionParam" type="xs:string" />
+          <xs:element minOccurs="0" name="pCompress" type="xs:string" />
+          <xs:element minOccurs="0" name="pVerifyInfo" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GeneralInvokerResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="QueryMemberLevel">
+    <wsdl:part name="parameters" element="tns:QueryMemberLevel" />
+  </wsdl:message>
+  <wsdl:message name="QueryChargeActivityResponse">
+    <wsdl:part name="parameters" element="tns:QueryChargeActivityResponse" />
+  </wsdl:message>
+  <wsdl:message name="IntegralRefundResponse">
+    <wsdl:part name="parameters" element="tns:IntegralRefundResponse" />
+  </wsdl:message>
+  <wsdl:message name="LockSeat">
+    <wsdl:part name="parameters" element="tns:LockSeat" />
+  </wsdl:message>
+  <wsdl:message name="VerifyMemberLoginResponse">
+    <wsdl:part name="parameters" element="tns:VerifyMemberLoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReleaseSeat">
+    <wsdl:part name="parameters" element="tns:ReleaseSeat" />
+  </wsdl:message>
+  <wsdl:message name="QueryFavorablePrice">
+    <wsdl:part name="parameters" element="tns:QueryFavorablePrice" />
+  </wsdl:message>
+  <wsdl:message name="QueryDeliveryStatusResponse">
+    <wsdl:part name="parameters" element="tns:QueryDeliveryStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="MemberRefund">
+    <wsdl:part name="parameters" element="tns:MemberRefund" />
+  </wsdl:message>
+  <wsdl:message name="PhoneNumReg">
+    <wsdl:part name="parameters" element="tns:PhoneNumReg" />
+  </wsdl:message>
+  <wsdl:message name="ModifyMemberLoginPassword">
+    <wsdl:part name="parameters" element="tns:ModifyMemberLoginPassword" />
+  </wsdl:message>
+  <wsdl:message name="QueryMemberTickets">
+    <wsdl:part name="parameters" element="tns:QueryMemberTickets" />
+  </wsdl:message>
+  <wsdl:message name="GetCinemaAllPlanResponse">
+    <wsdl:part name="parameters" element="tns:GetCinemaAllPlanResponse" />
+  </wsdl:message>
+  <wsdl:message name="QueryMemberFlowInfo">
+    <wsdl:part name="parameters" element="tns:QueryMemberFlowInfo" />
+  </wsdl:message>
+  <wsdl:message name="QueryTicketOfMarketing">
+    <wsdl:part name="parameters" element="tns:QueryTicketOfMarketing" />
+  </wsdl:message>
+  <wsdl:message name="TicketCheckUnlock">
+    <wsdl:part name="parameters" element="tns:TicketCheckUnlock" />
+  </wsdl:message>
+  <wsdl:message name="VerficationOfOne">
+    <wsdl:part name="parameters" element="tns:VerficationOfOne" />
+  </wsdl:message>
+  <wsdl:message name="CancelOrderResponse">
+    <wsdl:part name="parameters" element="tns:CancelOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="QueryFilmInfoByDatePeriod">
+    <wsdl:part name="parameters" element="tns:QueryFilmInfoByDatePeriod" />
+  </wsdl:message>
+  <wsdl:message name="ModifyMemberLoginPasswordResponse">
+    <wsdl:part name="parameters" element="tns:ModifyMemberLoginPasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="ModifyMemberPasswordResponse">
+    <wsdl:part name="parameters" element="tns:ModifyMemberPasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="QueryIntegralFlowInfo">
+    <wsdl:part name="parameters" element="tns:QueryIntegralFlowInfo" />
+  </wsdl:message>
+  <wsdl:message name="CreateMerOrderResponse">
+    <wsdl:part name="parameters" element="tns:CreateMerOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="VerficationOfMany">
+    <wsdl:part name="parameters" element="tns:VerficationOfMany" />
+  </wsdl:message>
+  <wsdl:message name="GeneralInvokerResponse">
+    <wsdl:part name="parameters" element="tns:GeneralInvokerResponse" />
+  </wsdl:message>
+  <wsdl:message name="MemberConsumeOrderResponse">
+    <wsdl:part name="parameters" element="tns:MemberConsumeOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="QueryFilmInfoResponse">
+    <wsdl:part name="parameters" element="tns:QueryFilmInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GiveIntegral">
+    <wsdl:part name="parameters" element="tns:GiveIntegral" />
+  </wsdl:message>
+  <wsdl:message name="QuerySeatInfo">
+    <wsdl:part name="parameters" element="tns:QuerySeatInfo" />
+  </wsdl:message>
+  <wsdl:message name="QueryCinemaListResponse">
+    <wsdl:part name="parameters" element="tns:QueryCinemaListResponse" />
+  </wsdl:message>
+  <wsdl:message name="VerficationOfManyResponse">
+    <wsdl:part name="parameters" element="tns:VerficationOfManyResponse" />
+  </wsdl:message>
+  <wsdl:message name="QueryMemberTicketsResponse">
+    <wsdl:part name="parameters" element="tns:QueryMemberTicketsResponse" />
+  </wsdl:message>
+  <wsdl:message name="QueryCinemaBusinessStatusResponse">
+    <wsdl:part name="parameters" element="tns:QueryCinemaBusinessStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="QueryAvailCinema">
+    <wsdl:part name="parameters" element="tns:QueryAvailCinema" />
+  </wsdl:message>
+  <wsdl:message name="MemberChargeResponse">
+    <wsdl:part name="parameters" element="tns:MemberChargeResponse" />
+  </wsdl:message>
+  <wsdl:message name="MemberConsumeResponse">
+    <wsdl:part name="parameters" element="tns:MemberConsumeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ModifyMemberPassword">
+    <wsdl:part name="parameters" element="tns:ModifyMemberPassword" />
+  </wsdl:message>
+  <wsdl:message name="SubmitMerOrder">
+    <wsdl:part name="parameters" element="tns:SubmitMerOrder" />
+  </wsdl:message>
+  <wsdl:message name="GiveTicketResponse">
+    <wsdl:part name="parameters" element="tns:GiveTicketResponse" />
+  </wsdl:message>
+  <wsdl:message name="MemberRefundV2p0Response">
+    <wsdl:part name="parameters" element="tns:MemberRefundV2p0Response" />
+  </wsdl:message>
+  <wsdl:message name="PreordainRetailTicketResponse">
+    <wsdl:part name="parameters" element="tns:PreordainRetailTicketResponse" />
+  </wsdl:message>
+  <wsdl:message name="CheckMemberByLoginPwdResponse">
+    <wsdl:part name="parameters" element="tns:CheckMemberByLoginPwdResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateMerOrder">
+    <wsdl:part name="parameters" element="tns:CreateMerOrder" />
+  </wsdl:message>
+  <wsdl:message name="IntegralConsume">
+    <wsdl:part name="parameters" element="tns:IntegralConsume" />
+  </wsdl:message>
+  <wsdl:message name="QueryPlanSeat">
+    <wsdl:part name="parameters" element="tns:QueryPlanSeat" />
+  </wsdl:message>
+  <wsdl:message name="ModifyMemberInfo">
+    <wsdl:part name="parameters" element="tns:ModifyMemberInfo" />
+  </wsdl:message>
+  <wsdl:message name="MemberRefundV2p0">
+    <wsdl:part name="parameters" element="tns:MemberRefundV2p0" />
+  </wsdl:message>
+  <wsdl:message name="TicketReturnProcess">
+    <wsdl:part name="parameters" element="tns:TicketReturnProcess" />
+  </wsdl:message>
+  <wsdl:message name="QueryCinemaBusinessStatus">
+    <wsdl:part name="parameters" element="tns:QueryCinemaBusinessStatus" />
+  </wsdl:message>
+  <wsdl:message name="MemberConsumeV2p0">
+    <wsdl:part name="parameters" element="tns:MemberConsumeV2p0" />
+  </wsdl:message>
+  <wsdl:message name="ModifyActivityExeTimeResponse">
+    <wsdl:part name="parameters" element="tns:ModifyActivityExeTimeResponse" />
+  </wsdl:message>
+  <wsdl:message name="QueryFavorableActivity">
+    <wsdl:part name="parameters" element="tns:QueryFavorableActivity" />
+  </wsdl:message>
+  <wsdl:message name="QueryTicketInfoResponse">
+    <wsdl:part name="parameters" element="tns:QueryTicketInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="QueryPlanSeatResponse">
+    <wsdl:part name="parameters" element="tns:QueryPlanSeatResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExtractRetailTicket">
+    <wsdl:part name="parameters" element="tns:ExtractRetailTicket" />
+  </wsdl:message>
+  <wsdl:message name="GetCinemaAllPlan">
+    <wsdl:part name="parameters" element="tns:GetCinemaAllPlan" />
+  </wsdl:message>
+  <wsdl:message name="QueryMerchandise">
+    <wsdl:part name="parameters" element="tns:QueryMerchandise" />
+  </wsdl:message>
+  <wsdl:message name="QueryDeliveryStatus">
+    <wsdl:part name="parameters" element="tns:QueryDeliveryStatus" />
+  </wsdl:message>
+  <wsdl:message name="PreordainRetailTicket">
+    <wsdl:part name="parameters" element="tns:PreordainRetailTicket" />
+  </wsdl:message>
+  <wsdl:message name="QueryTicketInfo">
+    <wsdl:part name="parameters" element="tns:QueryTicketInfo" />
+  </wsdl:message>
+  <wsdl:message name="MemberConsumeV2p0Response">
+    <wsdl:part name="parameters" element="tns:MemberConsumeV2p0Response" />
+  </wsdl:message>
+  <wsdl:message name="QuerySeatInfoResponse">
+    <wsdl:part name="parameters" element="tns:QuerySeatInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="MemberTransactionCancel">
+    <wsdl:part name="parameters" element="tns:MemberTransactionCancel" />
+  </wsdl:message>
+  <wsdl:message name="GeneralInvoker">
+    <wsdl:part name="parameters" element="tns:GeneralInvoker" />
+  </wsdl:message>
+  <wsdl:message name="MemberRefundOrder">
+    <wsdl:part name="parameters" element="tns:MemberRefundOrder" />
+  </wsdl:message>
+  <wsdl:message name="QueryFavorablePriceResponse">
+    <wsdl:part name="parameters" element="tns:QueryFavorablePriceResponse" />
+  </wsdl:message>
+  <wsdl:message name="QueryMemberLevelResponse">
+    <wsdl:part name="parameters" element="tns:QueryMemberLevelResponse" />
+  </wsdl:message>
+  <wsdl:message name="QueryCinemaInfo">
+    <wsdl:part name="parameters" element="tns:QueryCinemaInfo" />
+  </wsdl:message>
+  <wsdl:message name="QueryOrderDetail">
+    <wsdl:part name="parameters" element="tns:QueryOrderDetail" />
+  </wsdl:message>
+  <wsdl:message name="FetchTicket">
+    <wsdl:part name="parameters" element="tns:FetchTicket" />
+  </wsdl:message>
+  <wsdl:message name="QueryOrderStatusResponse">
+    <wsdl:part name="parameters" element="tns:QueryOrderStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetFilmInfo">
+    <wsdl:part name="parameters" element="tns:GetFilmInfo" />
+  </wsdl:message>
+  <wsdl:message name="CancelOrder">
+    <wsdl:part name="parameters" element="tns:CancelOrder" />
+  </wsdl:message>
+  <wsdl:message name="MemberRefundResponse">
+    <wsdl:part name="parameters" element="tns:MemberRefundResponse" />
+  </wsdl:message>
+  <wsdl:message name="SubmitMerOrderResponse">
+    <wsdl:part name="parameters" element="tns:SubmitMerOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="ModifyMemberInfoResponse">
+    <wsdl:part name="parameters" element="tns:ModifyMemberInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="MemberRefundOrderResponse">
+    <wsdl:part name="parameters" element="tns:MemberRefundOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="QueryCinemaInfoResponse">
+    <wsdl:part name="parameters" element="tns:QueryCinemaInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="QueryChargeActivity">
+    <wsdl:part name="parameters" element="tns:QueryChargeActivity" />
+  </wsdl:message>
+  <wsdl:message name="PreordainRetailTicketRevocation">
+    <wsdl:part name="parameters" element="tns:PreordainRetailTicketRevocation" />
+  </wsdl:message>
+  <wsdl:message name="ActivityInvokeMember">
+    <wsdl:part name="parameters" element="tns:ActivityInvokeMember" />
+  </wsdl:message>
+  <wsdl:message name="GetMoneyOrderByOrderNumResponse">
+    <wsdl:part name="parameters" element="tns:GetMoneyOrderByOrderNumResponse" />
+  </wsdl:message>
+  <wsdl:message name="QueryMemberFlowInfoResponse">
+    <wsdl:part name="parameters" element="tns:QueryMemberFlowInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="TicketConsume">
+    <wsdl:part name="parameters" element="tns:TicketConsume" />
+  </wsdl:message>
+  <wsdl:message name="QueryPlanInfoResponse">
+    <wsdl:part name="parameters" element="tns:QueryPlanInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="SubmitOrderResponse">
+    <wsdl:part name="parameters" element="tns:SubmitOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IntegralConsumeResponse">
+    <wsdl:part name="parameters" element="tns:IntegralConsumeResponse" />
+  </wsdl:message>
+  <wsdl:message name="QueryCinemaList">
+    <wsdl:part name="parameters" element="tns:QueryCinemaList" />
+  </wsdl:message>
+  <wsdl:message name="QueryDiscountActivity">
+    <wsdl:part name="parameters" element="tns:QueryDiscountActivity" />
+  </wsdl:message>
+  <wsdl:message name="QueryTicketOfMarketingResponse">
+    <wsdl:part name="parameters" element="tns:QueryTicketOfMarketingResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExtractRetailTicketResponse">
+    <wsdl:part name="parameters" element="tns:ExtractRetailTicketResponse" />
+  </wsdl:message>
+  <wsdl:message name="QueryDiscountActivityResponse">
+    <wsdl:part name="parameters" element="tns:QueryDiscountActivityResponse" />
+  </wsdl:message>
+  <wsdl:message name="ApplyFetchTicket">
+    <wsdl:part name="parameters" element="tns:ApplyFetchTicket" />
+  </wsdl:message>
+  <wsdl:message name="FetchTicketResponse">
+    <wsdl:part name="parameters" element="tns:FetchTicketResponse" />
+  </wsdl:message>
+  <wsdl:message name="IntegralTransactionCancelResponse">
+    <wsdl:part name="parameters" element="tns:IntegralTransactionCancelResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMoneyOrderByOrderNum">
+    <wsdl:part name="parameters" element="tns:GetMoneyOrderByOrderNum" />
+  </wsdl:message>
+  <wsdl:message name="QueryOrders">
+    <wsdl:part name="parameters" element="tns:QueryOrders" />
+  </wsdl:message>
+  <wsdl:message name="PhoneNumRegAndChargeResponse">
+    <wsdl:part name="parameters" element="tns:PhoneNumRegAndChargeResponse" />
+  </wsdl:message>
+  <wsdl:message name="QueryOrderStatus">
+    <wsdl:part name="parameters" element="tns:QueryOrderStatus" />
+  </wsdl:message>
+  <wsdl:message name="QueryAvailCinemaResponse">
+    <wsdl:part name="parameters" element="tns:QueryAvailCinemaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ModifyActivityExeTime">
+    <wsdl:part name="parameters" element="tns:ModifyActivityExeTime" />
+  </wsdl:message>
+  <wsdl:message name="GetIntegralOrderInfoByOrderNum">
+    <wsdl:part name="parameters" element="tns:GetIntegralOrderInfoByOrderNum" />
+  </wsdl:message>
+  <wsdl:message name="MemberCharge">
+    <wsdl:part name="parameters" element="tns:MemberCharge" />
+  </wsdl:message>
+  <wsdl:message name="QueryOrderDetailResponse">
+    <wsdl:part name="parameters" element="tns:QueryOrderDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="TicketConsumeResponse">
+    <wsdl:part name="parameters" element="tns:TicketConsumeResponse" />
+  </wsdl:message>
+  <wsdl:message name="QueryPlanInfoByDatePeriod">
+    <wsdl:part name="parameters" element="tns:QueryPlanInfoByDatePeriod" />
+  </wsdl:message>
+  <wsdl:message name="VerficationOfOneResponse">
+    <wsdl:part name="parameters" element="tns:VerficationOfOneResponse" />
+  </wsdl:message>
+  <wsdl:message name="QueryMemberInfoResponse">
+    <wsdl:part name="parameters" element="tns:QueryMemberInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="QueryPlanInfo">
+    <wsdl:part name="parameters" element="tns:QueryPlanInfo" />
+  </wsdl:message>
+  <wsdl:message name="CheckMemberByLoginPwd">
+    <wsdl:part name="parameters" element="tns:CheckMemberByLoginPwd" />
+  </wsdl:message>
+  <wsdl:message name="LockSeatResponse">
+    <wsdl:part name="parameters" element="tns:LockSeatResponse" />
+  </wsdl:message>
+  <wsdl:message name="TicketReturnProcessResponse">
+    <wsdl:part name="parameters" element="tns:TicketReturnProcessResponse" />
+  </wsdl:message>
+  <wsdl:message name="IntegralTransactionCancel">
+    <wsdl:part name="parameters" element="tns:IntegralTransactionCancel" />
+  </wsdl:message>
+  <wsdl:message name="QueryIntegralFlowInfoResponse">
+    <wsdl:part name="parameters" element="tns:QueryIntegralFlowInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="QueryPlanInfoByDatePeriodResponse">
+    <wsdl:part name="parameters" element="tns:QueryPlanInfoByDatePeriodResponse" />
+  </wsdl:message>
+  <wsdl:message name="SubmitOrder">
+    <wsdl:part name="parameters" element="tns:SubmitOrder" />
+  </wsdl:message>
+  <wsdl:message name="PhoneNumRegResponse">
+    <wsdl:part name="parameters" element="tns:PhoneNumRegResponse" />
+  </wsdl:message>
+  <wsdl:message name="PhoneNumRegAndCharge">
+    <wsdl:part name="parameters" element="tns:PhoneNumRegAndCharge" />
+  </wsdl:message>
+  <wsdl:message name="PreordainRetailTicketRevocationResponse">
+    <wsdl:part name="parameters" element="tns:PreordainRetailTicketRevocationResponse" />
+  </wsdl:message>
+  <wsdl:message name="TicketCheckUnlockResponse">
+    <wsdl:part name="parameters" element="tns:TicketCheckUnlockResponse" />
+  </wsdl:message>
+  <wsdl:message name="IntegralRefund">
+    <wsdl:part name="parameters" element="tns:IntegralRefund" />
+  </wsdl:message>
+  <wsdl:message name="GetPlanSeatStateResponse">
+    <wsdl:part name="parameters" element="tns:GetPlanSeatStateResponse" />
+  </wsdl:message>
+  <wsdl:message name="QueryFilmInfoByDatePeriodResponse">
+    <wsdl:part name="parameters" element="tns:QueryFilmInfoByDatePeriodResponse" />
+  </wsdl:message>
+  <wsdl:message name="GiveTicket">
+    <wsdl:part name="parameters" element="tns:GiveTicket" />
+  </wsdl:message>
+  <wsdl:message name="QueryMemberInfo">
+    <wsdl:part name="parameters" element="tns:QueryMemberInfo" />
+  </wsdl:message>
+  <wsdl:message name="MemberTransactionCancelResponse">
+    <wsdl:part name="parameters" element="tns:MemberTransactionCancelResponse" />
+  </wsdl:message>
+  <wsdl:message name="VerifyMemberLogin">
+    <wsdl:part name="parameters" element="tns:VerifyMemberLogin" />
+  </wsdl:message>
+  <wsdl:message name="GetPlanSeatState">
+    <wsdl:part name="parameters" element="tns:GetPlanSeatState" />
+  </wsdl:message>
+  <wsdl:message name="MemberConsumeOrder">
+    <wsdl:part name="parameters" element="tns:MemberConsumeOrder" />
+  </wsdl:message>
+  <wsdl:message name="QueryRetailTicketInfo">
+    <wsdl:part name="parameters" element="tns:QueryRetailTicketInfo" />
+  </wsdl:message>
+  <wsdl:message name="ActivityInvokeMemberResponse">
+    <wsdl:part name="parameters" element="tns:ActivityInvokeMemberResponse" />
+  </wsdl:message>
+  <wsdl:message name="QueryRetailTicketInfoResponse">
+    <wsdl:part name="parameters" element="tns:QueryRetailTicketInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="QueryMerchandiseResponse">
+    <wsdl:part name="parameters" element="tns:QueryMerchandiseResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetIntegralOrderInfoByOrderNumResponse">
+    <wsdl:part name="parameters" element="tns:GetIntegralOrderInfoByOrderNumResponse" />
+  </wsdl:message>
+  <wsdl:message name="ApplyFetchTicketResponse">
+    <wsdl:part name="parameters" element="tns:ApplyFetchTicketResponse" />
+  </wsdl:message>
+  <wsdl:message name="QueryFilmInfo">
+    <wsdl:part name="parameters" element="tns:QueryFilmInfo" />
+  </wsdl:message>
+  <wsdl:message name="QueryFavorableActivityResponse">
+    <wsdl:part name="parameters" element="tns:QueryFavorableActivityResponse" />
+  </wsdl:message>
+  <wsdl:message name="MemberConsume">
+    <wsdl:part name="parameters" element="tns:MemberConsume" />
+  </wsdl:message>
+  <wsdl:message name="QueryOrdersResponse">
+    <wsdl:part name="parameters" element="tns:QueryOrdersResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetFilmInfoResponse">
+    <wsdl:part name="parameters" element="tns:GetFilmInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GiveIntegralResponse">
+    <wsdl:part name="parameters" element="tns:GiveIntegralResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReleaseSeatResponse">
+    <wsdl:part name="parameters" element="tns:ReleaseSeatResponse" />
+  </wsdl:message>
+  <wsdl:portType name="TspSoapService">
+    <wsdl:operation name="MemberTransactionCancel">
+      <wsdl:input name="MemberTransactionCancel" message="tns:MemberTransactionCancel" />
+      <wsdl:output name="MemberTransactionCancelResponse" message="tns:MemberTransactionCancelResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GiveTicket">
+      <wsdl:input name="GiveTicket" message="tns:GiveTicket" />
+      <wsdl:output name="GiveTicketResponse" message="tns:GiveTicketResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="MemberConsumeOrder">
+      <wsdl:input name="MemberConsumeOrder" message="tns:MemberConsumeOrder" />
+      <wsdl:output name="MemberConsumeOrderResponse" message="tns:MemberConsumeOrderResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="ModifyActivityExeTime">
+      <wsdl:input name="ModifyActivityExeTime" message="tns:ModifyActivityExeTime" />
+      <wsdl:output name="ModifyActivityExeTimeResponse" message="tns:ModifyActivityExeTimeResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryOrderStatus">
+      <wsdl:input name="QueryOrderStatus" message="tns:QueryOrderStatus" />
+      <wsdl:output name="QueryOrderStatusResponse" message="tns:QueryOrderStatusResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryMerchandise">
+      <wsdl:input name="QueryMerchandise" message="tns:QueryMerchandise" />
+      <wsdl:output name="QueryMerchandiseResponse" message="tns:QueryMerchandiseResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetIntegralOrderInfoByOrderNum">
+      <wsdl:input name="GetIntegralOrderInfoByOrderNum" message="tns:GetIntegralOrderInfoByOrderNum" />
+      <wsdl:output name="GetIntegralOrderInfoByOrderNumResponse" message="tns:GetIntegralOrderInfoByOrderNumResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="SubmitOrder">
+      <wsdl:input name="SubmitOrder" message="tns:SubmitOrder" />
+      <wsdl:output name="SubmitOrderResponse" message="tns:SubmitOrderResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryFilmInfo">
+      <wsdl:input name="QueryFilmInfo" message="tns:QueryFilmInfo" />
+      <wsdl:output name="QueryFilmInfoResponse" message="tns:QueryFilmInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="ReleaseSeat">
+      <wsdl:input name="ReleaseSeat" message="tns:ReleaseSeat" />
+      <wsdl:output name="ReleaseSeatResponse" message="tns:ReleaseSeatResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryIntegralFlowInfo">
+      <wsdl:input name="QueryIntegralFlowInfo" message="tns:QueryIntegralFlowInfo" />
+      <wsdl:output name="QueryIntegralFlowInfoResponse" message="tns:QueryIntegralFlowInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateMerOrder">
+      <wsdl:input name="CreateMerOrder" message="tns:CreateMerOrder" />
+      <wsdl:output name="CreateMerOrderResponse" message="tns:CreateMerOrderResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="ApplyFetchTicket">
+      <wsdl:input name="ApplyFetchTicket" message="tns:ApplyFetchTicket" />
+      <wsdl:output name="ApplyFetchTicketResponse" message="tns:ApplyFetchTicketResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryCinemaInfo">
+      <wsdl:input name="QueryCinemaInfo" message="tns:QueryCinemaInfo" />
+      <wsdl:output name="QueryCinemaInfoResponse" message="tns:QueryCinemaInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryDiscountActivity">
+      <wsdl:input name="QueryDiscountActivity" message="tns:QueryDiscountActivity" />
+      <wsdl:output name="QueryDiscountActivityResponse" message="tns:QueryDiscountActivityResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryMemberInfo">
+      <wsdl:input name="QueryMemberInfo" message="tns:QueryMemberInfo" />
+      <wsdl:output name="QueryMemberInfoResponse" message="tns:QueryMemberInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryPlanInfo">
+      <wsdl:input name="QueryPlanInfo" message="tns:QueryPlanInfo" />
+      <wsdl:output name="QueryPlanInfoResponse" message="tns:QueryPlanInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="ModifyMemberPassword">
+      <wsdl:input name="ModifyMemberPassword" message="tns:ModifyMemberPassword" />
+      <wsdl:output name="ModifyMemberPasswordResponse" message="tns:ModifyMemberPasswordResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="VerficationOfOne">
+      <wsdl:input name="VerficationOfOne" message="tns:VerficationOfOne" />
+      <wsdl:output name="VerficationOfOneResponse" message="tns:VerficationOfOneResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryOrderDetail">
+      <wsdl:input name="QueryOrderDetail" message="tns:QueryOrderDetail" />
+      <wsdl:output name="QueryOrderDetailResponse" message="tns:QueryOrderDetailResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryRetailTicketInfo">
+      <wsdl:input name="QueryRetailTicketInfo" message="tns:QueryRetailTicketInfo" />
+      <wsdl:output name="QueryRetailTicketInfoResponse" message="tns:QueryRetailTicketInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryTicketOfMarketing">
+      <wsdl:input name="QueryTicketOfMarketing" message="tns:QueryTicketOfMarketing" />
+      <wsdl:output name="QueryTicketOfMarketingResponse" message="tns:QueryTicketOfMarketingResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="FetchTicket">
+      <wsdl:input name="FetchTicket" message="tns:FetchTicket" />
+      <wsdl:output name="FetchTicketResponse" message="tns:FetchTicketResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="MemberRefund">
+      <wsdl:input name="MemberRefund" message="tns:MemberRefund" />
+      <wsdl:output name="MemberRefundResponse" message="tns:MemberRefundResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="MemberConsumeV2p0">
+      <wsdl:input name="MemberConsumeV2p0" message="tns:MemberConsumeV2p0" />
+      <wsdl:output name="MemberConsumeV2p0Response" message="tns:MemberConsumeV2p0Response" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryMemberFlowInfo">
+      <wsdl:input name="QueryMemberFlowInfo" message="tns:QueryMemberFlowInfo" />
+      <wsdl:output name="QueryMemberFlowInfoResponse" message="tns:QueryMemberFlowInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="ModifyMemberInfo">
+      <wsdl:input name="ModifyMemberInfo" message="tns:ModifyMemberInfo" />
+      <wsdl:output name="ModifyMemberInfoResponse" message="tns:ModifyMemberInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMoneyOrderByOrderNum">
+      <wsdl:input name="GetMoneyOrderByOrderNum" message="tns:GetMoneyOrderByOrderNum" />
+      <wsdl:output name="GetMoneyOrderByOrderNumResponse" message="tns:GetMoneyOrderByOrderNumResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="MemberConsume">
+      <wsdl:input name="MemberConsume" message="tns:MemberConsume" />
+      <wsdl:output name="MemberConsumeResponse" message="tns:MemberConsumeResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryAvailCinema">
+      <wsdl:input name="QueryAvailCinema" message="tns:QueryAvailCinema" />
+      <wsdl:output name="QueryAvailCinemaResponse" message="tns:QueryAvailCinemaResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryFavorableActivity">
+      <wsdl:input name="QueryFavorableActivity" message="tns:QueryFavorableActivity" />
+      <wsdl:output name="QueryFavorableActivityResponse" message="tns:QueryFavorableActivityResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryOrders">
+      <wsdl:input name="QueryOrders" message="tns:QueryOrders" />
+      <wsdl:output name="QueryOrdersResponse" message="tns:QueryOrdersResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="PreordainRetailTicketRevocation">
+      <wsdl:input name="PreordainRetailTicketRevocation" message="tns:PreordainRetailTicketRevocation" />
+      <wsdl:output name="PreordainRetailTicketRevocationResponse" message="tns:PreordainRetailTicketRevocationResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="IntegralTransactionCancel">
+      <wsdl:input name="IntegralTransactionCancel" message="tns:IntegralTransactionCancel" />
+      <wsdl:output name="IntegralTransactionCancelResponse" message="tns:IntegralTransactionCancelResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFilmInfo">
+      <wsdl:input name="GetFilmInfo" message="tns:GetFilmInfo" />
+      <wsdl:output name="GetFilmInfoResponse" message="tns:GetFilmInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="MemberCharge">
+      <wsdl:input name="MemberCharge" message="tns:MemberCharge" />
+      <wsdl:output name="MemberChargeResponse" message="tns:MemberChargeResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="LockSeat">
+      <wsdl:input name="LockSeat" message="tns:LockSeat" />
+      <wsdl:output name="LockSeatResponse" message="tns:LockSeatResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryTicketInfo">
+      <wsdl:input name="QueryTicketInfo" message="tns:QueryTicketInfo" />
+      <wsdl:output name="QueryTicketInfoResponse" message="tns:QueryTicketInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="ModifyMemberLoginPassword">
+      <wsdl:input name="ModifyMemberLoginPassword" message="tns:ModifyMemberLoginPassword" />
+      <wsdl:output name="ModifyMemberLoginPasswordResponse" message="tns:ModifyMemberLoginPasswordResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryDeliveryStatus">
+      <wsdl:input name="QueryDeliveryStatus" message="tns:QueryDeliveryStatus" />
+      <wsdl:output name="QueryDeliveryStatusResponse" message="tns:QueryDeliveryStatusResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="TicketConsume">
+      <wsdl:input name="TicketConsume" message="tns:TicketConsume" />
+      <wsdl:output name="TicketConsumeResponse" message="tns:TicketConsumeResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryPlanInfoByDatePeriod">
+      <wsdl:input name="QueryPlanInfoByDatePeriod" message="tns:QueryPlanInfoByDatePeriod" />
+      <wsdl:output name="QueryPlanInfoByDatePeriodResponse" message="tns:QueryPlanInfoByDatePeriodResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="TicketCheckUnlock">
+      <wsdl:input name="TicketCheckUnlock" message="tns:TicketCheckUnlock" />
+      <wsdl:output name="TicketCheckUnlockResponse" message="tns:TicketCheckUnlockResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="PhoneNumRegAndCharge">
+      <wsdl:input name="PhoneNumRegAndCharge" message="tns:PhoneNumRegAndCharge" />
+      <wsdl:output name="PhoneNumRegAndChargeResponse" message="tns:PhoneNumRegAndChargeResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryPlanSeat">
+      <wsdl:input name="QueryPlanSeat" message="tns:QueryPlanSeat" />
+      <wsdl:output name="QueryPlanSeatResponse" message="tns:QueryPlanSeatResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelOrder">
+      <wsdl:input name="CancelOrder" message="tns:CancelOrder" />
+      <wsdl:output name="CancelOrderResponse" message="tns:CancelOrderResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="IntegralRefund">
+      <wsdl:input name="IntegralRefund" message="tns:IntegralRefund" />
+      <wsdl:output name="IntegralRefundResponse" message="tns:IntegralRefundResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="PreordainRetailTicket">
+      <wsdl:input name="PreordainRetailTicket" message="tns:PreordainRetailTicket" />
+      <wsdl:output name="PreordainRetailTicketResponse" message="tns:PreordainRetailTicketResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="VerifyMemberLogin">
+      <wsdl:input name="VerifyMemberLogin" message="tns:VerifyMemberLogin" />
+      <wsdl:output name="VerifyMemberLoginResponse" message="tns:VerifyMemberLoginResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="MemberRefundV2p0">
+      <wsdl:input name="MemberRefundV2p0" message="tns:MemberRefundV2p0" />
+      <wsdl:output name="MemberRefundV2p0Response" message="tns:MemberRefundV2p0Response" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryMemberTickets">
+      <wsdl:input name="QueryMemberTickets" message="tns:QueryMemberTickets" />
+      <wsdl:output name="QueryMemberTicketsResponse" message="tns:QueryMemberTicketsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GiveIntegral">
+      <wsdl:input name="GiveIntegral" message="tns:GiveIntegral" />
+      <wsdl:output name="GiveIntegralResponse" message="tns:GiveIntegralResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="SubmitMerOrder">
+      <wsdl:input name="SubmitMerOrder" message="tns:SubmitMerOrder" />
+      <wsdl:output name="SubmitMerOrderResponse" message="tns:SubmitMerOrderResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryCinemaList">
+      <wsdl:input name="QueryCinemaList" message="tns:QueryCinemaList" />
+      <wsdl:output name="QueryCinemaListResponse" message="tns:QueryCinemaListResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="QuerySeatInfo">
+      <wsdl:input name="QuerySeatInfo" message="tns:QuerySeatInfo" />
+      <wsdl:output name="QuerySeatInfoResponse" message="tns:QuerySeatInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="VerficationOfMany">
+      <wsdl:input name="VerficationOfMany" message="tns:VerficationOfMany" />
+      <wsdl:output name="VerficationOfManyResponse" message="tns:VerficationOfManyResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="ActivityInvokeMember">
+      <wsdl:input name="ActivityInvokeMember" message="tns:ActivityInvokeMember" />
+      <wsdl:output name="ActivityInvokeMemberResponse" message="tns:ActivityInvokeMemberResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="MemberRefundOrder">
+      <wsdl:input name="MemberRefundOrder" message="tns:MemberRefundOrder" />
+      <wsdl:output name="MemberRefundOrderResponse" message="tns:MemberRefundOrderResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="IntegralConsume">
+      <wsdl:input name="IntegralConsume" message="tns:IntegralConsume" />
+      <wsdl:output name="IntegralConsumeResponse" message="tns:IntegralConsumeResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckMemberByLoginPwd">
+      <wsdl:input name="CheckMemberByLoginPwd" message="tns:CheckMemberByLoginPwd" />
+      <wsdl:output name="CheckMemberByLoginPwdResponse" message="tns:CheckMemberByLoginPwdResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryChargeActivity">
+      <wsdl:input name="QueryChargeActivity" message="tns:QueryChargeActivity" />
+      <wsdl:output name="QueryChargeActivityResponse" message="tns:QueryChargeActivityResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCinemaAllPlan">
+      <wsdl:input name="GetCinemaAllPlan" message="tns:GetCinemaAllPlan" />
+      <wsdl:output name="GetCinemaAllPlanResponse" message="tns:GetCinemaAllPlanResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryMemberLevel">
+      <wsdl:input name="QueryMemberLevel" message="tns:QueryMemberLevel" />
+      <wsdl:output name="QueryMemberLevelResponse" message="tns:QueryMemberLevelResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryFilmInfoByDatePeriod">
+      <wsdl:input name="QueryFilmInfoByDatePeriod" message="tns:QueryFilmInfoByDatePeriod" />
+      <wsdl:output name="QueryFilmInfoByDatePeriodResponse" message="tns:QueryFilmInfoByDatePeriodResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPlanSeatState">
+      <wsdl:input name="GetPlanSeatState" message="tns:GetPlanSeatState" />
+      <wsdl:output name="GetPlanSeatStateResponse" message="tns:GetPlanSeatStateResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryFavorablePrice">
+      <wsdl:input name="QueryFavorablePrice" message="tns:QueryFavorablePrice" />
+      <wsdl:output name="QueryFavorablePriceResponse" message="tns:QueryFavorablePriceResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="PhoneNumReg">
+      <wsdl:input name="PhoneNumReg" message="tns:PhoneNumReg" />
+      <wsdl:output name="PhoneNumRegResponse" message="tns:PhoneNumRegResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="QueryCinemaBusinessStatus">
+      <wsdl:input name="QueryCinemaBusinessStatus" message="tns:QueryCinemaBusinessStatus" />
+      <wsdl:output name="QueryCinemaBusinessStatusResponse" message="tns:QueryCinemaBusinessStatusResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="TicketReturnProcess">
+      <wsdl:input name="TicketReturnProcess" message="tns:TicketReturnProcess" />
+      <wsdl:output name="TicketReturnProcessResponse" message="tns:TicketReturnProcessResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="ExtractRetailTicket">
+      <wsdl:input name="ExtractRetailTicket" message="tns:ExtractRetailTicket" />
+      <wsdl:output name="ExtractRetailTicketResponse" message="tns:ExtractRetailTicketResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GeneralInvoker">
+      <wsdl:input name="GeneralInvoker" message="tns:GeneralInvoker" />
+      <wsdl:output name="GeneralInvokerResponse" message="tns:GeneralInvokerResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TspSoapServiceImplServiceSoapBinding" type="tns:TspSoapService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GiveTicket">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="GiveTicket">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GiveTicketResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MemberTransactionCancel">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="MemberTransactionCancel">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="MemberTransactionCancelResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyActivityExeTime">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="ModifyActivityExeTime">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ModifyActivityExeTimeResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MemberConsumeOrder">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="MemberConsumeOrder">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="MemberConsumeOrderResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryMerchandise">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="QueryMerchandise">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryMerchandiseResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryOrderStatus">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="QueryOrderStatus">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryOrderStatusResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIntegralOrderInfoByOrderNum">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="GetIntegralOrderInfoByOrderNum">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetIntegralOrderInfoByOrderNumResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SubmitOrder">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="SubmitOrder">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="SubmitOrderResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryFilmInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="QueryFilmInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryFilmInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryIntegralFlowInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="QueryIntegralFlowInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryIntegralFlowInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReleaseSeat">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="ReleaseSeat">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ReleaseSeatResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateMerOrder">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="CreateMerOrder">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="CreateMerOrderResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApplyFetchTicket">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="ApplyFetchTicket">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ApplyFetchTicketResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryCinemaInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="QueryCinemaInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryCinemaInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryDiscountActivity">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="QueryDiscountActivity">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryDiscountActivityResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryMemberInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="QueryMemberInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryMemberInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryPlanInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="QueryPlanInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryPlanInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyMemberPassword">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="ModifyMemberPassword">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ModifyMemberPasswordResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerficationOfOne">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="VerficationOfOne">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="VerficationOfOneResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryOrderDetail">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="QueryOrderDetail">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryOrderDetailResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryRetailTicketInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="QueryRetailTicketInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryRetailTicketInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryTicketOfMarketing">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="QueryTicketOfMarketing">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryTicketOfMarketingResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FetchTicket">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="FetchTicket">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="FetchTicketResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MemberRefund">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="MemberRefund">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="MemberRefundResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MemberConsumeV2p0">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="MemberConsumeV2p0">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="MemberConsumeV2p0Response">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyMemberInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="ModifyMemberInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ModifyMemberInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryMemberFlowInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="QueryMemberFlowInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryMemberFlowInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMoneyOrderByOrderNum">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="GetMoneyOrderByOrderNum">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetMoneyOrderByOrderNumResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MemberConsume">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="MemberConsume">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="MemberConsumeResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryAvailCinema">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="QueryAvailCinema">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryAvailCinemaResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryFavorableActivity">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="QueryFavorableActivity">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryFavorableActivityResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PreordainRetailTicketRevocation">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="PreordainRetailTicketRevocation">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="PreordainRetailTicketRevocationResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryOrders">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="QueryOrders">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryOrdersResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IntegralTransactionCancel">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="IntegralTransactionCancel">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="IntegralTransactionCancelResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFilmInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="GetFilmInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetFilmInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LockSeat">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="LockSeat">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="LockSeatResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MemberCharge">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="MemberCharge">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="MemberChargeResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyMemberLoginPassword">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="ModifyMemberLoginPassword">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ModifyMemberLoginPasswordResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryTicketInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="QueryTicketInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryTicketInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryDeliveryStatus">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="QueryDeliveryStatus">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryDeliveryStatusResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryPlanInfoByDatePeriod">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="QueryPlanInfoByDatePeriod">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryPlanInfoByDatePeriodResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TicketConsume">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="TicketConsume">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="TicketConsumeResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TicketCheckUnlock">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="TicketCheckUnlock">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="TicketCheckUnlockResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PhoneNumRegAndCharge">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="PhoneNumRegAndCharge">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="PhoneNumRegAndChargeResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelOrder">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="CancelOrder">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="CancelOrderResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryPlanSeat">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="QueryPlanSeat">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryPlanSeatResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IntegralRefund">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="IntegralRefund">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="IntegralRefundResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PreordainRetailTicket">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="PreordainRetailTicket">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="PreordainRetailTicketResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MemberRefundV2p0">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="MemberRefundV2p0">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="MemberRefundV2p0Response">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyMemberLogin">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="VerifyMemberLogin">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="VerifyMemberLoginResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryMemberTickets">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="QueryMemberTickets">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryMemberTicketsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GiveIntegral">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="GiveIntegral">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GiveIntegralResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SubmitMerOrder">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="SubmitMerOrder">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="SubmitMerOrderResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryCinemaList">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="QueryCinemaList">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryCinemaListResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QuerySeatInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="QuerySeatInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QuerySeatInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerficationOfMany">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="VerficationOfMany">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="VerficationOfManyResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActivityInvokeMember">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="ActivityInvokeMember">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ActivityInvokeMemberResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckMemberByLoginPwd">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="CheckMemberByLoginPwd">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="CheckMemberByLoginPwdResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IntegralConsume">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="IntegralConsume">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="IntegralConsumeResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MemberRefundOrder">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="MemberRefundOrder">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="MemberRefundOrderResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryChargeActivity">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="QueryChargeActivity">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryChargeActivityResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCinemaAllPlan">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="GetCinemaAllPlan">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetCinemaAllPlanResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryMemberLevel">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="QueryMemberLevel">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryMemberLevelResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPlanSeatState">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="GetPlanSeatState">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetPlanSeatStateResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryFilmInfoByDatePeriod">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="QueryFilmInfoByDatePeriod">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryFilmInfoByDatePeriodResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryFavorablePrice">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="QueryFavorablePrice">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryFavorablePriceResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PhoneNumReg">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="PhoneNumReg">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="PhoneNumRegResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueryCinemaBusinessStatus">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="QueryCinemaBusinessStatus">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="QueryCinemaBusinessStatusResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TicketReturnProcess">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="TicketReturnProcess">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="TicketReturnProcessResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExtractRetailTicket">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="ExtractRetailTicket">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ExtractRetailTicketResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GeneralInvoker">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="GeneralInvoker">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GeneralInvokerResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TspSoapServiceImplService">
+    <wsdl:port name="TspSoapServiceImplPort" binding="tns:TspSoapServiceImplServiceSoapBinding">
+      <soap:address location="http://tsp.oristartech.cn:8080/tsp-ws/services/tsp/cinema" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
