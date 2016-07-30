@@ -355,15 +355,28 @@ namespace NetSaleSvc.Api.Core
                 lockSeatReply.SetCinemaInvalidReply();
                 return lockSeatReply;
             }
-
+            //验证锁座参数
             var QueryXmlObj = QueryXml.Deserialize<LockSeatQueryXml>();
-            if (QueryXmlObj == default(LockSeatQueryXml))
+            if (QueryXmlObj == default(LockSeatQueryXml) || QueryXmlObj.Order == null || QueryXmlObj.Order.Seat == null)
             {
                 lockSeatReply.SetXmlDeserializeFailReply(nameof(QueryXml));
                 return lockSeatReply;
             }
+            //验证排期是否存在
+            var sessionInfo = _sessionInfoService.GetSessionInfo(CinemaCode, QueryXmlObj.Order.SessionCode, UserInfo.Id);
+            if (sessionInfo == null)
+            {
+                lockSeatReply.SetSessionInvalidReply();
+                return lockSeatReply;
+            }
+            //验证座位数量
+            if (QueryXmlObj.Order.Count != QueryXmlObj.Order.Seat.Count)
+            {
+                lockSeatReply.SetSeatCountInvalidReply();
+                return lockSeatReply;
+            }
 
-            return lockSeatReply;
+            return LockSeat(lockSeatReply, userCinema, QueryXmlObj);
         }
         #endregion
 
@@ -407,26 +420,33 @@ namespace NetSaleSvc.Api.Core
             _CTMSInterface = CTMSInterfaceFactory.Create(userCinema);
 
             //从影院票务管理系统更新影院基本信息
-            _CTMSInterface.QueryCinema(userCinema);
+            var CTMSReply = _CTMSInterface.QueryCinema(userCinema);
 
-            //获取影院影厅列表
-            reply.Cinema = new QueryCinemaReplyCinema();
-            reply.Cinema.Code = userCinema.CinemaCode;
-            reply.Cinema.Name = userCinema.CinemaName;
-            reply.Cinema.Address = userCinema.CinemaAddress;
-
-            var ScreenList = _screenInfoService.GetScreenListByCinemaCode(userCinema.CinemaCode);
-            if (ScreenList == null || ScreenList.Count == 0)
+            if (CTMSReply.Status == StatusEnum.Success)
             {
-                reply.Cinema.ScreenCount = "0";
+                //获取影院影厅列表
+                reply.Cinema = new QueryCinemaReplyCinema();
+                reply.Cinema.Code = userCinema.CinemaCode;
+                reply.Cinema.Name = userCinema.CinemaName;
+                reply.Cinema.Address = userCinema.CinemaAddress;
+
+                var ScreenList = _screenInfoService.GetScreenListByCinemaCode(userCinema.CinemaCode);
+                if (ScreenList == null || ScreenList.Count == 0)
+                {
+                    reply.Cinema.ScreenCount = "0";
+                }
+                else
+                {
+                    reply.Cinema.ScreenCount = ScreenList.Count.ToString();
+                    reply.Cinema.Screen = ScreenList.Select(x => new QueryCinemaReplyScreen().MapFrom(x)).ToList();
+                }
+
+                reply.SetSuccessReply();
             }
             else
             {
-                reply.Cinema.ScreenCount = ScreenList.Count.ToString();
-                reply.Cinema.Screen = ScreenList.Select(x => new QueryCinemaReplyScreen().MapFrom(x)).ToList();
+                reply.GetErrorFromCTMSReply(CTMSReply);
             }
-
-            reply.SetSuccessReply();
             return reply;
         }
 
@@ -440,24 +460,31 @@ namespace NetSaleSvc.Api.Core
         [CheckForNullArgumentsAspect]
         private QuerySeatReply QuerySeat(QuerySeatReply reply, UserCinemaViewEntity userCinema, ScreenInfoEntity screen)
         {
-            //获取影厅座位列表
-            reply.Cinema = new QuerySeatReplyCinema();
-            reply.Cinema.Code = userCinema.CinemaCode;
-            reply.Cinema.Screen = new QuerySeatReplyScreen();
-            reply.Cinema.Screen.Code = screen.SCode;
-
             _CTMSInterface = CTMSInterfaceFactory.Create(userCinema);
             //从影院票务管理系统更新影厅座位信息
-            _CTMSInterface.QuerySeat(userCinema, screen);
+            var CTMSReply = _CTMSInterface.QuerySeat(userCinema, screen);
 
-            var seatList = _seatInfoService.GetScreenSeats(userCinema.CinemaCode, screen.SCode);
-
-            if (seatList != null && seatList.Count > 0)
+            if (CTMSReply.Status == StatusEnum.Success)
             {
-                reply.Cinema.Screen.Seat = seatList.Select(x => new QuerySeatReplySeat().MapFrom(x)).ToList();
-            }
+                //获取影厅座位列表
+                reply.Cinema = new QuerySeatReplyCinema();
+                reply.Cinema.Code = userCinema.CinemaCode;
+                reply.Cinema.Screen = new QuerySeatReplyScreen();
+                reply.Cinema.Screen.Code = screen.SCode;
 
-            reply.SetSuccessReply();
+                var seatList = _seatInfoService.GetScreenSeats(userCinema.CinemaCode, screen.SCode);
+
+                if (seatList != null && seatList.Count > 0)
+                {
+                    reply.Cinema.Screen.Seat = seatList.Select(x => new QuerySeatReplySeat().MapFrom(x)).ToList();
+                }
+
+                reply.SetSuccessReply();
+            }
+            else
+            {
+                reply.GetErrorFromCTMSReply(CTMSReply);
+            }
             return reply;
         }
 
@@ -475,13 +502,22 @@ namespace NetSaleSvc.Api.Core
         {
             _CTMSInterface = CTMSInterfaceFactory.Create(userCinema);
             //从影院票务管理系统更新影厅座位信息
-            var FilmEntities = _CTMSInterface.QueryFilm(userCinema, StartDate, EndDate).ToList();
+            var CTMSReply = _CTMSInterface.QueryFilm(userCinema, StartDate, EndDate);
 
-            reply.Films = new QueryFilmReplyFilms();
-            reply.Films.Count = FilmEntities.Count;
-            reply.Films.Film = FilmEntities.Select(x => new QueryFilmReplyFilm().MapFrom(x)).ToList();
+            if (CTMSReply.Status == StatusEnum.Success)
+            {
+                var FilmEntities = CTMSReply.films.ToList();
+                reply.Films = new QueryFilmReplyFilms();
+                reply.Films.Count = FilmEntities.Count;
+                reply.Films.Film = FilmEntities.Select(x => new QueryFilmReplyFilm().MapFrom(x)).ToList();
 
-            reply.SetSuccessReply();
+                reply.SetSuccessReply();
+            }
+            else
+            {
+                reply.GetErrorFromCTMSReply(CTMSReply);
+            }
+
             return reply;
         }
 
@@ -498,18 +534,25 @@ namespace NetSaleSvc.Api.Core
             DateTime StartDate, DateTime EndDate)
         {
             _CTMSInterface = CTMSInterfaceFactory.Create(userCinema);
-            _CTMSInterface.QuerySession(userCinema, StartDate, EndDate);
+            var CTMSReply = _CTMSInterface.QuerySession(userCinema, StartDate, EndDate);
 
-            var sessionList = _sessionInfoService.GetSessionWithUserPrice(userCinema.CinemaCode, userCinema.UserId, StartDate, EndDate);
-
-            reply.Sessions = new QuerySessionReplySessions();
-            reply.Sessions.CinemaCode = userCinema.CinemaCode;
-            if (sessionList != null && sessionList.Count > 0)
+            if (CTMSReply.Status == StatusEnum.Success)
             {
-                reply.Sessions.Session = sessionList.Select(x => new QuerySessionReplySession().MapFrom(x)).ToList();
-            }
+                var sessionList = _sessionInfoService.GetSessionWithUserPrice(userCinema.CinemaCode, userCinema.UserId, StartDate, EndDate);
 
-            reply.SetSuccessReply();
+                reply.Sessions = new QuerySessionReplySessions();
+                reply.Sessions.CinemaCode = userCinema.CinemaCode;
+                if (sessionList != null && sessionList.Count > 0)
+                {
+                    reply.Sessions.Session = sessionList.Select(x => new QuerySessionReplySession().MapFrom(x)).ToList();
+                }
+
+                reply.SetSuccessReply();
+            }
+            else
+            {
+                reply.GetErrorFromCTMSReply(CTMSReply);
+            }
             return reply;
         }
 
@@ -546,10 +589,23 @@ namespace NetSaleSvc.Api.Core
             }
             else
             {
-                reply.Status = StatusEnum.Failure.GetDescription();
-                reply.ErrorCode = CTMSReply.ErrorCode;
-                reply.ErrorMessage = CTMSReply.ErrorMessage;
+                reply.GetErrorFromCTMSReply(CTMSReply);
             }
+            return reply;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userCinema"></param>
+        /// <param name="QueryXmlObj"></param>
+        /// <returns></returns>
+        [CheckForNullArgumentsAspect]
+        private LockSeatReply LockSeat(LockSeatReply reply, UserCinemaViewEntity userCinema, LockSeatQueryXml QueryXmlObj)
+        {
+            _CTMSInterface = CTMSInterfaceFactory.Create(userCinema);
+            //TODO: 票务软件商接口获取锁座结果，直接返回，在此判断是否需要存储数据库。之前其他接口也需要修改从票务软件商接口获取返回结果
+
             return reply;
         }
         #endregion

@@ -76,5 +76,8 @@ namespace NetSaleSvc.Api.Models
         /// </summary>
         [Description("解析失败")]
         XmlDeserializeFail = 10000010,
+
+        [Description("座位数量与实际座位不匹配！")]
+        SeatCountInvalid = 10000011
     }
 }

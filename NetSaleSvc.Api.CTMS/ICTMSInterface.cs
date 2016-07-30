@@ -13,7 +13,7 @@ namespace NetSaleSvc.Api.CTMS
         /// </summary>
         /// <param name=""></param>
         /// <returns></returns>
-        bool QueryCinema(UserCinemaViewEntity userCinema);
+        CTMSQueryCinemaReply QueryCinema(UserCinemaViewEntity userCinema);
 
         /// <summary>
         /// 查询影厅座位信息
@@ -21,7 +21,7 @@ namespace NetSaleSvc.Api.CTMS
         /// <param name="userCinema"></param>
         /// <param name="screen"></param>
         /// <returns></returns>
-        bool QuerySeat(UserCinemaViewEntity userCinema, ScreenInfoEntity screen);
+        CTMSQuerySeatReply QuerySeat(UserCinemaViewEntity userCinema, ScreenInfoEntity screen);
 
         /// <summary>
         /// 查询影片信息
@@ -30,7 +30,7 @@ namespace NetSaleSvc.Api.CTMS
         /// <param name="StartDate"></param>
         /// <param name="EndDate"></param>
         /// <returns></returns>
-        IEnumerable<FilmInfoEntity> QueryFilm(UserCinemaViewEntity userCinema, DateTime StartDate, DateTime EndDate);
+        CTMSQueryFilmReply QueryFilm(UserCinemaViewEntity userCinema, DateTime StartDate, DateTime EndDate);
 
         /// <summary>
         /// 查询放映计划信息
@@ -39,7 +39,7 @@ namespace NetSaleSvc.Api.CTMS
         /// <param name="StartDate"></param>
         /// <param name="EndDate"></param>
         /// <returns></returns>
-        bool QuerySession(UserCinemaViewEntity userCinema, DateTime StartDate, DateTime EndDate);
+        CTMSQuerySessionReply QuerySession(UserCinemaViewEntity userCinema, DateTime StartDate, DateTime EndDate);
 
         /// <summary>
         /// 查询放映计划座位状态

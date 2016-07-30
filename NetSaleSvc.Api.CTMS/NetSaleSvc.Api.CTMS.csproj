@@ -52,6 +52,11 @@
     <Compile Include="CTMSInterfaceFactory.cs" />
     <Compile Include="DefaultCTMSInterface.cs" />
     <Compile Include="ICTMSInterface.cs" />
+    <Compile Include="Models\CTMSBaseReply.cs" />
+    <Compile Include="Models\CTMSQueryCinemaReply.cs" />
+    <Compile Include="Models\CTMSQueryFilmReply.cs" />
+    <Compile Include="Models\CTMSQuerySeatReply.cs" />
+    <Compile Include="Models\CTMSQuerySessionReply.cs" />
     <Compile Include="Models\CTMSQuerySessionSeatReply.cs" />
     <Compile Include="NationalStandard\Models\ModelMapper.cs" />
     <Compile Include="NationalStandard\Models\nsBaseReply.cs" />

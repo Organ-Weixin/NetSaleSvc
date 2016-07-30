@@ -25,7 +25,7 @@ namespace NetSaleSvc.Api.Models
         /// 锁座数量
         /// </summary>
         [XmlAttribute]
-        public string Count { get; set; }
+        public int Count { get; set; }
 
         /// <summary>
         /// 座位列表

@@ -1,6 +1,7 @@
 ﻿using NetSaleSvc.Entity.Enum;
 using System.Xml.Serialization;
 using NetSaleSvc.Util;
+using NetSaleSvc.Api.CTMS.Models;
 
 namespace NetSaleSvc.Api.Models
 {
@@ -71,6 +72,17 @@ namespace NetSaleSvc.Api.Models
         #endregion
 
         #region public methods
+        /// <summary>
+        /// 从影院票务系统返回中获取错误信息
+        /// </summary>
+        /// <param name="CTMSReply"></param>
+        public void GetErrorFromCTMSReply(CTMSBaseReply CTMSReply)
+        {
+            Status = CTMSReply.Status.GetDescription();
+            ErrorCode = CTMSReply.ErrorCode;
+            ErrorMessage = CTMSReply.ErrorMessage;
+        }
+
         /// <summary>
         /// 成功返回
         /// </summary>
@@ -180,6 +192,16 @@ namespace NetSaleSvc.Api.Models
             Status = StatusEnum.Failure.GetDescription();
             ErrorCode = ErrorCodeEnum.XmlDeserializeFail.GetValueString();
             ErrorMessage = $"{ParamName}{ErrorCodeEnum.XmlDeserializeFail.GetDescription()}";
+        }
+
+        /// <summary>
+        /// 座位数量错误
+        /// </summary>
+        public void SetSeatCountInvalidReply()
+        {
+            Status = StatusEnum.Failure.GetDescription();
+            ErrorCode = ErrorCodeEnum.SeatCountInvalid.GetValueString();
+            ErrorMessage = ErrorCodeEnum.SeatCountInvalid.GetDescription();
         }
         #endregion
 

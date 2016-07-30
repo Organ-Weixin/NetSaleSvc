@@ -17,7 +17,7 @@ namespace NetSaleSvc.Api.CTMS
         /// <param name="cinema"></param>
         /// <returns></returns>
         [CheckForNullArgumentsAspect]
-        public bool QueryCinema(UserCinemaViewEntity userCinema)
+        public CTMSQueryCinemaReply QueryCinema(UserCinemaViewEntity userCinema)
         {
             throw new Exception(CinemaInterfaceMiss);
         }
@@ -29,7 +29,7 @@ namespace NetSaleSvc.Api.CTMS
         /// <param name="screen"></param>
         /// <returns></returns>
         [CheckForNullArgumentsAspect]
-        public bool QuerySeat(UserCinemaViewEntity userCinema, ScreenInfoEntity screen)
+        public CTMSQuerySeatReply QuerySeat(UserCinemaViewEntity userCinema, ScreenInfoEntity screen)
         {
             throw new Exception(CinemaInterfaceMiss);
         }
@@ -42,7 +42,7 @@ namespace NetSaleSvc.Api.CTMS
         /// <param name="EndDate"></param>
         /// <returns></returns>
         [CheckForNullArgumentsAspect]
-        public IEnumerable<FilmInfoEntity> QueryFilm(UserCinemaViewEntity userCinema, DateTime StartDate, DateTime EndDate)
+        public CTMSQueryFilmReply QueryFilm(UserCinemaViewEntity userCinema, DateTime StartDate, DateTime EndDate)
         {
             throw new Exception(CinemaInterfaceMiss);
         }
@@ -55,7 +55,7 @@ namespace NetSaleSvc.Api.CTMS
         /// <param name="EndDate"></param>
         /// <returns></returns>
         [CheckForNullArgumentsAspect]
-        public bool QuerySession(UserCinemaViewEntity userCinema, DateTime StartDate, DateTime EndDate)
+        public CTMSQuerySessionReply QuerySession(UserCinemaViewEntity userCinema, DateTime StartDate, DateTime EndDate)
         {
             throw new Exception(CinemaInterfaceMiss);
         }
