@@ -73,5 +73,16 @@ namespace NetSaleSvc.Api.CTMS
         {
             throw new Exception(CinemaInterfaceMiss);
         }
+
+        /// <summary>
+        /// 锁定座位
+        /// </summary>
+        /// <param name="userCinema"></param>
+        /// <param name="QueryXml"></param>
+        /// <returns></returns>
+        public CTMSLockSeatReply LockSeat(UserCinemaViewEntity userCinema, LockSeatQueryXml QueryXml)
+        {
+            throw new Exception(CinemaInterfaceMiss);
+        }
     }
 }

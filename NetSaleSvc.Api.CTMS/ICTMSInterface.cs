@@ -50,5 +50,13 @@ namespace NetSaleSvc.Api.CTMS
         /// <returns></returns>
         CTMSQuerySessionSeatReply QuerySessionSeat(UserCinemaViewEntity userCinema,
             string SessionCode, SessionSeatStatusEnum Status);
+
+        /// <summary>
+        /// 锁定座位
+        /// </summary>
+        /// <param name="userCinema"></param>
+        /// <param name="QueryXml"></param>
+        /// <returns></returns>
+        CTMSLockSeatReply LockSeat(UserCinemaViewEntity userCinema, LockSeatQueryXml QueryXml);
     }
 }

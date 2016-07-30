@@ -180,13 +180,13 @@ namespace NetSaleSvc
         /// <param name="QueryXml"></param>
         /// <returns></returns>
         [WebMethod]
-        public string LockSeat(string Username, string Password, string CinemaCode, string QueryXml)
+        public string LockSeat(string Username, string Password, string QueryXml)
         {
             OnlineTicketingServiceReply onlineTicketingServiceReply = new OnlineTicketingServiceReply();
             try
             {
                 onlineTicketingServiceReply.LockSeatReply = NetSaleSvcCore.Instance.LockSeat(Username,
-                    Password, CinemaCode, QueryXml);
+                    Password, QueryXml);
             }
             catch (Exception ex)
             {

@@ -48,18 +48,17 @@
   <ItemGroup>
     <Compile Include="Core\NetSaleSvcCore.cs" />
     <Compile Include="Extension\ReplyExtension.cs" />
-    <Compile Include="Models\Query\LockSeatQueryXml.cs" />
-    <Compile Include="Models\Reply\BaseReply.cs" />
-    <Compile Include="Models\Reply\ErrorCodeEnum.cs" />
-    <Compile Include="Models\Reply\LockSeatReply.cs" />
-    <Compile Include="Models\Reply\ModelMapper.cs" />
-    <Compile Include="Models\Reply\OnlineTicketingServiceReply.cs" />
-    <Compile Include="Models\Reply\QueryCinemaListReply.cs" />
-    <Compile Include="Models\Reply\QueryCinemaReply.cs" />
-    <Compile Include="Models\Reply\QueryFilmReply.cs" />
-    <Compile Include="Models\Reply\QuerySeatReply.cs" />
-    <Compile Include="Models\Reply\QuerySessionReply.cs" />
-    <Compile Include="Models\Reply\QuerySessionSeatReply.cs" />
+    <Compile Include="Models\BaseReply.cs" />
+    <Compile Include="Models\ErrorCodeEnum.cs" />
+    <Compile Include="Models\LockSeatReply.cs" />
+    <Compile Include="Models\ModelMapper.cs" />
+    <Compile Include="Models\OnlineTicketingServiceReply.cs" />
+    <Compile Include="Models\QueryCinemaListReply.cs" />
+    <Compile Include="Models\QueryCinemaReply.cs" />
+    <Compile Include="Models\QueryFilmReply.cs" />
+    <Compile Include="Models\QuerySeatReply.cs" />
+    <Compile Include="Models\QuerySessionReply.cs" />
+    <Compile Include="Models\QuerySessionSeatReply.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

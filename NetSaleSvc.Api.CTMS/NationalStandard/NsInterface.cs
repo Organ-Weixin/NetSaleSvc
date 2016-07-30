@@ -49,7 +49,7 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
             CTMSQueryCinemaReply queryCinemaReply = new CTMSQueryCinemaReply();
 
             string queryCinemaResult = nsService.QueryCinema(userCinema.RealUserName, userCinema.RealPassword,
-                userCinema.Url, string.Empty, "33222222");
+                userCinema.Url, string.Empty, userCinema.CinemaCode);
             nsOnlineTicketingServiceReply reply = queryCinemaResult.Deserialize<nsOnlineTicketingServiceReply>();
 
             if (reply.QueryCinemaReply.Status == StatusEnum.Success.GetDescription())
@@ -213,6 +213,19 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
             }
 
             return _CTMSQuerySessionSeatReply;
+        }
+
+        /// <summary>
+        /// 锁定座位
+        /// </summary>
+        /// <param name="userCinema"></param>
+        /// <param name="QueryXml"></param>
+        /// <returns></returns>
+        public CTMSLockSeatReply LockSeat(UserCinemaViewEntity userCinema, LockSeatQueryXml QueryXml)
+        {
+            CTMSLockSeatReply lockSeatReply = new CTMSLockSeatReply();
+
+            return lockSeatReply;
         }
         #endregion
 

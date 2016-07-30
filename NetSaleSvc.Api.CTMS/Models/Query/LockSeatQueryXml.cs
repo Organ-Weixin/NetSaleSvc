@@ -1,11 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace NetSaleSvc.Api.Models
+namespace NetSaleSvc.Api.CTMS.Models
 {
     [XmlRoot("LockSeat")]
     public class LockSeatQueryXml
     {
+        /// <summary>
+        /// 影院编码
+        /// </summary>
+        [XmlAttribute]
+        public string CinemaCode { get; set; }
+
         /// <summary>
         /// 订单
         /// </summary>

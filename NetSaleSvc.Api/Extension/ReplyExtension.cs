@@ -230,7 +230,7 @@ namespace NetSaleSvc.Api.Extension
         /// <param name="QueryXml"></param>
         /// <returns></returns>
         public static bool RequestInfoGuard(this LockSeatReply reply, string Username, string Password,
-            string CinemaCode, string QueryXml)
+            string QueryXml)
         {
             if (string.IsNullOrEmpty(Username))
             {
@@ -240,11 +240,6 @@ namespace NetSaleSvc.Api.Extension
             if (string.IsNullOrEmpty(Password))
             {
                 reply.SetNecessaryParamMissReply(nameof(Password));
-                return false;
-            }
-            if (string.IsNullOrEmpty(CinemaCode))
-            {
-                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
                 return false;
             }
             if (string.IsNullOrEmpty(QueryXml))

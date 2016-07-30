@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using NetSaleSvc.Util;
 using NetSaleSvc.Entity.Enum;
+using NetSaleSvc.Api.CTMS.Models;
 
 namespace NetSaleSvc.Api.Core
 {
@@ -333,11 +334,11 @@ namespace NetSaleSvc.Api.Core
         /// <param name="CinemaCode"></param>
         /// <param name="QueryXml"></param>
         /// <returns></returns>
-        public LockSeatReply LockSeat(string Username, string Password, string CinemaCode, string QueryXml)
+        public LockSeatReply LockSeat(string Username, string Password, string QueryXml)
         {
             LockSeatReply lockSeatReply = new LockSeatReply();
 
-            if (!lockSeatReply.RequestInfoGuard(Username, Password, CinemaCode, QueryXml))
+            if (!lockSeatReply.RequestInfoGuard(Username, Password, QueryXml))
             {
                 return lockSeatReply;
             }
@@ -348,13 +349,6 @@ namespace NetSaleSvc.Api.Core
                 lockSeatReply.SetUserCredentialInvalidReply();
                 return lockSeatReply;
             }
-            //验证影院是否存在且可访问
-            var userCinema = _userCinemaService.GetUserCinema(UserInfo.Id, CinemaCode);
-            if (userCinema == null)
-            {
-                lockSeatReply.SetCinemaInvalidReply();
-                return lockSeatReply;
-            }
             //验证锁座参数
             var QueryXmlObj = QueryXml.Deserialize<LockSeatQueryXml>();
             if (QueryXmlObj == default(LockSeatQueryXml) || QueryXmlObj.Order == null || QueryXmlObj.Order.Seat == null)
@@ -362,8 +356,15 @@ namespace NetSaleSvc.Api.Core
                 lockSeatReply.SetXmlDeserializeFailReply(nameof(QueryXml));
                 return lockSeatReply;
             }
+            //验证影院是否存在且可访问
+            var userCinema = _userCinemaService.GetUserCinema(UserInfo.Id, QueryXmlObj.CinemaCode);
+            if (userCinema == null)
+            {
+                lockSeatReply.SetCinemaInvalidReply();
+                return lockSeatReply;
+            }
             //验证排期是否存在
-            var sessionInfo = _sessionInfoService.GetSessionInfo(CinemaCode, QueryXmlObj.Order.SessionCode, UserInfo.Id);
+            var sessionInfo = _sessionInfoService.GetSessionInfo(QueryXmlObj.CinemaCode, QueryXmlObj.Order.SessionCode, UserInfo.Id);
             if (sessionInfo == null)
             {
                 lockSeatReply.SetSessionInvalidReply();
@@ -604,7 +605,7 @@ namespace NetSaleSvc.Api.Core
         private LockSeatReply LockSeat(LockSeatReply reply, UserCinemaViewEntity userCinema, LockSeatQueryXml QueryXmlObj)
         {
             _CTMSInterface = CTMSInterfaceFactory.Create(userCinema);
-            //TODO: 票务软件商接口获取锁座结果，直接返回，在此判断是否需要存储数据库。之前其他接口也需要修改从票务软件商接口获取返回结果
+            var CTMSReply = _CTMSInterface.LockSeat(userCinema, QueryXmlObj);
 
             return reply;
         }
