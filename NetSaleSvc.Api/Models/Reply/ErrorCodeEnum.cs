@@ -77,7 +77,16 @@ namespace NetSaleSvc.Api.Models
         [Description("解析失败")]
         XmlDeserializeFail = 10000010,
 
+        /// <summary>
+        /// 座位数量与实际座位不匹配
+        /// </summary>
         [Description("座位数量与实际座位不匹配！")]
-        SeatCountInvalid = 10000011
+        SeatCountInvalid = 10000011,
+
+        /// <summary>
+        /// 订单不存在或不允许解锁座位
+        /// </summary>
+        [Description("订单不存在或不允许解锁座位！")]
+        OrderNotExist = 10000012
     }
 }

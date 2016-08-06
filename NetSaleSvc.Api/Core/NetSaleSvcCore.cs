@@ -385,6 +385,61 @@ namespace NetSaleSvc.Api.Core
 
             return LockSeat(lockSeatReply, userCinema, order);
         }
+
+        public ReleaseSeatReply ReleaseSeat(string Username, string Password, string QueryXml)
+        {
+            ReleaseSeatReply releaseSeatReply = new ReleaseSeatReply();
+
+            if (!releaseSeatReply.RequestInfoGuard(Username, Password, QueryXml))
+            {
+                return releaseSeatReply;
+            }
+
+            //获取用户信息
+            UserInfoEntity UserInfo = _userInfoService.GetUserInfoByUserCredential(Username, Password);
+            if (UserInfo == null)
+            {
+                releaseSeatReply.SetUserCredentialInvalidReply();
+                return releaseSeatReply;
+            }
+            //验证锁座参数
+            var QueryXmlObj = QueryXml.Deserialize<ReleaseSeatQueryXml>();
+            if (QueryXmlObj == default(ReleaseSeatQueryXml) || QueryXmlObj.Order == null || QueryXmlObj.Order.Seat == null)
+            {
+                releaseSeatReply.SetXmlDeserializeFailReply(nameof(QueryXml));
+                return releaseSeatReply;
+            }
+            //验证影院是否存在且可访问
+            var userCinema = _userCinemaService.GetUserCinema(UserInfo.Id, QueryXmlObj.CinemaCode);
+            if (userCinema == null)
+            {
+                releaseSeatReply.SetCinemaInvalidReply();
+                return releaseSeatReply;
+            }
+            //验证座位数量
+            if (QueryXmlObj.Order.Count != QueryXmlObj.Order.Seat.Count)
+            {
+                releaseSeatReply.SetSeatCountInvalidReply();
+                return releaseSeatReply;
+            }
+            //验证订单是否存在
+            OrderViewEntity order = null;
+            if (!string.IsNullOrEmpty(QueryXmlObj.Order.OrderCode))
+            {
+                order = _orderService.GetOrderWithLockOrderCode(QueryXmlObj.CinemaCode
+                    , QueryXmlObj.Order.OrderCode);
+            }
+            if (order == null
+                || (order.orderBaseInfo.OrderStatus != OrderStatusEnum.Locked 
+                && order.orderBaseInfo.OrderStatus != OrderStatusEnum.SubmitFail
+                && order.orderBaseInfo.OrderStatus != OrderStatusEnum.ReleaseFail))
+            {
+                releaseSeatReply.SetOrderNotExistReply();
+                return releaseSeatReply;
+            }
+
+            return ReleaseSeat(releaseSeatReply, userCinema, order);
+        }
         #endregion
 
         #region private methods
@@ -633,6 +688,32 @@ namespace NetSaleSvc.Api.Core
 
             //将订单保存到数据库
             _orderService.Insert(order);
+
+            return reply;
+        }
+
+        private ReleaseSeatReply ReleaseSeat(ReleaseSeatReply reply, UserCinemaViewEntity userCinema, OrderViewEntity order)
+        {
+            _CTMSInterface = CTMSInterfaceFactory.Create(userCinema);
+            var CTMSReply = _CTMSInterface.ReleaseSeat(userCinema, order);
+
+            if (CTMSReply.Status == StatusEnum.Success)
+            {
+                reply.Order = new ReleaseSeatReplyOrder();
+                reply.Order.OrderCode = order.orderBaseInfo.LockOrderCode;
+                reply.Order.SessionCode = order.orderBaseInfo.SessionCode;
+                reply.Order.Count = order.orderBaseInfo.TicketCount;
+                reply.Order.Seat = order.orderSeatDetails.Select(x => new ReleaseSeatReplySeat { SeatCode = x.SeatCode }).ToList();
+
+                reply.SetSuccessReply();
+            }
+            else
+            {
+                reply.GetErrorFromCTMSReply(CTMSReply);
+            }
+
+            //只更新订单信息，不更新订单座位信息
+            _orderService.UpdateOrderBaseInfo(order.orderBaseInfo);
 
             return reply;
         }

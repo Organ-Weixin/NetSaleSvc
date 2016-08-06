@@ -58,5 +58,13 @@ namespace NetSaleSvc.Api.CTMS
         /// <param name="QueryXml"></param>
         /// <returns></returns>
         CTMSLockSeatReply LockSeat(UserCinemaViewEntity userCinema, OrderViewEntity order);
+
+        /// <summary>
+        /// 解锁座位
+        /// </summary>
+        /// <param name="userCinema"></param>
+        /// <param name="order"></param>
+        /// <returns></returns>
+        CTMSReleaseSeatReply ReleaseSeat(UserCinemaViewEntity userCinema, OrderViewEntity order);
     }
 }

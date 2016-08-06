@@ -63,5 +63,11 @@ namespace NetSaleSvc.Api.Models
         /// </summary>
         [XmlElement]
         public LockSeatReply LockSeatReply { get; set; }
+
+        /// <summary>
+        /// 解锁座位
+        /// </summary>
+        [XmlElement]
+        public ReleaseSeatReply ReleaseSeatReply { get; set; }
     }
 }

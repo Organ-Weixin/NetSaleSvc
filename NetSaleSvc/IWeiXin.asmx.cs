@@ -196,5 +196,30 @@ namespace NetSaleSvc
 
             return onlineTicketingServiceReply.Serialize();
         }
+
+        /// <summary>
+        /// 解锁座位
+        /// </summary>
+        /// <param name="Username"></param>
+        /// <param name="Password"></param>
+        /// <param name="QueryXml"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public string ReleaseSeat(string Username, string Password, string QueryXml)
+        {
+            OnlineTicketingServiceReply onlineTicketingServiceReply = new OnlineTicketingServiceReply();
+            try
+            {
+                onlineTicketingServiceReply.ReleaseSeatReply = NetSaleSvcCore.Instance.ReleaseSeat(Username,
+                    Password, QueryXml);
+            }
+            catch (Exception ex)
+            {
+                onlineTicketingServiceReply.ReleaseSeatReply = new ReleaseSeatReply();
+                LogHelper.LogException(ex);
+            }
+
+            return onlineTicketingServiceReply.Serialize();
+        }
     }
 }

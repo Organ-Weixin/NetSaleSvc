@@ -203,6 +203,16 @@ namespace NetSaleSvc.Api.Models
             ErrorCode = ErrorCodeEnum.SeatCountInvalid.GetValueString();
             ErrorMessage = ErrorCodeEnum.SeatCountInvalid.GetDescription();
         }
+
+        /// <summary>
+        /// 订单不存在或不允许解锁座位
+        /// </summary>
+        public void SetOrderNotExistReply()
+        {
+            Status = StatusEnum.Failure.GetDescription();
+            ErrorCode = ErrorCodeEnum.OrderNotExist.GetValueString();
+            ErrorMessage = ErrorCodeEnum.OrderNotExist.GetDescription();
+        }
         #endregion
 
         /// <summary>

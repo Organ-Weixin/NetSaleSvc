@@ -224,6 +224,7 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
         public CTMSLockSeatReply LockSeat(UserCinemaViewEntity userCinema, OrderViewEntity order)
         {
             CTMSLockSeatReply lockSeatReply = new CTMSLockSeatReply();
+
             string SeatCodes = string.Join("|", order.orderSeatDetails.Select(x => x.SeatCode));
             string lockSeatResult = nsService.LockSeat(userCinema.RealUserName, userCinema.RealPassword,
                 userCinema.Url, string.Empty, order.orderBaseInfo.CinemaCode, order.orderBaseInfo.SessionCode, SeatCodes);
@@ -250,6 +251,41 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
             lockSeatReply.ErrorMessage = reply.LockSeatReply.ErrorMessage;
 
             return lockSeatReply;
+        }
+
+        /// <summary>
+        /// 解锁座位
+        /// </summary>
+        /// <param name="userCinema"></param>
+        /// <param name="order"></param>
+        /// <returns></returns>
+        public CTMSReleaseSeatReply ReleaseSeat(UserCinemaViewEntity userCinema, OrderViewEntity order)
+        {
+            CTMSReleaseSeatReply releaseSeatReply = new CTMSReleaseSeatReply();
+
+            string SeatCodes = string.Join("|", order.orderSeatDetails.Select(x => x.SeatCode));
+            string releaseSeatResult = nsService.ReleaseSeat(userCinema.RealUserName, userCinema.RealPassword,
+                userCinema.Url, string.Empty, order.orderBaseInfo.CinemaCode, order.orderBaseInfo.SessionCode,
+                order.orderBaseInfo.LockOrderCode, SeatCodes);
+
+            nsOnlineTicketingServiceReply reply = releaseSeatResult.Deserialize<nsOnlineTicketingServiceReply>();
+
+            if (reply.ReleaseSeatReply.Status == StatusEnum.Success.GetDescription())
+            {
+                order.orderBaseInfo.OrderStatus = OrderStatusEnum.Released;
+                releaseSeatReply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                order.orderBaseInfo.OrderStatus = OrderStatusEnum.ReleaseFail;
+                order.orderBaseInfo.ErrorMessage = reply.ReleaseSeatReply.ErrorMessage;
+                releaseSeatReply.Status = StatusEnum.Failure;
+            }
+
+            releaseSeatReply.ErrorCode = reply.ReleaseSeatReply.ErrorCode;
+            releaseSeatReply.ErrorMessage = reply.ReleaseSeatReply.ErrorMessage;
+
+            return releaseSeatReply;
         }
         #endregion
 
@@ -293,11 +329,7 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
                         })).ToList();
 
             //插入或更新最新座位
-
-            DateTime start = DateTime.Now;
             _seatInfoService.BulkMerge(newSeats, oldSeats);
-            DateTime end = DateTime.Now;
-            TimeSpan interval = end - start;
         }
 
         /// <summary>
