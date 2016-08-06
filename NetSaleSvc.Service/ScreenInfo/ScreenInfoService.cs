@@ -73,18 +73,11 @@ namespace NetSaleSvc.Service
         /// 批量合并
         /// </summary>
         /// <param name="entities"></param>
-        public void BulkMerge(IEnumerable<ScreenInfoEntity> entities)
+        public void BulkMerge(IEnumerable<ScreenInfoEntity> NewEntities
+            , IEnumerable<ScreenInfoEntity> OldEntities)
         {
-            _screenInfoRepository.BulkMerge(entities);
-        }
-
-        /// <summary>
-        /// 批量删除
-        /// </summary>
-        /// <param name="entities"></param>
-        public void BulkDelete(IEnumerable<ScreenInfoEntity> entities)
-        {
-            _screenInfoRepository.BulkDelete(entities);
+            _screenInfoRepository.BulkMerge(NewEntities, x=>x.Id,
+                OldEntities, x=>x.Id);
         }
     }
 }

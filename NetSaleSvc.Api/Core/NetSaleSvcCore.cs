@@ -21,6 +21,7 @@ namespace NetSaleSvc.Api.Core
         private ScreenInfoService _screenInfoService;
         private SeatInfoService _seatInfoService;
         private SessionInfoService _sessionInfoService;
+        private OrderService _orderService;
         #endregion
 
         #region static fileds
@@ -67,6 +68,7 @@ namespace NetSaleSvc.Api.Core
             _screenInfoService = new ScreenInfoService();
             _seatInfoService = new SeatInfoService();
             _sessionInfoService = new SessionInfoService();
+            _orderService = new OrderService();
         }
         #endregion
 
@@ -377,7 +379,11 @@ namespace NetSaleSvc.Api.Core
                 return lockSeatReply;
             }
 
-            return LockSeat(lockSeatReply, userCinema, QueryXmlObj);
+            //将请求参数转为订单
+            OrderViewEntity order = new OrderViewEntity();
+            order.MapFrom(userCinema, QueryXmlObj, sessionInfo);
+
+            return LockSeat(lockSeatReply, userCinema, order);
         }
         #endregion
 
@@ -602,10 +608,31 @@ namespace NetSaleSvc.Api.Core
         /// <param name="QueryXmlObj"></param>
         /// <returns></returns>
         [CheckForNullArgumentsAspect]
-        private LockSeatReply LockSeat(LockSeatReply reply, UserCinemaViewEntity userCinema, LockSeatQueryXml QueryXmlObj)
+        private LockSeatReply LockSeat(LockSeatReply reply, UserCinemaViewEntity userCinema, OrderViewEntity order)
         {
+
             _CTMSInterface = CTMSInterfaceFactory.Create(userCinema);
-            var CTMSReply = _CTMSInterface.LockSeat(userCinema, QueryXmlObj);
+            var CTMSReply = _CTMSInterface.LockSeat(userCinema, order);
+
+            if (CTMSReply.Status == StatusEnum.Success)
+            {
+                reply.Order = new LockSeatReplyOrder();
+                reply.Order.OrderCode = order.orderBaseInfo.LockOrderCode;
+                reply.Order.AutoUnlockDatetime = order.orderBaseInfo.AutoUnlockDatetime
+                    .GetValueOrDefault(DateTime.Now.AddMinutes(10)).ToFormatStringWithT();
+                reply.Order.SessionCode = order.orderBaseInfo.SessionCode;
+                reply.Order.Count = order.orderBaseInfo.TicketCount;
+                reply.Order.Seat = order.orderSeatDetails.Select(x => new LockSeatReplySeat { SeatCode = x.SeatCode }).ToList();
+
+                reply.SetSuccessReply();
+            }
+            else
+            {
+                reply.GetErrorFromCTMSReply(CTMSReply);
+            }
+
+            //将订单保存到数据库
+            _orderService.Insert(order);
 
             return reply;
         }

@@ -32,21 +32,14 @@ namespace NetSaleSvc.Service
         }
 
         /// <summary>
-        /// 批量插入
-        /// </summary>
-        /// <param name="entities"></param>
-        public void BulkInsert(IEnumerable<FilmInfoEntity> entities)
-        {
-            _filmInfoRepository.BulkInsert(entities);
-        }
-
-        /// <summary>
         /// 批量合并
         /// </summary>
         /// <param name="entities"></param>
-        public void BulkMerge(IEnumerable<FilmInfoEntity> entities)
+        public void BulkMerge(IEnumerable<FilmInfoEntity> NewEntities
+            , IEnumerable<FilmInfoEntity> OldEntities)
         {
-            _filmInfoRepository.BulkMerge(entities);
+            _filmInfoRepository.BulkMerge(NewEntities, x => x.Id,
+                OldEntities, x => x.Id);
         }
     }
 }

@@ -1,12 +1,13 @@
 ﻿using Dapper;
 using NetSaleSvc.Entity.Models;
+using NetSaleSvc.Util;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Z.Dapper.Plus;
 
 namespace NetSaleSvc.Entity.Repository.Impl
 {
@@ -25,30 +26,6 @@ namespace NetSaleSvc.Entity.Repository.Impl
             using (var connection = DbConnectionFactory.OpenConnection())
             {
                 return connection.Insert<int>(entityToInsert: entity);
-            }
-        }
-
-        public void BulkInsert(IEnumerable<T> entities)
-        {
-            using (var connection = DbConnectionFactory.OpenConnection())
-            {
-                connection.BulkInsert(entities);
-            }
-        }
-
-        public void BulkMerge(IEnumerable<T> entities)
-        {
-            using (var connection = DbConnectionFactory.OpenConnection())
-            {
-                connection.BulkMerge(entities);
-            }
-        }
-
-        public void BulkDelete(IEnumerable<T> entities)
-        {
-            using (var connection = DbConnectionFactory.OpenConnection())
-            {
-                connection.BulkDelete(entities);
             }
         }
 
@@ -147,6 +124,79 @@ namespace NetSaleSvc.Entity.Repository.Impl
             {
                 return connection.Query(sql, map, param, commandType: commandType);
             }
+        }
+
+        public void BulkMerge<TKey>(IEnumerable<T> newSource,
+          Func<T, TKey> newKeySelector,
+          IEnumerable<T> oldSource,
+          Func<T, TKey> oldKeySelector)
+        {
+            using (var connection = DbConnectionFactory.OpenConnection())
+            {
+                var groups = oldSource.FullOuterJoin(newSource,
+                    oldKeySelector,
+                    newKeySelector,
+                    (oldItem, newItem, key) => new { oldItem, newItem });
+
+                using (var trans = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        foreach (var group in groups)
+                        {
+                            if (group.oldItem == null) // add new item to database
+                            {
+                                connection.Insert(group.newItem, trans);
+                            }
+                            else if (group.newItem == null) // delete old item 
+                            {
+                                connection.Delete(group.oldItem, trans);
+                            }
+                            else // update old item
+                            {
+                                connection.Update(group.newItem, trans);
+                            }
+                        }
+
+                        trans.Commit();
+                    }
+                    catch
+                    {
+                        trans.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
+        public void BulkMerge<TKey>(IEnumerable<T> newSource,
+          Func<T, TKey> newKeySelector,
+          IEnumerable<T> oldSource,
+          Func<T, TKey> oldKeySelector,
+          IDbConnection connection,
+          IDbTransaction transaction)
+        {
+            var groups = oldSource.FullOuterJoin(newSource,
+                oldKeySelector,
+                newKeySelector,
+                (oldItem, newItem, key) => new { oldItem, newItem });
+
+            foreach (var group in groups)
+            {
+                if (group.oldItem == null) // add new item to database
+                {
+                    connection.Insert(group.newItem, transaction);
+                }
+                else if (group.newItem == null) // delete old item 
+                {
+                    connection.Delete(group.oldItem, transaction);
+                }
+                else // update old item
+                {
+                    connection.Update(group.newItem, transaction);
+                }
+            }
+
         }
     }
 }

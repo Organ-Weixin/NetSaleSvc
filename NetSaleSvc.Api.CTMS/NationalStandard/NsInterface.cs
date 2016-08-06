@@ -125,7 +125,7 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
                 var entities = reply.QueryFilmReply.Films.Film.Select(x => x.MapToEntity(
                     ExitedFilms.Where(y => y.FilmCode == x.Code).SingleOrDefault() ?? new FilmInfoEntity()));
 
-                _filmInfoService.BulkMerge(entities);
+                _filmInfoService.BulkMerge(entities, ExitedFilms);
 
                 queryFilmReply.Status = StatusEnum.Success;
                 queryFilmReply.films = entities;
@@ -190,13 +190,10 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
 
             nsOnlineTicketingServiceReply reply = querySessionSeatResult.Deserialize<nsOnlineTicketingServiceReply>();
 
-            CTMSQuerySessionSeatReply _CTMSQuerySessionSeatReply = new CTMSQuerySessionSeatReply();
+            CTMSQuerySessionSeatReply querySessionSeatReply = new CTMSQuerySessionSeatReply();
             if (reply.QuerySessionSeatReply.Status == StatusEnum.Success.GetDescription())
             {
-                _CTMSQuerySessionSeatReply.Status = StatusEnum.Success;
-                _CTMSQuerySessionSeatReply.ErrorCode = reply.QuerySessionSeatReply.ErrorCode;
-                _CTMSQuerySessionSeatReply.ErrorMessage = reply.QuerySessionSeatReply.ErrorMessage;
-                _CTMSQuerySessionSeatReply.SessionSeats = reply.QuerySessionSeatReply.SessionSeat.Seat.Select(x =>
+                querySessionSeatReply.SessionSeats = reply.QuerySessionSeatReply.SessionSeat.Seat.Select(x =>
                     new SessionSeatEntity
                     {
                         SeatCode = x.Code,
@@ -204,15 +201,18 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
                         ColumnNum = x.ColumnNum,
                         Status = x.Status.CastToEnum<SessionSeatStatusEnum>()
                     });
+
+                querySessionSeatReply.Status = StatusEnum.Success;
             }
             else
             {
-                _CTMSQuerySessionSeatReply.Status = StatusEnum.Failure;
-                _CTMSQuerySessionSeatReply.ErrorCode = reply.QuerySessionSeatReply.ErrorCode;
-                _CTMSQuerySessionSeatReply.ErrorMessage = reply.QuerySessionSeatReply.ErrorMessage;
+                querySessionSeatReply.Status = StatusEnum.Failure;
             }
 
-            return _CTMSQuerySessionSeatReply;
+            querySessionSeatReply.ErrorCode = reply.QuerySessionSeatReply.ErrorCode;
+            querySessionSeatReply.ErrorMessage = reply.QuerySessionSeatReply.ErrorMessage;
+
+            return querySessionSeatReply;
         }
 
         /// <summary>
@@ -221,9 +221,33 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
         /// <param name="userCinema"></param>
         /// <param name="QueryXml"></param>
         /// <returns></returns>
-        public CTMSLockSeatReply LockSeat(UserCinemaViewEntity userCinema, LockSeatQueryXml QueryXml)
+        public CTMSLockSeatReply LockSeat(UserCinemaViewEntity userCinema, OrderViewEntity order)
         {
             CTMSLockSeatReply lockSeatReply = new CTMSLockSeatReply();
+            string SeatCodes = string.Join("|", order.orderSeatDetails.Select(x => x.SeatCode));
+            string lockSeatResult = nsService.LockSeat(userCinema.RealUserName, userCinema.RealPassword,
+                userCinema.Url, string.Empty, order.orderBaseInfo.CinemaCode, order.orderBaseInfo.SessionCode, SeatCodes);
+
+            nsOnlineTicketingServiceReply reply = lockSeatResult.Deserialize<nsOnlineTicketingServiceReply>();
+
+            if (reply.LockSeatReply.Status == StatusEnum.Success.GetDescription())
+            {
+                order.orderBaseInfo.LockOrderCode = reply.LockSeatReply.Order.OrderCode;
+                order.orderBaseInfo.AutoUnlockDatetime = reply.LockSeatReply.Order.AutoUnlockDatetime;
+                order.orderBaseInfo.LockTime = DateTime.Now;
+                order.orderBaseInfo.OrderStatus = OrderStatusEnum.Locked;
+
+                lockSeatReply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                order.orderBaseInfo.OrderStatus = OrderStatusEnum.LockFail;
+                order.orderBaseInfo.ErrorMessage = reply.LockSeatReply.ErrorMessage;
+                lockSeatReply.Status = StatusEnum.Failure;
+            }
+
+            lockSeatReply.ErrorCode = reply.LockSeatReply.ErrorCode;
+            lockSeatReply.ErrorMessage = reply.LockSeatReply.ErrorMessage;
 
             return lockSeatReply;
         }
@@ -244,15 +268,8 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
                     oldScreens.Where(y => y.SCode == x.Code).SingleOrDefault()
                         ?? new ScreenInfoEntity { CCode = CinemaCode })).ToList();
 
-            var deleteList = oldScreens.Where(x => newScreens.Where(y => y.Id == x.Id).SingleOrDefault() == null).ToList();
-
-            //插入或更新最新座位
-            _screenInfoService.BulkMerge(newScreens);
-            //删除数据库中过期座位
-            if (deleteList.NotNull().Count > 0)
-            {
-                _screenInfoService.BulkDelete(deleteList);
-            }
+            //插入或更新最新影厅信息
+            _screenInfoService.BulkMerge(newScreens, oldScreens);
         }
 
         /// <summary>
@@ -275,15 +292,12 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
                             LoveFlag = "N"
                         })).ToList();
 
-            var deleteList = oldSeats.Where(x => newSeats.Where(y => y.Id == x.Id).SingleOrDefault() == null).ToList();
-
             //插入或更新最新座位
-            _seatInfoService.BulkMerge(newSeats);
-            //删除数据库中过期座位
-            if (deleteList.NotNull().Count > 0)
-            {
-                _seatInfoService.BulkDelete(deleteList);
-            }
+
+            DateTime start = DateTime.Now;
+            _seatInfoService.BulkMerge(newSeats, oldSeats);
+            DateTime end = DateTime.Now;
+            TimeSpan interval = end - start;
         }
 
         /// <summary>
@@ -307,15 +321,8 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
                             UserID = userCinema.UserId
                         })).ToList();
 
-            var deleteList = oldSessions.Where(x => newSessions.Where(y => y.Id == x.Id).SingleOrDefault() == null).ToList();
-
             //插入或更新最新放映计划
-            _sessionInfoService.BulkMerge(newSessions);
-            //删除数据库中过期放映计划
-            if (deleteList.NotNull().Count > 0)
-            {
-                _sessionInfoService.BulkDelete(deleteList);
-            }
+            _sessionInfoService.BulkMerge(newSessions, oldSessions);
         }
         #endregion
     }

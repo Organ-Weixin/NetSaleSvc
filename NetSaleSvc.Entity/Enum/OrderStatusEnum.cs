@@ -1,0 +1,34 @@
+﻿using System.ComponentModel;
+
+namespace NetSaleSvc.Entity.Enum
+{
+    /// <summary>
+    /// 订单状态
+    /// </summary>
+    public enum OrderStatusEnum : byte
+    {
+        [Description("新建")]
+        Created = 1,
+
+        [Description("已锁座")]
+        Locked = 2,
+
+        [Description("锁座失败")]
+        LockFail = 3,
+
+        /// <summary>
+        /// 满天星调用SellTicket接口成功后进入此状态，待轮询确认成功后进入Complete
+        /// </summary>
+        [Description("已提交")]
+        Submited = 4,
+
+        [Description("提交失败")]
+        SubmitFail = 5,
+
+        [Description("完成")]
+        Complete = 6,
+
+        [Description("已退票")]
+        Refund = 7
+    }
+}

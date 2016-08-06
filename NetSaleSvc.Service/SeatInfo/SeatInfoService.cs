@@ -30,30 +30,14 @@ namespace NetSaleSvc.Service
         }
 
         /// <summary>
-        /// 批量插入
+        /// 批量合并
         /// </summary>
         /// <param name="entities"></param>
-        public void BulkInsert(IEnumerable<ScreenSeatInfoEntity> entities)
+        public void BulkMerge(IEnumerable<ScreenSeatInfoEntity> NewEntities
+            , IEnumerable<ScreenSeatInfoEntity> OldEntities)
         {
-            _screenSeatInfoRepository.BulkInsert(entities);
-        }
-
-        /// <summary>
-        /// 根据主键合并
-        /// </summary>
-        /// <param name="entities"></param>
-        public void BulkMerge(IEnumerable<ScreenSeatInfoEntity> entities)
-        {
-            _screenSeatInfoRepository.BulkMerge(entities);
-        }
-
-        /// <summary>
-        /// 批量删除
-        /// </summary>
-        /// <param name="entities"></param>
-        public void BulkDelete(IEnumerable<ScreenSeatInfoEntity> entities)
-        {
-            _screenSeatInfoRepository.BulkDelete(entities);
+            _screenSeatInfoRepository.BulkMerge(NewEntities, x => x.Id,
+                OldEntities, x => x.Id);
         }
 
         /// <summary>

@@ -46,5 +46,11 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard.Models
         /// </summary>
         [XmlElement]
         public nsQuerySessionSeatReply QuerySessionSeatReply { get; set; }
+
+        /// <summary>
+        /// 锁定座位返回实体
+        /// </summary>
+        [XmlElement]
+        public nsLockSeatReply LockSeatReply { get; set; }
     }
 }

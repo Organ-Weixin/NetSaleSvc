@@ -103,18 +103,11 @@ namespace NetSaleSvc.Service
         /// 批量合并
         /// </summary>
         /// <param name="entities"></param>
-        public void BulkMerge(IEnumerable<SessionInfoEntity> entities)
+        public void BulkMerge(IEnumerable<SessionInfoEntity> NewEntities
+            , IEnumerable<SessionInfoEntity> OldEntities)
         {
-            _sessionInfoRepository.BulkMerge(entities);
-        }
-
-        /// <summary>
-        /// 批量删除
-        /// </summary>
-        /// <param name="entities"></param>
-        public void BulkDelete(IEnumerable<SessionInfoEntity> entities)
-        {
-            _sessionInfoRepository.BulkDelete(entities);
+            _sessionInfoRepository.BulkMerge(NewEntities, x => x.Id,
+                OldEntities, x => x.Id);
         }
     }
 }

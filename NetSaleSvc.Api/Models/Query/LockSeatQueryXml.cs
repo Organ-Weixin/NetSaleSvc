@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace NetSaleSvc.Api.CTMS.Models
+namespace NetSaleSvc.Api.Models
 {
     [XmlRoot("LockSeat")]
     public class LockSeatQueryXml
@@ -47,5 +47,17 @@ namespace NetSaleSvc.Api.CTMS.Models
         /// </summary>
         [XmlAttribute]
         public string SeatCode { get; set; }
+
+        /// <summary>
+        /// 票价
+        /// </summary>
+        [XmlAttribute]
+        public decimal Price { get; set; }
+
+        /// <summary>
+        /// 服务费
+        /// </summary>
+        [XmlAttribute]
+        public decimal Fee { get; set; }
     }
 }

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NetSaleSvc.Entity.Models;
 using NetSaleSvc.Util;
+using NetSaleSvc.Entity.Enum;
 
 namespace NetSaleSvc.Api.Models
 {
@@ -112,6 +110,44 @@ namespace NetSaleSvc.Api.Models
             session.Price.LowestPrice = entity.RealLowestPrice;
 
             return session;
+        }
+
+        /// <summary>
+        /// map
+        /// </summary>
+        /// <param name="order"></param>
+        /// <param name="userCinema"></param>
+        /// <param name="queryXmlObj"></param>
+        /// <returns></returns>
+        public static OrderViewEntity MapFrom(this OrderViewEntity order, UserCinemaViewEntity userCinema,
+            LockSeatQueryXml queryXmlObj, SessionInfoEntity sessionInfo)
+        {
+            //订单基本信息
+            OrderEntity orderBaseInfo = new OrderEntity();
+            orderBaseInfo.CinemaCode = userCinema.CinemaCode;
+            orderBaseInfo.UserId = userCinema.UserId;
+            orderBaseInfo.SessionCode = sessionInfo.SCode;
+            orderBaseInfo.ScreenCode = sessionInfo.ScreenCode;
+            orderBaseInfo.SessionTime = sessionInfo.StartTime;
+            orderBaseInfo.FilmCode = sessionInfo.FilmCode;
+            orderBaseInfo.FilmName = sessionInfo.FilmName;
+            orderBaseInfo.TicketCount = queryXmlObj.Order.Count;
+            orderBaseInfo.TotalPrice = queryXmlObj.Order.Seat.Sum(x => x.Price);
+            orderBaseInfo.TotalFee = queryXmlObj.Order.Seat.Sum(x => x.Fee);
+            orderBaseInfo.OrderStatus = OrderStatusEnum.Created;
+            orderBaseInfo.Created = DateTime.Now;
+            order.orderBaseInfo = orderBaseInfo;
+
+            order.orderSeatDetails = queryXmlObj.Order.Seat.Select(
+                x => new OrderSeatDetailEntity()
+                {
+                    SeatCode = x.SeatCode,
+                    Price = x.Price,
+                    Fee = x.Fee,
+                    Created = DateTime.Now
+                }).ToList();
+
+            return order;
         }
     }
 }

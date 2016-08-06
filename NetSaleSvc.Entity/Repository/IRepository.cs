@@ -17,17 +17,6 @@ namespace NetSaleSvc.Entity.Repository
         /// </summary>
         IRepositoryQueryable<T> Query { get; }
         /// <summary>
-        /// 批量插入
-        /// </summary>
-        /// <param name="entities"></param>
-        void BulkInsert(IEnumerable<T> entities);
-        /// <summary>
-        /// 批量合并（根据主键合并）
-        /// </summary>
-        /// <param name="entities"></param>
-        void BulkMerge(IEnumerable<T> entities);
-        void BulkDelete(IEnumerable<T> entities);
-        /// <summary>
         /// 添加
         /// </summary>
         /// <param name="entity"></param>
@@ -147,5 +136,35 @@ namespace NetSaleSvc.Entity.Repository
         /// <returns></returns>
         IEnumerable<TReturn> QueryDouble<TFirst, TSecond, TReturn>(string sql,
             Func<TFirst, TSecond, TReturn> map, object param = null, CommandType? commandType = default(CommandType?));
+
+        /// <summary>
+        /// 批量合并
+        /// </summary>
+        /// <typeparam name="TKey"></typeparam>
+        /// <param name="newSource"></param>
+        /// <param name="newKeySelector"></param>
+        /// <param name="oldSource"></param>
+        /// <param name="oldKeySelector"></param>
+        void BulkMerge<TKey>(IEnumerable<T> newSource,
+          Func<T, TKey> newKeySelector,
+          IEnumerable<T> oldSource,
+          Func<T, TKey> oldKeySelector);
+
+        /// <summary>
+        /// 批量合并(外部事务)
+        /// </summary>
+        /// <typeparam name="TKey"></typeparam>
+        /// <param name="newSource"></param>
+        /// <param name="newKeySelector"></param>
+        /// <param name="oldSource"></param>
+        /// <param name="oldKeySelector"></param>
+        /// <param name="connection"></param>
+        /// <param name="transaction"></param>
+        void BulkMerge<TKey>(IEnumerable<T> newSource,
+          Func<T, TKey> newKeySelector,
+          IEnumerable<T> oldSource,
+          Func<T, TKey> oldKeySelector,
+          IDbConnection connection,
+          IDbTransaction transaction);
     }
 }

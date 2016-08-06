@@ -80,7 +80,7 @@ namespace NetSaleSvc.Api.CTMS
         /// <param name="userCinema"></param>
         /// <param name="QueryXml"></param>
         /// <returns></returns>
-        public CTMSLockSeatReply LockSeat(UserCinemaViewEntity userCinema, LockSeatQueryXml QueryXml)
+        public CTMSLockSeatReply LockSeat(UserCinemaViewEntity userCinema, OrderViewEntity order)
         {
             throw new Exception(CinemaInterfaceMiss);
         }
