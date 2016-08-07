@@ -64,5 +64,11 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard.Models
         /// </summary>
         [XmlElement]
         public nsSubmitOrderReply SubmitOrderReply { get; set; }
+
+        /// <summary>
+        /// 查询出票状态返回实体
+        /// </summary>
+        [XmlElement]
+        public nsQueryPrintReply QueryPrintReply { get; set; }
     }
 }

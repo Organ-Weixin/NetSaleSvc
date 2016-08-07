@@ -75,5 +75,11 @@ namespace NetSaleSvc.Api.Models
         /// </summary>
         [XmlElement]
         public SubmitOrderReply SubmitOrderReply { get; set; }
+
+        /// <summary>
+        /// 查询出票状态
+        /// </summary>
+        [XmlElement]
+        public QueryPrintReply QueryPrintReply { get; set; }
     }
 }

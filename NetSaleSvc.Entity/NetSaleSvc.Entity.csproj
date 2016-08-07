@@ -57,6 +57,7 @@
     <Compile Include="Enum\CinemaTypeEnum.cs" />
     <Compile Include="Enum\OrderStatusEnum.cs" />
     <Compile Include="Enum\PricePlanTypeEnum.cs" />
+    <Compile Include="Enum\PrintStatusEnum.cs" />
     <Compile Include="Enum\SessionSeatStatusEnum.cs" />
     <Compile Include="Enum\StatusEnum.cs" />
     <Compile Include="Models\EntityBase.cs" />

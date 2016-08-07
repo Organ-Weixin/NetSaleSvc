@@ -48,6 +48,29 @@ namespace NetSaleSvc.Service
         }
 
         /// <summary>
+        /// 根据取票信息获取订单
+        /// </summary>
+        /// <param name="CinemaCode"></param>
+        /// <param name="PrintNo"></param>
+        /// <param name="VerifyCode"></param>
+        /// <returns></returns>
+        public OrderViewEntity GetOrderWithPrintNo(string CinemaCode, string PrintNo, string VerifyCode)
+        {
+            var order = _orderRepository.Query.Where(x => x.CinemaCode == CinemaCode
+                && x.PrintNo == PrintNo && x.VerifyCode == VerifyCode).SingleOrDefault();
+            if (order == null)
+            {
+                return null;
+            }
+            var orderSeats = _orderSeatRepository.Query.Where(x => x.OrderId == order.Id).ToList();
+            return new OrderViewEntity
+            {
+                orderBaseInfo = order,
+                orderSeatDetails = orderSeats.ToList()
+            };
+        }
+
+        /// <summary>
         /// 新增订单（包括订单座位信息）
         /// </summary>
         /// <param name="orderView"></param>

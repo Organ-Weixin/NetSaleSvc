@@ -516,6 +516,49 @@ namespace NetSaleSvc.Api.Core
 
             return SubmitOrder(submitOrderReply, userCinema, order);
         }
+
+        /// <summary>
+        /// 查询出票状态
+        /// </summary>
+        /// <param name="Username"></param>
+        /// <param name="Password"></param>
+        /// <param name="CinemaCode"></param>
+        /// <param name="PrintNo"></param>
+        /// <param name="VerifyCode"></param>
+        /// <returns></returns>
+        public QueryPrintReply QueryPrint(string Username, string Password, string CinemaCode,
+            string PrintNo, string VerifyCode)
+        {
+            QueryPrintReply queryPrintReply = new QueryPrintReply();
+
+            if (!queryPrintReply.RequestInfoGuard(Username, Password, CinemaCode, PrintNo, VerifyCode))
+            {
+                return queryPrintReply;
+            }
+            //获取用户信息
+            UserInfoEntity UserInfo = _userInfoService.GetUserInfoByUserCredential(Username, Password);
+            if (UserInfo == null)
+            {
+                queryPrintReply.SetUserCredentialInvalidReply();
+                return queryPrintReply;
+            }
+            //验证影院是否存在且可访问
+            var userCinema = _userCinemaService.GetUserCinema(UserInfo.Id, CinemaCode);
+            if (userCinema == null)
+            {
+                queryPrintReply.SetCinemaInvalidReply();
+                return queryPrintReply;
+            }
+            //验证订单是否存在
+            var order = _orderService.GetOrderWithPrintNo(CinemaCode, PrintNo, VerifyCode);
+            if (order == null)
+            {
+                queryPrintReply.SetOrderNotExistReply();
+                return queryPrintReply;
+            }
+
+            return QueryPrint(queryPrintReply, userCinema, order);
+        }
         #endregion
 
         #region private methods
@@ -840,6 +883,39 @@ namespace NetSaleSvc.Api.Core
 
             //更新订单信息
             _orderService.Update(order);
+
+            return reply;
+        }
+
+        /// <summary>
+        /// 查询出票状态
+        /// </summary>
+        /// <param name="reply"></param>
+        /// <param name="order"></param>
+        /// <returns></returns>
+        [CheckForNullArgumentsAspect]
+        private QueryPrintReply QueryPrint(QueryPrintReply reply, UserCinemaViewEntity userCinema, OrderViewEntity order)
+        {
+            _CTMSInterface = CTMSInterfaceFactory.Create(userCinema);
+            var CTMSReply = _CTMSInterface.QueryPrint(userCinema, order);
+
+            if (CTMSReply.Status == StatusEnum.Success)
+            {
+                reply.Order = new QueryPrintReplyOrder();
+                reply.Order.OrderCode = order.orderBaseInfo.SubmitOrderCode;
+                reply.Order.PrintNo = order.orderBaseInfo.PrintNo;
+                reply.Order.Status = order.orderBaseInfo.PrintStatus.Value;
+                reply.Order.PrintTime = order.orderBaseInfo.PrintTime?.ToFormatStringWithT() ?? string.Empty;
+
+                reply.SetSuccessReply();
+            }
+            else
+            {
+                reply.GetErrorFromCTMSReply(CTMSReply);
+            }
+
+            //更新订单信息
+            _orderService.UpdateOrderBaseInfo(order.orderBaseInfo);
 
             return reply;
         }

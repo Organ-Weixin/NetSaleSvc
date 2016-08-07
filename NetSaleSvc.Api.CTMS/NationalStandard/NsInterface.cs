@@ -332,6 +332,41 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
 
             return submitOrderReply;
         }
+
+        /// <summary>
+        /// 查询出票状态
+        /// </summary>
+        /// <param name="userCinema"></param>
+        /// <param name="order"></param>
+        /// <returns></returns>
+        public CTMSQueryPrintReply QueryPrint(UserCinemaViewEntity userCinema, OrderViewEntity order)
+        {
+            CTMSQueryPrintReply queryPrintReply = new CTMSQueryPrintReply();
+
+            string queryPrintResult = nsService.QueryPrint(userCinema.RealUserName, userCinema.RealPassword,
+                userCinema.Url, string.Empty, userCinema.CinemaCode, order.orderBaseInfo.PrintNo, order.orderBaseInfo.VerifyCode);
+
+            nsOnlineTicketingServiceReply reply = queryPrintResult.Deserialize<nsOnlineTicketingServiceReply>();
+
+            if (reply.QueryPrintReply.Status == StatusEnum.Success.GetDescription())
+            {
+                order.orderBaseInfo.PrintStatus = reply.QueryPrintReply.Order.Status;
+                if (order.orderBaseInfo.PrintStatus == PrintStatusEnum.Yes)
+                {
+                    order.orderBaseInfo.PrintTime = DateTime.Parse(reply.QueryPrintReply.Order.PrintTime);
+                }
+                queryPrintReply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                queryPrintReply.Status = StatusEnum.Failure;
+            }
+
+            queryPrintReply.ErrorCode = reply.QueryPrintReply.ErrorCode;
+            queryPrintReply.ErrorMessage = reply.QueryPrintReply.ErrorMessage;
+
+            return queryPrintReply;
+        }
         #endregion
 
         #region private methods

@@ -56,6 +56,7 @@
     <Compile Include="Models\CTMSLockSeatReply.cs" />
     <Compile Include="Models\CTMSQueryCinemaReply.cs" />
     <Compile Include="Models\CTMSQueryFilmReply.cs" />
+    <Compile Include="Models\CTMSQueryPrintReply.cs" />
     <Compile Include="Models\CTMSQuerySeatReply.cs" />
     <Compile Include="Models\CTMSQuerySessionReply.cs" />
     <Compile Include="Models\CTMSQuerySessionSeatReply.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="NationalStandard\Models\nsOnlineTicketingServiceReply.cs" />
     <Compile Include="NationalStandard\Models\nsQueryCinemaReply.cs" />
     <Compile Include="NationalStandard\Models\nsQueryFilmReply.cs" />
+    <Compile Include="NationalStandard\Models\nsQueryPrintReply.cs" />
     <Compile Include="NationalStandard\Models\nsQuerySeatReply.cs" />
     <Compile Include="NationalStandard\Models\nsQuerySessionReply.cs" />
     <Compile Include="NationalStandard\Models\nsQuerySessionSeatReply.cs" />

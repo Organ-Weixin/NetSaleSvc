@@ -246,5 +246,24 @@ namespace NetSaleSvc
 
             return onlineTicketingServiceReply.Serialize();
         }
+
+        [WebMethod]
+        public string QueryPrint(string Username, string Password, string CinemaCode, 
+            string PrintNo, string VerifyCode)
+        {
+            OnlineTicketingServiceReply onlineTicketingServiceReply = new OnlineTicketingServiceReply();
+            try
+            {
+                onlineTicketingServiceReply.QueryPrintReply = NetSaleSvcCore.Instance.QueryPrint(Username,
+                    Password, CinemaCode, PrintNo, VerifyCode);
+            }
+            catch (Exception ex)
+            {
+                onlineTicketingServiceReply.QueryPrintReply = new QueryPrintReply();
+                LogHelper.LogException(ex);
+            }
+
+            return onlineTicketingServiceReply.Serialize();
+        }
     }
 }
