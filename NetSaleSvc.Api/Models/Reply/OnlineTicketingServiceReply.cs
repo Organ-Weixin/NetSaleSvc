@@ -69,5 +69,11 @@ namespace NetSaleSvc.Api.Models
         /// </summary>
         [XmlElement]
         public ReleaseSeatReply ReleaseSeatReply { get; set; }
+
+        /// <summary>
+        /// 确认订单
+        /// </summary>
+        [XmlElement]
+        public SubmitOrderReply SubmitOrderReply { get; set; }
     }
 }

@@ -66,5 +66,13 @@ namespace NetSaleSvc.Api.CTMS
         /// <param name="order"></param>
         /// <returns></returns>
         CTMSReleaseSeatReply ReleaseSeat(UserCinemaViewEntity userCinema, OrderViewEntity order);
+
+        /// <summary>
+        /// 提交订单
+        /// </summary>
+        /// <param name="userCinema"></param>
+        /// <param name="order"></param>
+        /// <returns></returns>
+        CTMSSubmitOrderReply SubmitOrder(UserCinemaViewEntity userCinema, OrderViewEntity order);
     }
 }

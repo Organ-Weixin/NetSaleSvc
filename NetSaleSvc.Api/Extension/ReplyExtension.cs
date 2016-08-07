@@ -280,5 +280,35 @@ namespace NetSaleSvc.Api.Extension
 
             return true;
         }
+
+        /// <summary>
+        /// 检查传入参数
+        /// </summary>
+        /// <param name="reply"></param>
+        /// <param name="Username"></param>
+        /// <param name="Password"></param>
+        /// <param name="QueryXml"></param>
+        /// <returns></returns>
+        public static bool RequestInfoGuard(this SubmitOrderReply reply, string Username, string Password,
+            string QueryXml)
+        {
+            if (string.IsNullOrEmpty(Username))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Username));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Password));
+                return false;
+            }
+            if (string.IsNullOrEmpty(QueryXml))
+            {
+                reply.SetNecessaryParamMissReply(nameof(QueryXml));
+                return false;
+            }
+
+            return true;
+        }
     }
 }

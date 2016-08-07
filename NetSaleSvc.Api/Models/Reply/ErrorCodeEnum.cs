@@ -84,9 +84,9 @@ namespace NetSaleSvc.Api.Models
         SeatCountInvalid = 10000011,
 
         /// <summary>
-        /// 订单不存在或不允许解锁座位
+        /// 订单不存在或状态不合法
         /// </summary>
-        [Description("订单不存在或不允许解锁座位！")]
+        [Description("订单不存在或状态不合法！")]
         OrderNotExist = 10000012
     }
 }

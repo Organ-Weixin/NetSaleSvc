@@ -287,6 +287,51 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
 
             return releaseSeatReply;
         }
+
+        /// <summary>
+        /// 提交订单
+        /// </summary>
+        /// <param name="userCinema"></param>
+        /// <param name="order"></param>
+        /// <returns></returns>
+        public CTMSSubmitOrderReply SubmitOrder(UserCinemaViewEntity userCinema, OrderViewEntity order)
+        {
+            CTMSSubmitOrderReply submitOrderReply = new CTMSSubmitOrderReply();
+
+            string SeatCodes = string.Join("|", order.orderSeatDetails.Select(x => x.SeatCode));
+            string Prices = string.Join("|", order.orderSeatDetails.Select(x => (x.Price + x.Fee)));
+            string submitOrderResult = nsService.SubmitOrder(userCinema.RealUserName, userCinema.RealPassword,
+                userCinema.Url, string.Empty, userCinema.CinemaCode, order.orderBaseInfo.SessionCode,
+                order.orderBaseInfo.LockOrderCode, SeatCodes, Prices);
+
+            nsOnlineTicketingServiceReply reply = submitOrderResult.Deserialize<nsOnlineTicketingServiceReply>();
+
+            if (reply.SubmitOrderReply.Status == StatusEnum.Success.GetDescription())
+            {
+                order.orderBaseInfo.SubmitOrderCode = reply.SubmitOrderReply.Order.OrderCode;
+                order.orderBaseInfo.PrintNo = reply.SubmitOrderReply.Order.PrintNo;
+                order.orderBaseInfo.VerifyCode = reply.SubmitOrderReply.Order.VerifyCode;
+                order.orderSeatDetails.ForEach(x =>
+                {
+                    var newSeat = reply.SubmitOrderReply.Order.Seat.Where(y => y.SeatCode == x.SeatCode).SingleOrDefault();
+                    x.FilmTicketCode = newSeat.FilmTicketCode;
+                });
+                order.orderBaseInfo.OrderStatus = OrderStatusEnum.Complete;
+                order.orderBaseInfo.SubmitTime = DateTime.Now;
+                submitOrderReply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                order.orderBaseInfo.OrderStatus = OrderStatusEnum.SubmitFail;
+                order.orderBaseInfo.ErrorMessage = reply.SubmitOrderReply.ErrorMessage;
+                submitOrderReply.Status = StatusEnum.Failure;
+            }
+
+            submitOrderReply.ErrorCode = reply.SubmitOrderReply.ErrorCode;
+            submitOrderReply.ErrorMessage = reply.SubmitOrderReply.ErrorMessage;
+
+            return submitOrderReply;
+        }
         #endregion
 
         #region private methods

@@ -58,5 +58,11 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard.Models
         /// </summary>
         [XmlElement]
         public nsReleaseSeatReply ReleaseSeatReply { get; set; }
+
+        /// <summary>
+        /// 提交订单返回实体
+        /// </summary>
+        [XmlElement]
+        public nsSubmitOrderReply SubmitOrderReply { get; set; }
     }
 }

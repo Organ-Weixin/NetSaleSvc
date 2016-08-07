@@ -60,6 +60,7 @@
     <Compile Include="Models\CTMSQuerySessionReply.cs" />
     <Compile Include="Models\CTMSQuerySessionSeatReply.cs" />
     <Compile Include="Models\CTMSReleaseSeatReply.cs" />
+    <Compile Include="Models\CTMSSubmitOrderReply.cs" />
     <Compile Include="NationalStandard\Models\ModelMapper.cs" />
     <Compile Include="NationalStandard\Models\nsBaseReply.cs" />
     <Compile Include="NationalStandard\Models\nsLockSeatReply.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="NationalStandard\Models\nsQuerySessionReply.cs" />
     <Compile Include="NationalStandard\Models\nsQuerySessionSeatReply.cs" />
     <Compile Include="NationalStandard\Models\nsReleaseSeatReply.cs" />
+    <Compile Include="NationalStandard\Models\nsSubmitOrderReply.cs" />
     <Compile Include="NationalStandard\NsInterface.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">

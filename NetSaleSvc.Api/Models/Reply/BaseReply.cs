@@ -205,7 +205,7 @@ namespace NetSaleSvc.Api.Models
         }
 
         /// <summary>
-        /// 订单不存在或不允许解锁座位
+        /// 订单不存在或状态不合法
         /// </summary>
         public void SetOrderNotExistReply()
         {

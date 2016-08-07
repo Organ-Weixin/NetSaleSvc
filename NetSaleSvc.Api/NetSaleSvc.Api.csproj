@@ -50,6 +50,7 @@
     <Compile Include="Extension\ReplyExtension.cs" />
     <Compile Include="Models\Query\LockSeatQueryXml.cs" />
     <Compile Include="Models\Query\ReleaseSeatQueryXml.cs" />
+    <Compile Include="Models\Query\SubmitOrderQueryXml.cs" />
     <Compile Include="Models\Reply\BaseReply.cs" />
     <Compile Include="Models\Reply\ErrorCodeEnum.cs" />
     <Compile Include="Models\Reply\LockSeatReply.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="Models\Reply\QuerySessionReply.cs" />
     <Compile Include="Models\Reply\QuerySessionSeatReply.cs" />
     <Compile Include="Models\Reply\ReleaseSeatReply.cs" />
+    <Compile Include="Models\Reply\SubmitOrderReply.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -386,6 +386,13 @@ namespace NetSaleSvc.Api.Core
             return LockSeat(lockSeatReply, userCinema, order);
         }
 
+        /// <summary>
+        /// 解锁座位
+        /// </summary>
+        /// <param name="Username"></param>
+        /// <param name="Password"></param>
+        /// <param name="QueryXml"></param>
+        /// <returns></returns>
         public ReleaseSeatReply ReleaseSeat(string Username, string Password, string QueryXml)
         {
             ReleaseSeatReply releaseSeatReply = new ReleaseSeatReply();
@@ -430,7 +437,7 @@ namespace NetSaleSvc.Api.Core
                     , QueryXmlObj.Order.OrderCode);
             }
             if (order == null
-                || (order.orderBaseInfo.OrderStatus != OrderStatusEnum.Locked 
+                || (order.orderBaseInfo.OrderStatus != OrderStatusEnum.Locked
                 && order.orderBaseInfo.OrderStatus != OrderStatusEnum.SubmitFail
                 && order.orderBaseInfo.OrderStatus != OrderStatusEnum.ReleaseFail))
             {
@@ -439,6 +446,75 @@ namespace NetSaleSvc.Api.Core
             }
 
             return ReleaseSeat(releaseSeatReply, userCinema, order);
+        }
+
+        /// <summary>
+        /// 提交订单
+        /// </summary>
+        /// <param name="Username"></param>
+        /// <param name="Password"></param>
+        /// <param name="QueryXml"></param>
+        /// <returns></returns>
+        public SubmitOrderReply SubmitOrder(string Username, string Password, string QueryXml)
+        {
+            SubmitOrderReply submitOrderReply = new SubmitOrderReply();
+
+            if (!submitOrderReply.RequestInfoGuard(Username, Password, QueryXml))
+            {
+                return submitOrderReply;
+            }
+
+            //获取用户信息
+            UserInfoEntity UserInfo = _userInfoService.GetUserInfoByUserCredential(Username, Password);
+            if (UserInfo == null)
+            {
+                submitOrderReply.SetUserCredentialInvalidReply();
+                return submitOrderReply;
+            }
+            //验证锁座参数
+            var QueryXmlObj = QueryXml.Deserialize<SubmitOrderQueryXml>();
+            if (QueryXmlObj == default(SubmitOrderQueryXml) || QueryXmlObj.Order == null || QueryXmlObj.Order.Seat == null)
+            {
+                submitOrderReply.SetXmlDeserializeFailReply(nameof(QueryXml));
+                return submitOrderReply;
+            }
+            //验证是否传递手机号
+            if (string.IsNullOrEmpty(QueryXmlObj.Order.MobilePhone))
+            {
+                submitOrderReply.SetNecessaryParamMissReply("MobilePhone");
+            }
+            //验证影院是否存在且可访问
+            var userCinema = _userCinemaService.GetUserCinema(UserInfo.Id, QueryXmlObj.CinemaCode);
+            if (userCinema == null)
+            {
+                submitOrderReply.SetCinemaInvalidReply();
+                return submitOrderReply;
+            }
+            //验证订单是否存在
+            OrderViewEntity order = null;
+            if (!string.IsNullOrEmpty(QueryXmlObj.Order.OrderCode))
+            {
+                order = _orderService.GetOrderWithLockOrderCode(QueryXmlObj.CinemaCode
+                    , QueryXmlObj.Order.OrderCode);
+            }
+            if (order == null
+                || (order.orderBaseInfo.OrderStatus != OrderStatusEnum.Locked
+                && order.orderBaseInfo.OrderStatus != OrderStatusEnum.SubmitFail))
+            {
+                submitOrderReply.SetOrderNotExistReply();
+                return submitOrderReply;
+            }
+            //验证座位数量
+            if (QueryXmlObj.Order.Count != QueryXmlObj.Order.Seat.Count || QueryXmlObj.Order.Count != order.orderBaseInfo.TicketCount)
+            {
+                submitOrderReply.SetSeatCountInvalidReply();
+                return submitOrderReply;
+            }
+
+            //更新订单信息
+            order.MapFrom(QueryXmlObj);
+
+            return SubmitOrder(submitOrderReply, userCinema, order);
         }
         #endregion
 
@@ -657,7 +733,7 @@ namespace NetSaleSvc.Api.Core
         }
 
         /// <summary>
-        /// 
+        /// 锁定座位
         /// </summary>
         /// <param name="userCinema"></param>
         /// <param name="QueryXmlObj"></param>
@@ -692,6 +768,14 @@ namespace NetSaleSvc.Api.Core
             return reply;
         }
 
+        /// <summary>
+        /// 解锁座位
+        /// </summary>
+        /// <param name="reply"></param>
+        /// <param name="userCinema"></param>
+        /// <param name="order"></param>
+        /// <returns></returns>
+        [CheckForNullArgumentsAspect]
         private ReleaseSeatReply ReleaseSeat(ReleaseSeatReply reply, UserCinemaViewEntity userCinema, OrderViewEntity order)
         {
             _CTMSInterface = CTMSInterfaceFactory.Create(userCinema);
@@ -714,6 +798,48 @@ namespace NetSaleSvc.Api.Core
 
             //只更新订单信息，不更新订单座位信息
             _orderService.UpdateOrderBaseInfo(order.orderBaseInfo);
+
+            return reply;
+        }
+
+        /// <summary>
+        /// 提交订单
+        /// </summary>
+        /// <param name="reply"></param>
+        /// <param name="userCinema"></param>
+        /// <param name="order"></param>
+        /// <returns></returns>
+        [CheckForNullArgumentsAspect]
+        private SubmitOrderReply SubmitOrder(SubmitOrderReply reply, UserCinemaViewEntity userCinema, OrderViewEntity order)
+        {
+            _CTMSInterface = CTMSInterfaceFactory.Create(userCinema);
+            var CTMSReply = _CTMSInterface.SubmitOrder(userCinema, order);
+
+            if (CTMSReply.Status == StatusEnum.Success)
+            {
+                reply.Order = new SubmitOrderReplyOrder();
+                reply.Order.CinemaType = userCinema.CinemaType;
+                reply.Order.OrderCode = order.orderBaseInfo.SubmitOrderCode;
+                reply.Order.SessionCode = order.orderBaseInfo.SessionCode;
+                reply.Order.Count = order.orderBaseInfo.TicketCount;
+                reply.Order.PrintNo = order.orderBaseInfo.PrintNo;
+                reply.Order.VerifyCode = order.orderBaseInfo.VerifyCode;
+                reply.Order.Seat = order.orderSeatDetails.Select(x =>
+                    new SubmitOrderReplySeat
+                    {
+                        SeatCode = x.SeatCode,
+                        FilmTicketCode = x.FilmTicketCode
+                    }).ToList();
+
+                reply.SetSuccessReply();
+            }
+            else
+            {
+                reply.GetErrorFromCTMSReply(CTMSReply);
+            }
+
+            //更新订单信息
+            _orderService.Update(order);
 
             return reply;
         }

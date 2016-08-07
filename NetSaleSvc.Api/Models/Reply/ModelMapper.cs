@@ -149,5 +149,27 @@ namespace NetSaleSvc.Api.Models
 
             return order;
         }
+
+        /// <summary>
+        /// map
+        /// </summary>
+        /// <param name="order"></param>
+        /// <param name="queryXmlObj"></param>
+        public static OrderViewEntity MapFrom(this OrderViewEntity order, SubmitOrderQueryXml queryXmlObj)
+        {
+            order.orderBaseInfo.TotalPrice = queryXmlObj.Order.Seat.Sum(x => x.Price);
+            order.orderBaseInfo.TotalSalePrice = queryXmlObj.Order.Seat.Sum(x => x.RealPrice);
+            order.orderBaseInfo.TotalFee = queryXmlObj.Order.Seat.Sum(x => x.Fee);
+            order.orderBaseInfo.MobilePhone = queryXmlObj.Order.MobilePhone;
+            order.orderSeatDetails.ForEach(x =>
+            {
+                var newInfo = queryXmlObj.Order.Seat.Where(y => y.SeatCode == x.SeatCode).SingleOrDefault();
+                x.Price = newInfo.Price;
+                x.SalePrice = newInfo.RealPrice;
+                x.Fee = newInfo.Fee;
+            });
+
+            return order;
+        }
     }
 }

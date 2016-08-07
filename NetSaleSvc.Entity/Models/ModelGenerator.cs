@@ -17,6 +17,56 @@ using NetSaleSvc.Entity.Enum;
 namespace NetSaleSvc.Entity.Models
 {
     /// <summary>
+    /// A class which represents the OrderSeatDetails table.
+    /// </summary>
+    [Table("OrderSeatDetails")]
+    [SqlLamTable(Name = "OrderSeatDetails")]
+    public partial class OrderSeatDetailEntity : EntityBase
+    {
+        /// <summary>
+        /// 程序猿只想做个安静的美男子，不想写注释
+        /// </summary>
+        [Key]
+        public virtual int Id { get; set; }
+        /// <summary>
+        /// 订单Id
+        /// </summary>
+        public virtual int OrderId { get; set; }
+        /// <summary>
+        /// 座位编码
+        /// </summary>
+        public virtual string SeatCode { get; set; }
+        /// <summary>
+        /// 上报票价
+        /// </summary>
+        public virtual decimal Price { get; set; }
+        /// <summary>
+        /// 接入商实际销售票价
+        /// </summary>
+        public virtual decimal SalePrice { get; set; }
+        /// <summary>
+        /// 服务费
+        /// </summary>
+        public virtual decimal Fee { get; set; }
+        /// <summary>
+        /// 电影票编码
+        /// </summary>
+        public virtual string FilmTicketCode { get; set; }
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public virtual DateTime Created { get; set; }
+        /// <summary>
+        /// 更新时间
+        /// </summary>
+        public virtual DateTime? Updated { get; set; }
+        /// <summary>
+        /// 删除标识
+        /// </summary>
+        public virtual bool Deleted { get; set; }
+    }
+
+    /// <summary>
     /// A class which represents the SysUser table.
     /// </summary>
     [Table("SysUser")]
@@ -39,6 +89,116 @@ namespace NetSaleSvc.Entity.Models
         /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual int? Type { get; set; }
+    }
+
+    /// <summary>
+    /// A class which represents the Orders table.
+    /// </summary>
+    [Table("Orders")]
+    [SqlLamTable(Name = "Orders")]
+    public partial class OrderEntity : EntityBase
+    {
+        /// <summary>
+        /// 主键
+        /// </summary>
+        [Key]
+        public virtual int Id { get; set; }
+        /// <summary>
+        /// 影院编码
+        /// </summary>
+        public virtual string CinemaCode { get; set; }
+        /// <summary>
+        /// 接入商Id
+        /// </summary>
+        public virtual int UserId { get; set; }
+        /// <summary>
+        /// 排期编码
+        /// </summary>
+        public virtual string SessionCode { get; set; }
+        /// <summary>
+        /// 影厅编码
+        /// </summary>
+        public virtual string ScreenCode { get; set; }
+        /// <summary>
+        /// 排期时间
+        /// </summary>
+        public virtual DateTime SessionTime { get; set; }
+        /// <summary>
+        /// 影片编码
+        /// </summary>
+        public virtual string FilmCode { get; set; }
+        /// <summary>
+        /// 影片名称
+        /// </summary>
+        public virtual string FilmName { get; set; }
+        /// <summary>
+        /// 影票数量
+        /// </summary>
+        public virtual int TicketCount { get; set; }
+        /// <summary>
+        /// 影票上报总价（不包含服务费）
+        /// </summary>
+        public virtual decimal TotalPrice { get; set; }
+        /// <summary>
+        /// 总服务费
+        /// </summary>
+        public virtual decimal TotalFee { get; set; }
+        /// <summary>
+        /// 接入商总售价
+        /// </summary>
+        public virtual decimal TotalSalePrice { get; set; }
+        /// <summary>
+        /// 订单状态
+        /// </summary>
+        public virtual OrderStatusEnum OrderStatus { get; set; }
+        /// <summary>
+        /// 程序猿只想做个安静的美男子，不想写注释
+        /// </summary>
+        public virtual string MobilePhone { get; set; }
+        /// <summary>
+        /// 锁座时间
+        /// </summary>
+        public virtual DateTime? LockTime { get; set; }
+        /// <summary>
+        /// 自动解锁时间
+        /// </summary>
+        public virtual DateTime? AutoUnlockDatetime { get; set; }
+        /// <summary>
+        /// 锁座订单号（主要用于13规范锁座返回的订单号并不是最终提交订单返回的订单号）
+        /// </summary>
+        public virtual string LockOrderCode { get; set; }
+        /// <summary>
+        /// 订单提交时间
+        /// </summary>
+        public virtual DateTime? SubmitTime { get; set; }
+        /// <summary>
+        /// 提交订单编号（即最终订单编号）
+        /// </summary>
+        public virtual string SubmitOrderCode { get; set; }
+        /// <summary>
+        /// 取票序号
+        /// </summary>
+        public virtual string PrintNo { get; set; }
+        /// <summary>
+        /// 取票验证码
+        /// </summary>
+        public virtual string VerifyCode { get; set; }
+        /// <summary>
+        /// 订单创建时间
+        /// </summary>
+        public virtual DateTime Created { get; set; }
+        /// <summary>
+        /// 订单更新时间
+        /// </summary>
+        public virtual DateTime? Updated { get; set; }
+        /// <summary>
+        /// 订单删除标识
+        /// </summary>
+        public virtual bool Deleted { get; set; }
+        /// <summary>
+        /// 错误信息（锁座或提交订单失败错误信息）
+        /// </summary>
+        public virtual string ErrorMessage { get; set; }
     }
 
     /// <summary>
@@ -1110,146 +1270,6 @@ namespace NetSaleSvc.Entity.Models
         /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual DateTime? UpdateTime { get; set; }
-    }
-
-    /// <summary>
-    /// A class which represents the Orders table.
-    /// </summary>
-    [Table("Orders")]
-    [SqlLamTable(Name = "Orders")]
-    public partial class OrderEntity : EntityBase
-    {
-        /// <summary>
-        /// 主键
-        /// </summary>
-        [Key]
-        public virtual int Id { get; set; }
-        /// <summary>
-        /// 影院编码
-        /// </summary>
-        public virtual string CinemaCode { get; set; }
-        /// <summary>
-        /// 接入商Id
-        /// </summary>
-        public virtual int UserId { get; set; }
-        /// <summary>
-        /// 排期编码
-        /// </summary>
-        public virtual string SessionCode { get; set; }
-        /// <summary>
-        /// 影厅编码
-        /// </summary>
-        public virtual string ScreenCode { get; set; }
-        /// <summary>
-        /// 排期时间
-        /// </summary>
-        public virtual DateTime SessionTime { get; set; }
-        /// <summary>
-        /// 影片编码
-        /// </summary>
-        public virtual string FilmCode { get; set; }
-        /// <summary>
-        /// 影片名称
-        /// </summary>
-        public virtual string FilmName { get; set; }
-        /// <summary>
-        /// 影票数量
-        /// </summary>
-        public virtual int TicketCount { get; set; }
-        /// <summary>
-        /// 影票上报总价（不包含服务费）
-        /// </summary>
-        public virtual decimal TotalPrice { get; set; }
-        /// <summary>
-        /// 总服务费
-        /// </summary>
-        public virtual decimal TotalFee { get; set; }
-        /// <summary>
-        /// 接入商总售价
-        /// </summary>
-        public virtual decimal TotalSalePrice { get; set; }
-        /// <summary>
-        /// 订单状态
-        /// </summary>
-        public virtual OrderStatusEnum OrderStatus { get; set; }
-        /// <summary>
-        /// 程序猿只想做个安静的美男子，不想写注释
-        /// </summary>
-        public virtual string MobilePhone { get; set; }
-        /// <summary>
-        /// 锁座时间
-        /// </summary>
-        public virtual DateTime? LockTime { get; set; }
-        /// <summary>
-        /// 自动解锁时间
-        /// </summary>
-        public virtual DateTime? AutoUnlockDatetime { get; set; }
-        /// <summary>
-        /// 锁座订单号（主要用于13规范锁座返回的订单号并不是最终提交订单返回的订单号）
-        /// </summary>
-        public virtual string LockOrderCode { get; set; }
-        /// <summary>
-        /// 订单创建时间
-        /// </summary>
-        public virtual DateTime Created { get; set; }
-        /// <summary>
-        /// 订单更新时间
-        /// </summary>
-        public virtual DateTime? Updated { get; set; }
-        /// <summary>
-        /// 订单删除标识
-        /// </summary>
-        public virtual bool Deleted { get; set; }
-        /// <summary>
-        /// 错误信息（锁座或提交订单失败错误信息）
-        /// </summary>
-        public virtual string ErrorMessage { get; set; }
-    }
-
-    /// <summary>
-    /// A class which represents the OrderSeatDetails table.
-    /// </summary>
-    [Table("OrderSeatDetails")]
-    [SqlLamTable(Name = "OrderSeatDetails")]
-    public partial class OrderSeatDetailEntity : EntityBase
-    {
-        /// <summary>
-        /// 程序猿只想做个安静的美男子，不想写注释
-        /// </summary>
-        [Key]
-        public virtual int Id { get; set; }
-        /// <summary>
-        /// 订单Id
-        /// </summary>
-        public virtual int OrderId { get; set; }
-        /// <summary>
-        /// 座位编码
-        /// </summary>
-        public virtual string SeatCode { get; set; }
-        /// <summary>
-        /// 上报票价
-        /// </summary>
-        public virtual decimal Price { get; set; }
-        /// <summary>
-        /// 接入商实际销售票价
-        /// </summary>
-        public virtual decimal SalePrice { get; set; }
-        /// <summary>
-        /// 服务费
-        /// </summary>
-        public virtual decimal Fee { get; set; }
-        /// <summary>
-        /// 创建时间
-        /// </summary>
-        public virtual DateTime Created { get; set; }
-        /// <summary>
-        /// 更新时间
-        /// </summary>
-        public virtual DateTime? Updated { get; set; }
-        /// <summary>
-        /// 删除标识
-        /// </summary>
-        public virtual bool Deleted { get; set; }
     }
 
 }

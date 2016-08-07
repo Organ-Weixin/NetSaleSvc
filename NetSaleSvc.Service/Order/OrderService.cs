@@ -79,11 +79,44 @@ namespace NetSaleSvc.Service
         }
 
         /// <summary>
+        /// 更新订单（包括座位信息）
+        /// </summary>
+        /// <param name="orderView"></param>
+        public void Update(OrderViewEntity orderView)
+        {
+            using (var connection = DbConnectionFactory.OpenConnection())
+            {
+                using (var transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        orderView.orderBaseInfo.Updated = DateTime.Now;
+                        _orderRepository.UpdateWithTransaction(orderView.orderBaseInfo,
+                            connection, transaction);
+
+                        orderView.orderSeatDetails.ForEach(x =>
+                        {
+                            x.Updated = DateTime.Now;
+                            _orderSeatRepository.UpdateWithTransaction(x, connection, transaction);
+                        });
+
+                        transaction.Commit();
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// 只更新订单信息，不更新订单座位信息
         /// </summary>
         /// <param name="entity"></param>
         public void UpdateOrderBaseInfo(OrderEntity entity)
         {
+            entity.Updated = DateTime.Now;
             _orderRepository.Update(entity);
         }
     }
