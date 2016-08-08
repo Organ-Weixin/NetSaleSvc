@@ -2,16 +2,16 @@
 
 namespace NetSaleSvc.Entity.Enum
 {
-    public enum PrintStatusEnum : byte
+    public enum YesOrNoEnum : byte
     {
         /// <summary>
-        /// 未出票
+        /// No
         /// </summary>
         [XmlEnum("No")]
         No = 0,
 
         /// <summary>
-        /// 已出票
+        /// Yes
         /// </summary>
         [XmlEnum("Yes")]
         Yes = 1

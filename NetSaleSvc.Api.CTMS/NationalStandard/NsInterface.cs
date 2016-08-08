@@ -351,7 +351,7 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
             if (reply.QueryPrintReply.Status == StatusEnum.Success.GetDescription())
             {
                 order.orderBaseInfo.PrintStatus = reply.QueryPrintReply.Order.Status;
-                if (order.orderBaseInfo.PrintStatus == PrintStatusEnum.Yes)
+                if (order.orderBaseInfo.PrintStatus == YesOrNoEnum.Yes)
                 {
                     order.orderBaseInfo.PrintTime = DateTime.Parse(reply.QueryPrintReply.Order.PrintTime);
                 }
@@ -366,6 +366,42 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
             queryPrintReply.ErrorMessage = reply.QueryPrintReply.ErrorMessage;
 
             return queryPrintReply;
+        }
+
+        /// <summary>
+        /// 退票
+        /// </summary>
+        /// <param name="userCinema"></param>
+        /// <param name="order"></param>
+        /// <returns></returns>
+        public CTMSRefundTicketReply RefundTicket(UserCinemaViewEntity userCinema, OrderViewEntity order)
+        {
+            CTMSRefundTicketReply refundTicketReply = new CTMSRefundTicketReply();
+
+            string refundTicketResult = nsService.RefundTicket(userCinema.RealUserName, userCinema.RealPassword,
+                userCinema.Url, string.Empty, userCinema.CinemaCode, order.orderBaseInfo.PrintNo, order.orderBaseInfo.VerifyCode);
+
+            nsOnlineTicketingServiceReply reply = refundTicketResult.Deserialize<nsOnlineTicketingServiceReply>();
+
+            if (reply.RefundTicketReply.Status == StatusEnum.Success.GetDescription())
+            {
+                if (reply.RefundTicketReply.Order.Status == YesOrNoEnum.Yes)
+                {
+                    order.orderBaseInfo.OrderStatus = OrderStatusEnum.Refund;
+                    order.orderBaseInfo.RefundTime = DateTime.Parse(reply.RefundTicketReply.Order.RefundTime);
+                }
+                refundTicketReply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                refundTicketReply.Status = StatusEnum.Failure;
+            }
+
+            refundTicketReply.ErrorCode = reply.RefundTicketReply.ErrorCode;
+            refundTicketReply.ErrorMessage = reply.RefundTicketReply.ErrorMessage;
+
+
+            return refundTicketReply;
         }
         #endregion
 

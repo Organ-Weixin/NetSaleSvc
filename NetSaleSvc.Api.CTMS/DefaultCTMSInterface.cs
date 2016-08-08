@@ -117,5 +117,16 @@ namespace NetSaleSvc.Api.CTMS
         {
             throw new Exception(CinemaInterfaceMiss);
         }
+
+        /// <summary>
+        /// 退票
+        /// </summary>
+        /// <param name="userCinema"></param>
+        /// <param name="order"></param>
+        /// <returns></returns>
+        public CTMSRefundTicketReply RefundTicket(UserCinemaViewEntity userCinema, OrderViewEntity order)
+        {
+            throw new Exception(CinemaInterfaceMiss);
+        }
     }
 }

@@ -247,6 +247,15 @@ namespace NetSaleSvc
             return onlineTicketingServiceReply.Serialize();
         }
 
+        /// <summary>
+        /// 查询出票状态
+        /// </summary>
+        /// <param name="Username"></param>
+        /// <param name="Password"></param>
+        /// <param name="CinemaCode"></param>
+        /// <param name="PrintNo"></param>
+        /// <param name="VerifyCode"></param>
+        /// <returns></returns>
         [WebMethod]
         public string QueryPrint(string Username, string Password, string CinemaCode, 
             string PrintNo, string VerifyCode)
@@ -260,6 +269,34 @@ namespace NetSaleSvc
             catch (Exception ex)
             {
                 onlineTicketingServiceReply.QueryPrintReply = new QueryPrintReply();
+                LogHelper.LogException(ex);
+            }
+
+            return onlineTicketingServiceReply.Serialize();
+        }
+
+        /// <summary>
+        /// 退票
+        /// </summary>
+        /// <param name="Username"></param>
+        /// <param name="Password"></param>
+        /// <param name="CinemaCode"></param>
+        /// <param name="PrintNo"></param>
+        /// <param name="VerifyCode"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public string RefundTicket(string Username, string Password, string CinemaCode,
+            string PrintNo, string VerifyCode)
+        {
+            OnlineTicketingServiceReply onlineTicketingServiceReply = new OnlineTicketingServiceReply();
+            try
+            {
+                onlineTicketingServiceReply.RefundTicketReply = NetSaleSvcCore.Instance.RefundTicket(Username,
+                    Password, CinemaCode, PrintNo, VerifyCode);
+            }
+            catch (Exception ex)
+            {
+                onlineTicketingServiceReply.RefundTicketReply = new RefundTicketReply();
                 LogHelper.LogException(ex);
             }
 

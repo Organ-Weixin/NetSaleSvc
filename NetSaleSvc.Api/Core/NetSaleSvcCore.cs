@@ -559,6 +559,49 @@ namespace NetSaleSvc.Api.Core
 
             return QueryPrint(queryPrintReply, userCinema, order);
         }
+
+        /// <summary>
+        /// 退票
+        /// </summary>
+        /// <param name="Username"></param>
+        /// <param name="Password"></param>
+        /// <param name="CinemaCode"></param>
+        /// <param name="PrintNo"></param>
+        /// <param name="VerifyCode"></param>
+        /// <returns></returns>
+        public RefundTicketReply RefundTicket(string Username, string Password, string CinemaCode,
+            string PrintNo, string VerifyCode)
+        {
+            RefundTicketReply refundTicketReply = new RefundTicketReply();
+
+            if (!refundTicketReply.RequestInfoGuard(Username, Password, CinemaCode, PrintNo, VerifyCode))
+            {
+                return refundTicketReply;
+            }
+            //获取用户信息
+            UserInfoEntity UserInfo = _userInfoService.GetUserInfoByUserCredential(Username, Password);
+            if (UserInfo == null)
+            {
+                refundTicketReply.SetUserCredentialInvalidReply();
+                return refundTicketReply;
+            }
+            //验证影院是否存在且可访问
+            var userCinema = _userCinemaService.GetUserCinema(UserInfo.Id, CinemaCode);
+            if (userCinema == null)
+            {
+                refundTicketReply.SetCinemaInvalidReply();
+                return refundTicketReply;
+            }
+            //验证订单是否存在
+            var order = _orderService.GetOrderWithPrintNo(CinemaCode, PrintNo, VerifyCode);
+            if (order == null || order.orderBaseInfo.OrderStatus != OrderStatusEnum.Complete)
+            {
+                refundTicketReply.SetOrderNotExistReply();
+                return refundTicketReply;
+            }
+
+            return RefundTicket(refundTicketReply, userCinema, order);
+        }
         #endregion
 
         #region private methods
@@ -904,8 +947,46 @@ namespace NetSaleSvc.Api.Core
                 reply.Order = new QueryPrintReplyOrder();
                 reply.Order.OrderCode = order.orderBaseInfo.SubmitOrderCode;
                 reply.Order.PrintNo = order.orderBaseInfo.PrintNo;
+                reply.Order.VerifyCode = order.orderBaseInfo.VerifyCode;
                 reply.Order.Status = order.orderBaseInfo.PrintStatus.Value;
                 reply.Order.PrintTime = order.orderBaseInfo.PrintTime?.ToFormatStringWithT() ?? string.Empty;
+
+                reply.SetSuccessReply();
+            }
+            else
+            {
+                reply.GetErrorFromCTMSReply(CTMSReply);
+            }
+
+            //更新订单信息
+            _orderService.UpdateOrderBaseInfo(order.orderBaseInfo);
+
+            return reply;
+        }
+
+        /// <summary>
+        /// 退票
+        /// </summary>
+        /// <param name="reply"></param>
+        /// <param name="userCinema"></param>
+        /// <param name="order"></param>
+        /// <returns></returns>
+        [CheckForNullArgumentsAspect]
+        private RefundTicketReply RefundTicket(RefundTicketReply reply, UserCinemaViewEntity userCinema, OrderViewEntity order)
+        {
+            _CTMSInterface = CTMSInterfaceFactory.Create(userCinema);
+            var CTMSReply = _CTMSInterface.RefundTicket(userCinema, order);
+
+            if (CTMSReply.Status == StatusEnum.Success)
+            {
+                reply.Order = new RefundTicketReplyOrder();
+                reply.Order.OrderCode = order.orderBaseInfo.SubmitOrderCode;
+                reply.Order.PrintNo = order.orderBaseInfo.PrintNo;
+                reply.Order.VerifyCode = order.orderBaseInfo.VerifyCode;
+                reply.Order.Status = order.orderBaseInfo.OrderStatus == OrderStatusEnum.Refund ? YesOrNoEnum.Yes : YesOrNoEnum.No;
+                reply.Order.RefundTime = reply.Order.Status == YesOrNoEnum.Yes 
+                    ? order.orderBaseInfo.RefundTime.GetValueOrDefault(DateTime.Now).ToFormatStringWithT()
+                    : string.Empty;
 
                 reply.SetSuccessReply();
             }

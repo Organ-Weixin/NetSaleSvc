@@ -187,6 +187,72 @@ namespace NetSaleSvc.Entity.Models
     }
 
     /// <summary>
+    /// A class which represents the Ticket table.
+    /// </summary>
+    [Table("Ticket")]
+    [SqlLamTable(Name = "Ticket")]
+    public partial class TicketEntity : EntityBase
+    {
+        /// <summary>
+        /// 程序猿只想做个安静的美男子，不想写注释
+        /// </summary>
+        public virtual int Id { get; set; }
+        /// <summary>
+        /// 程序猿只想做个安静的美男子，不想写注释
+        /// </summary>
+        public virtual int? UserId { get; set; }
+        /// <summary>
+        /// 程序猿只想做个安静的美男子，不想写注释
+        /// </summary>
+        public virtual string CinemaCode { get; set; }
+        /// <summary>
+        /// 程序猿只想做个安静的美男子，不想写注释
+        /// </summary>
+        public virtual int? Count { get; set; }
+        /// <summary>
+        /// 总费用
+        /// </summary>
+        public virtual int? Fee { get; set; }
+        /// <summary>
+        /// 程序猿只想做个安静的美男子，不想写注释
+        /// </summary>
+        public virtual DateTime? Time { get; set; }
+    }
+
+    /// <summary>
+    /// A class which represents the log_Function table.
+    /// </summary>
+    [Table("log_Function")]
+    [SqlLamTable(Name = "log_Function")]
+    public partial class logFunctionEntity : EntityBase
+    {
+        /// <summary>
+        /// 程序猿只想做个安静的美男子，不想写注释
+        /// </summary>
+        public virtual int Id { get; set; }
+        /// <summary>
+        /// 程序猿只想做个安静的美男子，不想写注释
+        /// </summary>
+        public virtual int? UserId { get; set; }
+        /// <summary>
+        /// 程序猿只想做个安静的美男子，不想写注释
+        /// </summary>
+        public virtual string CinemaCode { get; set; }
+        /// <summary>
+        /// 程序猿只想做个安静的美男子，不想写注释
+        /// </summary>
+        public virtual int? Func { get; set; }
+        /// <summary>
+        /// 程序猿只想做个安静的美男子，不想写注释
+        /// </summary>
+        public virtual string Msg { get; set; }
+        /// <summary>
+        /// 程序猿只想做个安静的美男子，不想写注释
+        /// </summary>
+        public virtual string Time { get; set; }
+    }
+
+    /// <summary>
     /// A class which represents the Orders table.
     /// </summary>
     [Table("Orders")]
@@ -281,11 +347,15 @@ namespace NetSaleSvc.Entity.Models
         /// <summary>
         /// 出票状态
         /// </summary>
-        public virtual PrintStatusEnum? PrintStatus { get; set; }
+        public virtual YesOrNoEnum? PrintStatus { get; set; }
         /// <summary>
         /// 出票时间
         /// </summary>
         public virtual DateTime? PrintTime { get; set; }
+        /// <summary>
+        /// 退票时间
+        /// </summary>
+        public virtual DateTime? RefundTime { get; set; }
         /// <summary>
         /// 订单创建时间
         /// </summary>
@@ -302,72 +372,6 @@ namespace NetSaleSvc.Entity.Models
         /// 错误信息（锁座或提交订单失败错误信息）
         /// </summary>
         public virtual string ErrorMessage { get; set; }
-    }
-
-    /// <summary>
-    /// A class which represents the Ticket table.
-    /// </summary>
-    [Table("Ticket")]
-    [SqlLamTable(Name = "Ticket")]
-    public partial class TicketEntity : EntityBase
-    {
-        /// <summary>
-        /// 程序猿只想做个安静的美男子，不想写注释
-        /// </summary>
-        public virtual int Id { get; set; }
-        /// <summary>
-        /// 程序猿只想做个安静的美男子，不想写注释
-        /// </summary>
-        public virtual int? UserId { get; set; }
-        /// <summary>
-        /// 程序猿只想做个安静的美男子，不想写注释
-        /// </summary>
-        public virtual string CinemaCode { get; set; }
-        /// <summary>
-        /// 程序猿只想做个安静的美男子，不想写注释
-        /// </summary>
-        public virtual int? Count { get; set; }
-        /// <summary>
-        /// 总费用
-        /// </summary>
-        public virtual int? Fee { get; set; }
-        /// <summary>
-        /// 程序猿只想做个安静的美男子，不想写注释
-        /// </summary>
-        public virtual DateTime? Time { get; set; }
-    }
-
-    /// <summary>
-    /// A class which represents the log_Function table.
-    /// </summary>
-    [Table("log_Function")]
-    [SqlLamTable(Name = "log_Function")]
-    public partial class logFunctionEntity : EntityBase
-    {
-        /// <summary>
-        /// 程序猿只想做个安静的美男子，不想写注释
-        /// </summary>
-        public virtual int Id { get; set; }
-        /// <summary>
-        /// 程序猿只想做个安静的美男子，不想写注释
-        /// </summary>
-        public virtual int? UserId { get; set; }
-        /// <summary>
-        /// 程序猿只想做个安静的美男子，不想写注释
-        /// </summary>
-        public virtual string CinemaCode { get; set; }
-        /// <summary>
-        /// 程序猿只想做个安静的美男子，不想写注释
-        /// </summary>
-        public virtual int? Func { get; set; }
-        /// <summary>
-        /// 程序猿只想做个安静的美男子，不想写注释
-        /// </summary>
-        public virtual string Msg { get; set; }
-        /// <summary>
-        /// 程序猿只想做个安静的美男子，不想写注释
-        /// </summary>
-        public virtual string Time { get; set; }
     }
 
     /// <summary>

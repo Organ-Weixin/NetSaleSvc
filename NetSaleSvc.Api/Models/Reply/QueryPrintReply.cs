@@ -40,7 +40,7 @@ namespace NetSaleSvc.Api.Models
         /// 打印状态
         /// </summary>
         [XmlElement]
-        public PrintStatusEnum Status { get; set; }
+        public YesOrNoEnum Status { get; set; }
 
         /// <summary>
         /// 打印时间

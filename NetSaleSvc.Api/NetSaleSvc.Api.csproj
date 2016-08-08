@@ -63,6 +63,7 @@
     <Compile Include="Models\Reply\QuerySeatReply.cs" />
     <Compile Include="Models\Reply\QuerySessionReply.cs" />
     <Compile Include="Models\Reply\QuerySessionSeatReply.cs" />
+    <Compile Include="Models\Reply\RefundTicketReply.cs" />
     <Compile Include="Models\Reply\ReleaseSeatReply.cs" />
     <Compile Include="Models\Reply\SubmitOrderReply.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

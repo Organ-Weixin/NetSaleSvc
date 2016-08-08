@@ -82,5 +82,13 @@ namespace NetSaleSvc.Api.CTMS
         /// <param name="order"></param>
         /// <returns></returns>
         CTMSQueryPrintReply QueryPrint(UserCinemaViewEntity userCinema, OrderViewEntity order);
+
+        /// <summary>
+        /// 退票
+        /// </summary>
+        /// <param name="userCinema"></param>
+        /// <param name="order"></param>
+        /// <returns></returns>
+        CTMSRefundTicketReply RefundTicket(UserCinemaViewEntity userCinema, OrderViewEntity order);
     }
 }
