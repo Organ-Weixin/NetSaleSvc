@@ -63,6 +63,10 @@ namespace NetSaleSvc.Api.Models
         /// 查询影票信息接口Id
         /// </summary>
         public static string ID_QueryTicketReply = nameof(ID_QueryTicketReply);
+        /// <summary>
+        /// 确认出票接口Id
+        /// </summary>
+        public static string ID_FetchTicketReply = nameof(ID_FetchTicketReply);
         #endregion
 
         #region ctor

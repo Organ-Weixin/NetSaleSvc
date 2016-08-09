@@ -696,6 +696,49 @@ namespace NetSaleSvc.Api.Core
 
             return QueryTicket(queryTicketReply, userCinema, order);
         }
+
+        /// <summary>
+        /// 确认出票
+        /// </summary>
+        /// <param name="Username"></param>
+        /// <param name="Password"></param>
+        /// <param name="CinemaCode"></param>
+        /// <param name="PrintNo"></param>
+        /// <param name="VerifyCode"></param>
+        /// <returns></returns>
+        public FetchTicketReply FetchTicket(string Username, string Password, string CinemaCode,
+            string PrintNo, string VerifyCode)
+        {
+            FetchTicketReply fetchTicketReply = new FetchTicketReply();
+
+            if (!fetchTicketReply.RequestInfoGuard(Username, Password, CinemaCode, PrintNo, VerifyCode))
+            {
+                return fetchTicketReply;
+            }
+            //获取用户信息
+            UserInfoEntity UserInfo = _userInfoService.GetUserInfoByUserCredential(Username, Password);
+            if (UserInfo == null)
+            {
+                fetchTicketReply.SetUserCredentialInvalidReply();
+                return fetchTicketReply;
+            }
+            //验证影院是否存在且可访问
+            var userCinema = _userCinemaService.GetUserCinema(UserInfo.Id, CinemaCode);
+            if (userCinema == null)
+            {
+                fetchTicketReply.SetCinemaInvalidReply();
+                return fetchTicketReply;
+            }
+            //验证订单是否存在
+            var order = _orderService.GetOrderWithPrintNo(CinemaCode, PrintNo, VerifyCode);
+            if (order == null)
+            {
+                fetchTicketReply.SetOrderNotExistReply();
+                return fetchTicketReply;
+            }
+
+            return FetchTicket(fetchTicketReply, userCinema, order);
+        }
         #endregion
 
         #region private methods
@@ -1217,6 +1260,34 @@ namespace NetSaleSvc.Api.Core
 
             //更新订单信息
             _orderService.Update(order);
+
+            return reply;
+        }
+
+        /// <summary>
+        /// 确认出票
+        /// </summary>
+        /// <param name="reply"></param>
+        /// <param name="userCinema"></param>
+        /// <param name="order"></param>
+        /// <returns></returns>
+        [CheckForNullArgumentsAspect]
+        private FetchTicketReply FetchTicket(FetchTicketReply reply, UserCinemaViewEntity userCinema, OrderViewEntity order)
+        {
+            _CTMSInterface = CTMSInterfaceFactory.Create(userCinema);
+            var CTMSReply = _CTMSInterface.FetchTicket(userCinema, order);
+
+            if (CTMSReply.Status == StatusEnum.Success)
+            {
+                reply.SetSuccessReply();
+            }
+            else
+            {
+                reply.GetErrorFromCTMSReply(CTMSReply);
+            }
+
+            //更新订单信息
+            _orderService.UpdateOrderBaseInfo(order.orderBaseInfo);
 
             return reply;
         }

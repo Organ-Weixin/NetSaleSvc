@@ -358,6 +358,34 @@ namespace NetSaleSvc
 
             return onlineTicketingServiceReply.Serialize();
         }
+
+        /// <summary>
+        /// 确认出票
+        /// </summary>
+        /// <param name="Username"></param>
+        /// <param name="Password"></param>
+        /// <param name="CinemaCode"></param>
+        /// <param name="PrintNo"></param>
+        /// <param name="VerifyCode"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public string FetchTicket(string Username, string Password, string CinemaCode,
+            string PrintNo, string VerifyCode)
+        {
+            OnlineTicketingServiceReply onlineTicketingServiceReply = new OnlineTicketingServiceReply();
+            try
+            {
+                onlineTicketingServiceReply.FetchTicketReply = NetSaleSvcCore.Instance.FetchTicket(Username,
+                    Password, CinemaCode, PrintNo, VerifyCode);
+            }
+            catch (Exception ex)
+            {
+                onlineTicketingServiceReply.FetchTicketReply = new FetchTicketReply();
+                LogHelper.LogException(ex);
+            }
+
+            return onlineTicketingServiceReply.Serialize();
+        }
         #endregion
     }
 }

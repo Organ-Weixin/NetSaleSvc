@@ -99,5 +99,11 @@ namespace NetSaleSvc.Api.Models
         /// </summary>
         [XmlElement]
         public QueryTicketReply QueryTicketReply { get; set; }
+
+        /// <summary>
+        /// 确认出票
+        /// </summary>
+        [XmlElement]
+        public FetchTicketReply FetchTicketReply { get; set; }
     }
 }

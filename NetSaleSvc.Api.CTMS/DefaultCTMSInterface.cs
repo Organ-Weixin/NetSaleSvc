@@ -150,5 +150,16 @@ namespace NetSaleSvc.Api.CTMS
         {
             throw new Exception(CinemaInterfaceMiss);
         }
+
+        /// <summary>
+        /// 确认出票
+        /// </summary>
+        /// <param name="userCinema"></param>
+        /// <param name="order"></param>
+        /// <returns></returns>
+        public CTMSFetchTicketReply FetchTicket(UserCinemaViewEntity userCinema, OrderViewEntity order)
+        {
+            throw new Exception(CinemaInterfaceMiss);
+        }
     }
 }

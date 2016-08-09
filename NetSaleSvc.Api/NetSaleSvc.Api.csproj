@@ -53,6 +53,7 @@
     <Compile Include="Models\Query\SubmitOrderQueryXml.cs" />
     <Compile Include="Models\Reply\BaseReply.cs" />
     <Compile Include="Models\Reply\ErrorCodeEnum.cs" />
+    <Compile Include="Models\Reply\FetchTicketReply.cs" />
     <Compile Include="Models\Reply\LockSeatReply.cs" />
     <Compile Include="Models\Reply\ModelMapper.cs" />
     <Compile Include="Models\Reply\OnlineTicketingServiceReply.cs" />

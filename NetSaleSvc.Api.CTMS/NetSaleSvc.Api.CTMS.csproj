@@ -53,6 +53,7 @@
     <Compile Include="DefaultCTMSInterface.cs" />
     <Compile Include="ICTMSInterface.cs" />
     <Compile Include="Models\CTMSBaseReply.cs" />
+    <Compile Include="Models\CTMSFetchTicketReply.cs" />
     <Compile Include="Models\CTMSLockSeatReply.cs" />
     <Compile Include="Models\CTMSQueryCinemaReply.cs" />
     <Compile Include="Models\CTMSQueryFilmReply.cs" />
@@ -66,7 +67,9 @@
     <Compile Include="Models\CTMSReleaseSeatReply.cs" />
     <Compile Include="Models\CTMSSubmitOrderReply.cs" />
     <Compile Include="NationalStandard\Models\ModelMapper.cs" />
+    <Compile Include="NationalStandard\Models\nsApplyFetchTicketResult.cs" />
     <Compile Include="NationalStandard\Models\nsBaseReply.cs" />
+    <Compile Include="NationalStandard\Models\nsFetchTicketResult.cs" />
     <Compile Include="NationalStandard\Models\nsLockSeatReply.cs" />
     <Compile Include="NationalStandard\Models\nsOnlineTicketingServiceReply.cs" />
     <Compile Include="NationalStandard\Models\nsQueryCinemaReply.cs" />

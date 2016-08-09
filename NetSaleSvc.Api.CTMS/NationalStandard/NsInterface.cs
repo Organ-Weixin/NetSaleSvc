@@ -514,6 +514,51 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
 
             return queryTicketReply;
         }
+
+        /// <summary>
+        /// 确认出票
+        /// </summary>
+        /// <param name="userCinema"></param>
+        /// <param name="order"></param>
+        /// <returns></returns>
+        public CTMSFetchTicketReply FetchTicket(UserCinemaViewEntity userCinema, OrderViewEntity order)
+        {
+            CTMSFetchTicketReply fetchTicketReply = new CTMSFetchTicketReply();
+            
+            //先请求出票
+            string applyFetchTicketResult = fetchTicketSvc.ApplyFetchTicket(userCinema.FetchTicketIp, userCinema.RealUserName,
+                userCinema.RealPassword, order.orderBaseInfo.PrintNo, order.orderBaseInfo.VerifyCode);
+
+            nsApplyFetchTicketResult applyReply = applyFetchTicketResult.Deserialize<nsApplyFetchTicketResult>();
+
+            if (applyReply.ResultCode == "0")
+            {
+                //然后确认出票
+                string fetchTicketResult = fetchTicketSvc.FetchTicket(userCinema.FetchTicketIp, userCinema.RealUserName,
+                userCinema.RealPassword, order.orderBaseInfo.PrintNo);
+
+                nsFetchTicketResult fetchReply = applyFetchTicketResult.Deserialize<nsFetchTicketResult>();
+
+                if (fetchReply.ResultCode == "0")
+                {
+                    fetchTicketReply.Status = StatusEnum.Success;
+                }
+                else
+                {
+                    fetchTicketReply.Status = StatusEnum.Failure;
+                    fetchTicketReply.ErrorCode = fetchReply.ResultCode;
+                    fetchTicketReply.ErrorMessage = fetchReply.Message;
+                }
+            }
+            else
+            {
+                fetchTicketReply.Status = StatusEnum.Failure;
+                fetchTicketReply.ErrorCode = applyReply.ResultCode;
+                fetchTicketReply.ErrorMessage = applyReply.Message;
+            }
+
+            return fetchTicketReply;
+        }
         #endregion
 
         #region private methods
