@@ -120,7 +120,7 @@ namespace NetSaleSvc.Api.Models
         /// 影片在连场中的序号
         /// </summary>
         [XmlElement]
-        public int? Sequence { get; set; }
+        public string Sequence { get; set; }
 
         /// <summary>
         /// 语言

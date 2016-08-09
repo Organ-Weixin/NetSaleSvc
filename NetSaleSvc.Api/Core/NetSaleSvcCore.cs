@@ -8,6 +8,7 @@ using System.Linq;
 using NetSaleSvc.Util;
 using NetSaleSvc.Entity.Enum;
 using NetSaleSvc.Api.CTMS.Models;
+using System.Collections.Generic;
 
 namespace NetSaleSvc.Api.Core
 {
@@ -602,6 +603,47 @@ namespace NetSaleSvc.Api.Core
 
             return RefundTicket(refundTicketReply, userCinema, order);
         }
+
+        /// <summary>
+        /// 查询订单信息
+        /// </summary>
+        /// <param name="Username"></param>
+        /// <param name="Password"></param>
+        /// <param name="CinemaCode"></param>
+        /// <param name="OrderCode"></param>
+        /// <returns></returns>
+        public QueryOrderReply QueryOrder(string Username, string Password, string CinemaCode,
+            string OrderCode)
+        {
+            QueryOrderReply queryOrderReply = new QueryOrderReply();
+            if (!queryOrderReply.RequestInfoGuard(Username, Password, CinemaCode, OrderCode))
+            {
+                return queryOrderReply;
+            }
+            //获取用户信息
+            UserInfoEntity UserInfo = _userInfoService.GetUserInfoByUserCredential(Username, Password);
+            if (UserInfo == null)
+            {
+                queryOrderReply.SetUserCredentialInvalidReply();
+                return queryOrderReply;
+            }
+            //验证影院是否存在且可访问
+            var userCinema = _userCinemaService.GetUserCinema(UserInfo.Id, CinemaCode);
+            if (userCinema == null)
+            {
+                queryOrderReply.SetCinemaInvalidReply();
+                return queryOrderReply;
+            }
+            //验证订单是否存在
+            var order = _orderService.GetOrderWithOrderCode(CinemaCode, OrderCode);
+            if (order == null)
+            {
+                queryOrderReply.SetOrderNotExistReply();
+                return queryOrderReply;
+            }
+
+            return QueryOrder(queryOrderReply, userCinema, order);
+        }
         #endregion
 
         #region private methods
@@ -984,7 +1026,7 @@ namespace NetSaleSvc.Api.Core
                 reply.Order.PrintNo = order.orderBaseInfo.PrintNo;
                 reply.Order.VerifyCode = order.orderBaseInfo.VerifyCode;
                 reply.Order.Status = order.orderBaseInfo.OrderStatus == OrderStatusEnum.Refund ? YesOrNoEnum.Yes : YesOrNoEnum.No;
-                reply.Order.RefundTime = reply.Order.Status == YesOrNoEnum.Yes 
+                reply.Order.RefundTime = reply.Order.Status == YesOrNoEnum.Yes
                     ? order.orderBaseInfo.RefundTime.GetValueOrDefault(DateTime.Now).ToFormatStringWithT()
                     : string.Empty;
 
@@ -998,6 +1040,79 @@ namespace NetSaleSvc.Api.Core
             //更新订单信息
             _orderService.UpdateOrderBaseInfo(order.orderBaseInfo);
 
+            return reply;
+        }
+
+        /// <summary>
+        /// 查询订单信息
+        /// </summary>
+        /// <param name="reply"></param>
+        /// <param name="userCinema"></param>
+        /// <param name="order"></param>
+        /// <returns></returns>
+        [CheckForNullArgumentsAspect]
+        private QueryOrderReply QueryOrder(QueryOrderReply reply, UserCinemaViewEntity userCinema,
+            OrderViewEntity order)
+        {
+            _CTMSInterface = CTMSInterfaceFactory.Create(userCinema);
+            var CTMSReply = _CTMSInterface.QueryOrder(userCinema, order);
+
+            if (CTMSReply.Status == StatusEnum.Success)
+            {
+                reply.Order = new QueryOrderReplyOrder();
+                reply.Order.OrderCode = order.orderBaseInfo.SubmitOrderCode;
+                reply.Order.CinemaCode = userCinema.CinemaCode;
+                reply.Order.CinemaType = userCinema.CinemaType;
+                reply.Order.CinemaName = userCinema.CinemaName;
+                var screenInfo = _screenInfoService.GetScreenInfo(userCinema.CinemaCode, order.orderBaseInfo.ScreenCode);
+                reply.Order.ScreenCode = order.orderBaseInfo.ScreenCode;
+                reply.Order.ScreenName = screenInfo?.SName ?? string.Empty;
+                var sessionInfo = _sessionInfoService.GetSessionInfo(userCinema.CinemaCode,
+                    order.orderBaseInfo.SessionCode, userCinema.UserId);
+                reply.Order.SessionCode = order.orderBaseInfo.SessionCode;
+                reply.Order.StartTime = order.orderBaseInfo.SessionTime.ToFormatStringWithT();
+                reply.Order.PlaythroughFlag = sessionInfo?.PlaythroughFlag ?? "No";
+                reply.Order.PrintNo = order.orderBaseInfo.PrintNo;
+                reply.Order.VerifyCode = order.orderBaseInfo.VerifyCode;
+
+                QueryOrderReplyFilm film = new QueryOrderReplyFilm
+                {
+                    Code = order.orderBaseInfo.FilmCode,
+                    Name = order.orderBaseInfo.FilmName,
+                    Duration = (sessionInfo?.Duration ?? 0).ToString(),
+                    Sequence = (sessionInfo?.Sequence ?? 1).ToString()
+                };
+                reply.Order.Films = new QueryOrderReplyFilms
+                {
+                    Film = new List<QueryOrderReplyFilm> { film }
+                };
+
+                var seatInfos = _seatInfoService.GetSeats(userCinema.CinemaCode,
+                    order.orderSeatDetails.Select(x => x.SeatCode));
+                reply.Order.Seats = new QueryOrderReplySeats
+                {
+                    Seat = order.orderSeatDetails.Select(x => new QueryOrderReplySeat
+                    {
+                        SeatCode = x.SeatCode,
+                        RowNum = seatInfos.Where(y => y.SeatCode == x.SeatCode).SingleOrDefault()?.RowNum ?? string.Empty,
+                        ColumnNum = seatInfos.Where(y => y.SeatCode == x.SeatCode).SingleOrDefault()?.ColumnNum ?? string.Empty,
+                        FilmTicketCode = x.FilmTicketCode,
+                        PrintStatus = order.orderBaseInfo.PrintStatus.GetValueOrDefault(YesOrNoEnum.No),
+                        PrintTime = order.orderBaseInfo.PrintTime?.ToFormatStringWithT() ?? string.Empty,
+                        RefundStatus = order.orderBaseInfo.OrderStatus == OrderStatusEnum.Refund ? YesOrNoEnum.Yes : YesOrNoEnum.No,
+                        RefundTime = order.orderBaseInfo.RefundTime?.ToFormatStringWithT() ?? string.Empty
+                    }).ToList()
+                };
+
+                reply.SetSuccessReply();
+            }
+            else
+            {
+                reply.GetErrorFromCTMSReply(CTMSReply);
+            }
+
+            //更新订单信息
+            _orderService.Update(order);
             return reply;
         }
         #endregion

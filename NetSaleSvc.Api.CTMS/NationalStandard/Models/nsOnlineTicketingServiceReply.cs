@@ -76,5 +76,11 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard.Models
         /// </summary>
         [XmlElement]
         public nsRefundTicketReply RefundTicketReply { get; set; }
+
+        /// <summary>
+        /// 查询订单信息
+        /// </summary>
+        [XmlElement]
+        public nsQueryOrderReply QueryOrderReply { get; set; }
     }
 }

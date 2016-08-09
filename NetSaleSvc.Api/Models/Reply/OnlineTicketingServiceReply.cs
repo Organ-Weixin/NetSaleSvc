@@ -87,5 +87,11 @@ namespace NetSaleSvc.Api.Models
         /// </summary>
         [XmlElement]
         public RefundTicketReply RefundTicketReply { get; set; }
+
+        /// <summary>
+        /// 查询订单信息
+        /// </summary>
+        [XmlElement]
+        public QueryOrderReply QueryOrderReply { get; set; }
     }
 }

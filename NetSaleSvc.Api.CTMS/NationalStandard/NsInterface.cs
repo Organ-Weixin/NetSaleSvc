@@ -403,6 +403,64 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
 
             return refundTicketReply;
         }
+
+        /// <summary>
+        /// 查询订单信息
+        /// </summary>
+        /// <param name="userCinema"></param>
+        /// <param name="order"></param>
+        /// <returns></returns>
+        public CTMSQueryOrderReply QueryOrder(UserCinemaViewEntity userCinema, OrderViewEntity order)
+        {
+            CTMSQueryOrderReply queryOrderReply = new CTMSQueryOrderReply();
+
+            string queryOrderResult = nsService.QueryOrder(userCinema.RealUserName, userCinema.RealPassword,
+                userCinema.Url, string.Empty, userCinema.CinemaCode, order.orderBaseInfo.SubmitOrderCode);
+
+            nsOnlineTicketingServiceReply reply = queryOrderResult.Deserialize<nsOnlineTicketingServiceReply>();
+
+            if (reply.QueryOrderReply.Status == StatusEnum.Success.GetDescription())
+            {
+                var firstSeat = reply.QueryOrderReply.Order.Seats.Seat.FirstOrDefault() ?? new nsQueryOrderReplySeat();
+                if (firstSeat.PrintStatus == YesOrNoEnum.Yes)
+                {
+                    order.orderBaseInfo.PrintStatus = YesOrNoEnum.Yes;
+                    DateTime printTime;
+                    if (DateTime.TryParse(firstSeat.PrintTime, out printTime))
+                    {
+                        order.orderBaseInfo.PrintTime = printTime;
+                    }
+                    else
+                    {
+                        order.orderBaseInfo.PrintTime = DateTime.Now;
+                    }
+                }
+
+                if (firstSeat.RefundStatus == YesOrNoEnum.Yes)
+                {
+                    order.orderBaseInfo.OrderStatus = OrderStatusEnum.Refund;
+                    DateTime refundTime;
+                    if (DateTime.TryParse(firstSeat.RefundTime, out refundTime))
+                    {
+                        order.orderBaseInfo.RefundTime = refundTime;
+                    }
+                    else
+                    {
+                        order.orderBaseInfo.RefundTime = DateTime.Now;
+                    }
+                }
+                queryOrderReply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                queryOrderReply.Status = StatusEnum.Failure;
+            }
+
+            queryOrderReply.ErrorCode = reply.QueryOrderReply.ErrorCode;
+            queryOrderReply.ErrorMessage = reply.QueryOrderReply.ErrorMessage;
+
+            return queryOrderReply;
+        }
         #endregion
 
         #region private methods

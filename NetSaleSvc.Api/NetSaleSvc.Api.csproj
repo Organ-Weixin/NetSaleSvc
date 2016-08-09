@@ -59,6 +59,7 @@
     <Compile Include="Models\Reply\QueryCinemaListReply.cs" />
     <Compile Include="Models\Reply\QueryCinemaReply.cs" />
     <Compile Include="Models\Reply\QueryFilmReply.cs" />
+    <Compile Include="Models\Reply\QueryOrderReply.cs" />
     <Compile Include="Models\Reply\QueryPrintReply.cs" />
     <Compile Include="Models\Reply\QuerySeatReply.cs" />
     <Compile Include="Models\Reply\QuerySessionReply.cs" />

@@ -128,5 +128,16 @@ namespace NetSaleSvc.Api.CTMS
         {
             throw new Exception(CinemaInterfaceMiss);
         }
+
+        /// <summary>
+        /// 查询订单信息
+        /// </summary>
+        /// <param name="userCinema"></param>
+        /// <param name="order"></param>
+        /// <returns></returns>
+        public CTMSQueryOrderReply QueryOrder(UserCinemaViewEntity userCinema, OrderViewEntity order)
+        {
+            throw new Exception(CinemaInterfaceMiss);
+        }
     }
 }

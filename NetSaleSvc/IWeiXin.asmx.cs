@@ -302,5 +302,32 @@ namespace NetSaleSvc
 
             return onlineTicketingServiceReply.Serialize();
         }
+
+        /// <summary>
+        /// 查询订单信息
+        /// </summary>
+        /// <param name="Username"></param>
+        /// <param name="Password"></param>
+        /// <param name="CinemaCode"></param>
+        /// <param name="OrderCode"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public string QueryOrder(string Username, string Password, string CinemaCode,
+            string OrderCode)
+        {
+            OnlineTicketingServiceReply onlineTicketingServiceReply = new OnlineTicketingServiceReply();
+            try
+            {
+                onlineTicketingServiceReply.QueryOrderReply = NetSaleSvcCore.Instance.QueryOrder(Username,
+                    Password, CinemaCode, OrderCode);
+            }
+            catch (Exception ex)
+            {
+                onlineTicketingServiceReply.QueryOrderReply = new QueryOrderReply();
+                LogHelper.LogException(ex);
+            }
+
+            return onlineTicketingServiceReply.Serialize();
+        }
     }
 }

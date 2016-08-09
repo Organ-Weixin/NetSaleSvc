@@ -30,6 +30,18 @@ namespace NetSaleSvc.Service
         }
 
         /// <summary>
+        /// 根据座位编码列表获取座位信息
+        /// </summary>
+        /// <param name="CinemaCode"></param>
+        /// <param name="SeatCodes"></param>
+        /// <returns></returns>
+        public IList<ScreenSeatInfoEntity> GetSeats(string CinemaCode, IEnumerable<string> SeatCodes)
+        {
+            return _screenSeatInfoRepository.Query.Where(x => x.CinemaCode == CinemaCode)
+                .WhereIsIn(x => x.SeatCode, SeatCodes).ToList();
+        }
+
+        /// <summary>
         /// 批量合并
         /// </summary>
         /// <param name="entities"></param>

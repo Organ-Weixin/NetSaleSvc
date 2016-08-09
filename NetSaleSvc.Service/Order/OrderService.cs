@@ -48,6 +48,29 @@ namespace NetSaleSvc.Service
         }
 
         /// <summary>
+        /// 根据订单编码（可以是LockOrderCode，也可以是SubmitOrderCode）获取订单信息
+        /// </summary>
+        /// <param name="CinemaCode"></param>
+        /// <param name="OrderCode"></param>
+        /// <returns></returns>
+        public OrderViewEntity GetOrderWithOrderCode(string CinemaCode, string OrderCode)
+        {
+            var order = _orderRepository.Query.Where(x => x.CinemaCode == CinemaCode
+                && (x.LockOrderCode == OrderCode || x.SubmitOrderCode == OrderCode)).SingleOrDefault();
+            if (order == null)
+            {
+                return null;
+            }
+
+            var orderSeats = _orderSeatRepository.Query.Where(x => x.OrderId == order.Id).ToList();
+            return new OrderViewEntity
+            {
+                orderBaseInfo = order,
+                orderSeatDetails = orderSeats.ToList()
+            };
+        }
+
+        /// <summary>
         /// 根据取票信息获取订单
         /// </summary>
         /// <param name="CinemaCode"></param>
@@ -96,6 +119,7 @@ namespace NetSaleSvc.Service
                     catch
                     {
                         transaction.Rollback();
+                        throw;
                     }
                 }
             }
@@ -128,6 +152,7 @@ namespace NetSaleSvc.Service
                     catch
                     {
                         transaction.Rollback();
+                        throw;
                     }
                 }
             }

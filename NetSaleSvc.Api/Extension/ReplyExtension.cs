@@ -394,5 +394,32 @@ namespace NetSaleSvc.Api.Extension
 
             return true;
         }
+
+        public static bool RequestInfoGuard(this QueryOrderReply reply, string Username, string Password,
+            string CinemaCode, string OrderCode)
+        {
+            if (string.IsNullOrEmpty(Username))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Username));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Password));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CinemaCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(OrderCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(OrderCode));
+                return false;
+            }
+
+            return true;
+        }
     }
 }

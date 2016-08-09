@@ -101,7 +101,7 @@ namespace NetSaleSvc.Api.Models
             film.Name = entity.sessionInfo.FilmName;
             film.Dimensional = entity.sessionInfo.Dimensional;
             film.Duration = entity.sessionInfo.Duration.HasValue ? entity.sessionInfo.Duration.Value.ToString() : string.Empty;
-            film.Sequence = entity.sessionInfo.Sequence;
+            film.Sequence = entity.sessionInfo.Sequence.ToString();
             film.Language = entity.sessionInfo.Language;
             session.Films.Film.Add(film);
 
