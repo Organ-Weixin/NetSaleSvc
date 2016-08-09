@@ -8,5 +8,8 @@
     <Setting Name="NetSaleSvc_Api_CTMS_NationalStandardService_NsService" Type="(Web Service URL)" Scope="Application">
       <Value Profile="(Default)">http://zjpt.80piao.com:81/NsService.asmx</Value>
     </Setting>
+    <Setting Name="NetSaleSvc_Api_CTMS_NsFetchTicket_FetchTicketSvc" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://ccz.80piao.com:89/FetchTicketSvc.asmx</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

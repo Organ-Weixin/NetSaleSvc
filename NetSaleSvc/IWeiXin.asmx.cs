@@ -329,5 +329,35 @@ namespace NetSaleSvc
 
             return onlineTicketingServiceReply.Serialize();
         }
+
+        #region 取票接口
+        /// <summary>
+        /// 查询影票信息
+        /// </summary>
+        /// <param name="Username"></param>
+        /// <param name="Password"></param>
+        /// <param name="CinemaCode"></param>
+        /// <param name="PrintNo"></param>
+        /// <param name="VerifyCode"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public string QueryTicket(string Username, string Password, string CinemaCode,
+            string PrintNo, string VerifyCode)
+        {
+            OnlineTicketingServiceReply onlineTicketingServiceReply = new OnlineTicketingServiceReply();
+            try
+            {
+                onlineTicketingServiceReply.QueryTicketReply = NetSaleSvcCore.Instance.QueryTicket(Username,
+                    Password, CinemaCode, PrintNo, VerifyCode);
+            }
+            catch (Exception ex)
+            {
+                onlineTicketingServiceReply.QueryTicketReply = new QueryTicketReply();
+                LogHelper.LogException(ex);
+            }
+
+            return onlineTicketingServiceReply.Serialize();
+        }
+        #endregion
     }
 }

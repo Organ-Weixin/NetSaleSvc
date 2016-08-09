@@ -42,5 +42,15 @@ namespace NetSaleSvc.Api.CTMS.Properties {
                 return ((string)(this["NetSaleSvc_Api_CTMS_NationalStandardService_NsService"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://ccz.80piao.com:89/FetchTicketSvc.asmx")]
+        public string NetSaleSvc_Api_CTMS_NsFetchTicket_FetchTicketSvc {
+            get {
+                return ((string)(this["NetSaleSvc_Api_CTMS_NsFetchTicket_FetchTicketSvc"]));
+            }
+        }
     }
 }

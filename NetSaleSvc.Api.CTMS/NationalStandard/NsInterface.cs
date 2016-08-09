@@ -10,6 +10,7 @@ using NetSaleSvc.Util;
 using NetSaleSvc.Entity.Enum;
 using NetSaleSvc.Service;
 using NetSaleSvc.Api.CTMS.Models;
+using NetSaleSvc.Api.CTMS.NsFetchTicket;
 
 namespace NetSaleSvc.Api.CTMS.NationalStandard
 {
@@ -20,6 +21,7 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
     {
         #region private fields
         private NsService nsService;
+        private FetchTicketSvc fetchTicketSvc;
         private ScreenInfoService _screenInfoService;
         private SeatInfoService _seatInfoService;
         private FilmInfoService _filmInfoService;
@@ -30,6 +32,7 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
         public NsInterface()
         {
             nsService = new NsService();
+            fetchTicketSvc = new FetchTicketSvc();
             _screenInfoService = new ScreenInfoService();
             _seatInfoService = new SeatInfoService();
             _filmInfoService = new FilmInfoService();
@@ -314,7 +317,10 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
                 order.orderSeatDetails.ForEach(x =>
                 {
                     var newSeat = reply.SubmitOrderReply.Order.Seat.Where(y => y.SeatCode == x.SeatCode).SingleOrDefault();
-                    x.FilmTicketCode = newSeat.FilmTicketCode;
+                    if (newSeat != null)
+                    {
+                        x.FilmTicketCode = newSeat.FilmTicketCode;
+                    }
                 });
                 order.orderBaseInfo.OrderStatus = OrderStatusEnum.Complete;
                 order.orderBaseInfo.SubmitTime = DateTime.Now;
@@ -460,6 +466,53 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
             queryOrderReply.ErrorMessage = reply.QueryOrderReply.ErrorMessage;
 
             return queryOrderReply;
+        }
+
+        /// <summary>
+        /// 查询影票信息
+        /// </summary>
+        /// <param name="userCinema"></param>
+        /// <param name="order"></param>
+        /// <returns></returns>
+        public CTMSQueryTicketReply QueryTicket(UserCinemaViewEntity userCinema, OrderViewEntity order)
+        {
+            CTMSQueryTicketReply queryTicketReply = new CTMSQueryTicketReply();
+
+            string queryTicketResult = fetchTicketSvc.QueryTicketInfo(userCinema.FetchTicketIp, userCinema.RealUserName,
+                userCinema.RealPassword, order.orderBaseInfo.PrintNo);
+
+            nsQueryTicketReply reply = queryTicketResult.Deserialize<nsQueryTicketReply>();
+
+            if (reply.ResultCode == "0")
+            {
+                if (reply.Tickets != null && reply.Tickets.Ticket != null && reply.Tickets.Ticket.Count > 0)
+                {
+                    order.orderSeatDetails.ForEach(x =>
+                    {
+                        var ticket = reply.Tickets.Ticket.Where(y => y.SeatCode == x.SeatCode).SingleOrDefault();
+                        if (ticket != null)
+                        {
+                            x.TicketInfoCode = ticket.TicketInfoCode;
+                            x.FilmTicketCode = ticket.TicketCode;
+                            byte printFlag = 0;
+                            if (byte.TryParse(ticket.PrintFlag, out printFlag))
+                            {
+                                x.PrintFlag = printFlag;
+                            }
+                        }
+                    });
+                }
+                queryTicketReply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                queryTicketReply.Status = StatusEnum.Failure;
+            }
+
+            queryTicketReply.ErrorCode = reply.ResultCode;
+            queryTicketReply.ErrorMessage = reply.Message;
+
+            return queryTicketReply;
         }
         #endregion
 

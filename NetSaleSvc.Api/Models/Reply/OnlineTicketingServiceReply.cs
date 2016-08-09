@@ -93,5 +93,11 @@ namespace NetSaleSvc.Api.Models
         /// </summary>
         [XmlElement]
         public QueryOrderReply QueryOrderReply { get; set; }
+
+        /// <summary>
+        /// 查询影票信息
+        /// </summary>
+        [XmlElement]
+        public QueryTicketReply QueryTicketReply { get; set; }
     }
 }

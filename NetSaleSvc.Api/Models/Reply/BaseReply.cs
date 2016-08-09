@@ -59,7 +59,10 @@ namespace NetSaleSvc.Api.Models
         /// 查询订单接口Id
         /// </summary>
         public static string ID_QueryOrderReply = nameof(ID_QueryOrderReply);
-
+        /// <summary>
+        /// 查询影票信息接口Id
+        /// </summary>
+        public static string ID_QueryTicketReply = nameof(ID_QueryTicketReply);
         #endregion
 
         #region ctor

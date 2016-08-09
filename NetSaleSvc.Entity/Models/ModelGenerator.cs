@@ -17,56 +17,6 @@ using NetSaleSvc.Entity.Enum;
 namespace NetSaleSvc.Entity.Models
 {
     /// <summary>
-    /// A class which represents the OrderSeatDetails table.
-    /// </summary>
-    [Table("OrderSeatDetails")]
-    [SqlLamTable(Name = "OrderSeatDetails")]
-    public partial class OrderSeatDetailEntity : EntityBase
-    {
-        /// <summary>
-        /// 程序猿只想做个安静的美男子，不想写注释
-        /// </summary>
-        [Key]
-        public virtual int Id { get; set; }
-        /// <summary>
-        /// 订单Id
-        /// </summary>
-        public virtual int OrderId { get; set; }
-        /// <summary>
-        /// 座位编码
-        /// </summary>
-        public virtual string SeatCode { get; set; }
-        /// <summary>
-        /// 上报票价
-        /// </summary>
-        public virtual decimal Price { get; set; }
-        /// <summary>
-        /// 接入商实际销售票价
-        /// </summary>
-        public virtual decimal SalePrice { get; set; }
-        /// <summary>
-        /// 服务费
-        /// </summary>
-        public virtual decimal Fee { get; set; }
-        /// <summary>
-        /// 电影票编码
-        /// </summary>
-        public virtual string FilmTicketCode { get; set; }
-        /// <summary>
-        /// 创建时间
-        /// </summary>
-        public virtual DateTime Created { get; set; }
-        /// <summary>
-        /// 更新时间
-        /// </summary>
-        public virtual DateTime? Updated { get; set; }
-        /// <summary>
-        /// 删除标识
-        /// </summary>
-        public virtual bool Deleted { get; set; }
-    }
-
-    /// <summary>
     /// A class which represents the SysUser table.
     /// </summary>
     [Table("SysUser")]
@@ -467,6 +417,72 @@ namespace NetSaleSvc.Entity.Models
         /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual string FilmTicketCode { get; set; }
+    }
+
+    /// <summary>
+    /// A class which represents the OrderSeatDetails table.
+    /// </summary>
+    [Table("OrderSeatDetails")]
+    [SqlLamTable(Name = "OrderSeatDetails")]
+    public partial class OrderSeatDetailEntity : EntityBase
+    {
+        /// <summary>
+        /// 程序猿只想做个安静的美男子，不想写注释
+        /// </summary>
+        [Key]
+        public virtual int Id { get; set; }
+        /// <summary>
+        /// 订单Id
+        /// </summary>
+        public virtual int OrderId { get; set; }
+        /// <summary>
+        /// 座位编码
+        /// </summary>
+        public virtual string SeatCode { get; set; }
+        /// <summary>
+        /// 行
+        /// </summary>
+        public virtual string RowNum { get; set; }
+        /// <summary>
+        /// 列
+        /// </summary>
+        public virtual string ColumnNum { get; set; }
+        /// <summary>
+        /// 上报票价
+        /// </summary>
+        public virtual decimal Price { get; set; }
+        /// <summary>
+        /// 接入商实际销售票价
+        /// </summary>
+        public virtual decimal SalePrice { get; set; }
+        /// <summary>
+        /// 服务费
+        /// </summary>
+        public virtual decimal Fee { get; set; }
+        /// <summary>
+        /// 电影票编码
+        /// </summary>
+        public virtual string FilmTicketCode { get; set; }
+        /// <summary>
+        /// 电影票信息码（二维码内容）
+        /// </summary>
+        public virtual string TicketInfoCode { get; set; }
+        /// <summary>
+        /// 打印标识（0：未打印  1：已打印）
+        /// </summary>
+        public virtual byte? PrintFlag { get; set; }
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public virtual DateTime Created { get; set; }
+        /// <summary>
+        /// 更新时间
+        /// </summary>
+        public virtual DateTime? Updated { get; set; }
+        /// <summary>
+        /// 删除标识
+        /// </summary>
+        public virtual bool Deleted { get; set; }
     }
 
     /// <summary>

@@ -383,6 +383,16 @@ namespace NetSaleSvc.Api.Core
             //将请求参数转为订单
             OrderViewEntity order = new OrderViewEntity();
             order.MapFrom(userCinema, QueryXmlObj, sessionInfo);
+            var seatInfos = _seatInfoService.GetSeats(userCinema.CinemaCode, order.orderSeatDetails.Select(x => x.SeatCode));
+            order.orderSeatDetails.ForEach(x =>
+            {
+                var seatInfo = seatInfos.Where(y => y.SeatCode == x.SeatCode).SingleOrDefault();
+                if (seatInfo != null)
+                {
+                    x.RowNum = seatInfo.RowNum;
+                    x.ColumnNum = seatInfo.ColumnNum;
+                }
+            });
 
             return LockSeat(lockSeatReply, userCinema, order);
         }
@@ -643,6 +653,48 @@ namespace NetSaleSvc.Api.Core
             }
 
             return QueryOrder(queryOrderReply, userCinema, order);
+        }
+
+        /// <summary>
+        /// 查询影票信息
+        /// </summary>
+        /// <param name="Username"></param>
+        /// <param name="Password"></param>
+        /// <param name="CinemaCode"></param>
+        /// <param name="PrintNo"></param>
+        /// <param name="VerifyCode"></param>
+        /// <returns></returns>
+        public QueryTicketReply QueryTicket(string Username, string Password, string CinemaCode,
+            string PrintNo, string VerifyCode)
+        {
+            QueryTicketReply queryTicketReply = new QueryTicketReply();
+            if (!queryTicketReply.RequestInfoGuard(Username, Password, CinemaCode, PrintNo, VerifyCode))
+            {
+                return queryTicketReply;
+            }
+            //获取用户信息
+            UserInfoEntity UserInfo = _userInfoService.GetUserInfoByUserCredential(Username, Password);
+            if (UserInfo == null)
+            {
+                queryTicketReply.SetUserCredentialInvalidReply();
+                return queryTicketReply;
+            }
+            //验证影院是否存在且可访问
+            var userCinema = _userCinemaService.GetUserCinema(UserInfo.Id, CinemaCode);
+            if (userCinema == null)
+            {
+                queryTicketReply.SetCinemaInvalidReply();
+                return queryTicketReply;
+            }
+            //验证订单是否存在
+            var order = _orderService.GetOrderWithPrintNo(CinemaCode, PrintNo, VerifyCode);
+            if (order == null)
+            {
+                queryTicketReply.SetOrderNotExistReply();
+                return queryTicketReply;
+            }
+
+            return QueryTicket(queryTicketReply, userCinema, order);
         }
         #endregion
 
@@ -1087,15 +1139,13 @@ namespace NetSaleSvc.Api.Core
                     Film = new List<QueryOrderReplyFilm> { film }
                 };
 
-                var seatInfos = _seatInfoService.GetSeats(userCinema.CinemaCode,
-                    order.orderSeatDetails.Select(x => x.SeatCode));
                 reply.Order.Seats = new QueryOrderReplySeats
                 {
                     Seat = order.orderSeatDetails.Select(x => new QueryOrderReplySeat
                     {
                         SeatCode = x.SeatCode,
-                        RowNum = seatInfos.Where(y => y.SeatCode == x.SeatCode).SingleOrDefault()?.RowNum ?? string.Empty,
-                        ColumnNum = seatInfos.Where(y => y.SeatCode == x.SeatCode).SingleOrDefault()?.ColumnNum ?? string.Empty,
+                        RowNum = x.RowNum ?? string.Empty,
+                        ColumnNum = x.ColumnNum ?? string.Empty,
                         FilmTicketCode = x.FilmTicketCode,
                         PrintStatus = order.orderBaseInfo.PrintStatus.GetValueOrDefault(YesOrNoEnum.No),
                         PrintTime = order.orderBaseInfo.PrintTime?.ToFormatStringWithT() ?? string.Empty,
@@ -1113,6 +1163,61 @@ namespace NetSaleSvc.Api.Core
 
             //更新订单信息
             _orderService.Update(order);
+            return reply;
+        }
+
+        /// <summary>
+        /// 查询影票信息
+        /// </summary>
+        /// <param name="reply"></param>
+        /// <param name="userCinema"></param>
+        /// <param name="order"></param>
+        /// <returns></returns>
+        [CheckForNullArgumentsAspect]
+        private QueryTicketReply QueryTicket(QueryTicketReply reply, UserCinemaViewEntity userCinema, OrderViewEntity order)
+        {
+            _CTMSInterface = CTMSInterfaceFactory.Create(userCinema);
+            var CTMSReply = _CTMSInterface.QueryTicket(userCinema, order);
+
+            if (CTMSReply.Status == StatusEnum.Success)
+            {
+                var screenInfo = _screenInfoService.GetScreenInfo(userCinema.CinemaCode, order.orderBaseInfo.ScreenCode);
+                var tickets = order.orderSeatDetails.Select(x => new QueryTicketReplyTicket
+                {
+                    PrintNo = order.orderBaseInfo.PrintNo,
+                    TicketInfoCode = x.TicketInfoCode,
+                    CinemaCode = userCinema.CinemaCode,
+                    CinemaName = userCinema.CinemaName,
+                    ScreenCode = order.orderBaseInfo.ScreenCode,
+                    ScreenName = screenInfo.SName,
+                    FilmCode = order.orderBaseInfo.FilmCode,
+                    FilmName = order.orderBaseInfo.FilmName,
+                    SessionCode = order.orderBaseInfo.SessionCode,
+                    SessionDateTime = order.orderBaseInfo.SessionTime.ToFormatStringWithT() ?? string.Empty,
+                    TicketCode = x.FilmTicketCode,
+                    SeatCode = x.SeatCode,
+                    SeatName = $"{x.RowNum}排{x.ColumnNum}座",
+                    Price = x.Price.ToString("0.##"),
+                    Service = x.Fee.ToString("0.##"),
+                    PrintFlag = x.PrintFlag.GetValueOrDefault(0).ToString()
+                }).ToList();
+
+                reply.Tickets = new QueryTicketReplyTickets
+                {
+                    Count = tickets.Count,
+                    Ticket = tickets
+                };
+
+                reply.SetSuccessReply();
+            }
+            else
+            {
+                reply.GetErrorFromCTMSReply(CTMSReply);
+            }
+
+            //更新订单信息
+            _orderService.Update(order);
+
             return reply;
         }
         #endregion

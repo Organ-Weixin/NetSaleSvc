@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="FetchTicketSvc" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="FetchTicketSvc" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="FetchTicketSvc">
+      <s:element name="QueryTicketInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="IpAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PrintNo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="QueryTicketInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="QueryTicketInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ApplyFetchTicket">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="IpAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PrintNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="VerifyCode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ApplyFetchTicketResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ApplyFetchTicketResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FetchTicket">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="IpAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PrintNo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FetchTicketResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FetchTicketResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="QueryTicketInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:QueryTicketInfo" />
+  </wsdl:message>
+  <wsdl:message name="QueryTicketInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:QueryTicketInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ApplyFetchTicketSoapIn">
+    <wsdl:part name="parameters" element="tns:ApplyFetchTicket" />
+  </wsdl:message>
+  <wsdl:message name="ApplyFetchTicketSoapOut">
+    <wsdl:part name="parameters" element="tns:ApplyFetchTicketResponse" />
+  </wsdl:message>
+  <wsdl:message name="FetchTicketSoapIn">
+    <wsdl:part name="parameters" element="tns:FetchTicket" />
+  </wsdl:message>
+  <wsdl:message name="FetchTicketSoapOut">
+    <wsdl:part name="parameters" element="tns:FetchTicketResponse" />
+  </wsdl:message>
+  <wsdl:portType name="FetchTicketSvcSoap">
+    <wsdl:operation name="QueryTicketInfo">
+      <wsdl:input message="tns:QueryTicketInfoSoapIn" />
+      <wsdl:output message="tns:QueryTicketInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ApplyFetchTicket">
+      <wsdl:input message="tns:ApplyFetchTicketSoapIn" />
+      <wsdl:output message="tns:ApplyFetchTicketSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FetchTicket">
+      <wsdl:input message="tns:FetchTicketSoapIn" />
+      <wsdl:output message="tns:FetchTicketSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="FetchTicketSvcSoap" type="tns:FetchTicketSvcSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="QueryTicketInfo">
+      <soap:operation soapAction="FetchTicketSvc/QueryTicketInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApplyFetchTicket">
+      <soap:operation soapAction="FetchTicketSvc/ApplyFetchTicket" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FetchTicket">
+      <soap:operation soapAction="FetchTicketSvc/FetchTicket" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="FetchTicketSvcSoap12" type="tns:FetchTicketSvcSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="QueryTicketInfo">
+      <soap12:operation soapAction="FetchTicketSvc/QueryTicketInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApplyFetchTicket">
+      <soap12:operation soapAction="FetchTicketSvc/ApplyFetchTicket" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FetchTicket">
+      <soap12:operation soapAction="FetchTicketSvc/FetchTicket" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="FetchTicketSvc">
+    <wsdl:port name="FetchTicketSvcSoap" binding="tns:FetchTicketSvcSoap">
+      <soap:address location="http://ccz.80piao.com:89/FetchTicketSvc.asmx" />
+    </wsdl:port>
+    <wsdl:port name="FetchTicketSvcSoap12" binding="tns:FetchTicketSvcSoap12">
+      <soap12:address location="http://ccz.80piao.com:89/FetchTicketSvc.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

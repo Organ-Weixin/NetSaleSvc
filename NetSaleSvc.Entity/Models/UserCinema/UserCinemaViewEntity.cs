@@ -1,4 +1,6 @@
-﻿namespace NetSaleSvc.Entity.Models
+﻿using System.Text.RegularExpressions;
+
+namespace NetSaleSvc.Entity.Models
 {
     public partial class UserCinemaViewEntity
     {
@@ -21,6 +23,23 @@
             get
             {
                 return string.IsNullOrEmpty(Password) ? DefaultPassword : Password;
+            }
+        }
+
+        /// <summary>
+        /// 国标取票IP
+        /// </summary>
+        public string FetchTicketIp
+        {
+            get
+            {
+                Regex regex = new Regex(@"\d+\.\d+\.\d+\.\d+");
+                Match match = regex.Match(Url);
+                if (match.Success)
+                {
+                    return match.Value;
+                }
+                return string.Empty;
             }
         }
     }

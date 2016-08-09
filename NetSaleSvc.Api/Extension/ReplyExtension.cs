@@ -395,6 +395,15 @@ namespace NetSaleSvc.Api.Extension
             return true;
         }
 
+        /// <summary>
+        /// 检查传入参数
+        /// </summary>
+        /// <param name="reply"></param>
+        /// <param name="Username"></param>
+        /// <param name="Password"></param>
+        /// <param name="CinemaCode"></param>
+        /// <param name="OrderCode"></param>
+        /// <returns></returns>
         public static bool RequestInfoGuard(this QueryOrderReply reply, string Username, string Password,
             string CinemaCode, string OrderCode)
         {
@@ -416,6 +425,48 @@ namespace NetSaleSvc.Api.Extension
             if (string.IsNullOrEmpty(OrderCode))
             {
                 reply.SetNecessaryParamMissReply(nameof(OrderCode));
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// 检查传入参数
+        /// </summary>
+        /// <param name="reply"></param>
+        /// <param name="Username"></param>
+        /// <param name="Password"></param>
+        /// <param name="CinemaCode"></param>
+        /// <param name="PrintNo"></param>
+        /// <param name="VerifyCode"></param>
+        /// <returns></returns>
+        public static bool RequestInfoGuard(this QueryTicketReply reply, string Username, string Password,
+            string CinemaCode, string PrintNo, string VerifyCode)
+        {
+            if (string.IsNullOrEmpty(Username))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Username));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Password));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CinemaCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(PrintNo))
+            {
+                reply.SetNecessaryParamMissReply(nameof(PrintNo));
+                return false;
+            }
+            if (string.IsNullOrEmpty(VerifyCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(VerifyCode));
                 return false;
             }
 

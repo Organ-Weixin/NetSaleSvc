@@ -164,9 +164,12 @@ namespace NetSaleSvc.Api.Models
             order.orderSeatDetails.ForEach(x =>
             {
                 var newInfo = queryXmlObj.Order.Seat.Where(y => y.SeatCode == x.SeatCode).SingleOrDefault();
-                x.Price = newInfo.Price;
-                x.SalePrice = newInfo.RealPrice;
-                x.Fee = newInfo.Fee;
+                if (newInfo != null)
+                {
+                    x.Price = newInfo.Price;
+                    x.SalePrice = newInfo.RealPrice;
+                    x.Fee = newInfo.Fee;
+                }
             });
 
             return order;
