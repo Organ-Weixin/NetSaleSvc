@@ -535,9 +535,9 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
             {
                 //然后确认出票
                 string fetchTicketResult = fetchTicketSvc.FetchTicket(userCinema.FetchTicketIp, userCinema.RealUserName,
-                userCinema.RealPassword, order.orderBaseInfo.PrintNo);
+                userCinema.RealPassword, order.orderBaseInfo.PrintNo + "333");
 
-                nsFetchTicketResult fetchReply = applyFetchTicketResult.Deserialize<nsFetchTicketResult>();
+                nsFetchTicketResult fetchReply = fetchTicketResult.Deserialize<nsFetchTicketResult>();
 
                 if (fetchReply.ResultCode == "0")
                 {
