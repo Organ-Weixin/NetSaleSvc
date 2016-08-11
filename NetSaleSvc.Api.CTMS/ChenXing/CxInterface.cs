@@ -4,12 +4,34 @@ using NetSaleSvc.Entity.Models;
 using NetSaleSvc.Util;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using NetSaleSvc.Api.CTMS.CxService;
+using NetSaleSvc.Api.CTMS.ChenXing.Models;
+using NetSaleSvc.Service;
 
-namespace NetSaleSvc.Api.CTMS
+namespace NetSaleSvc.Api.CTMS.ChenXing
 {
-    public class DefaultCTMSInterface : ICTMSInterface
+    public class CxInterface : ICTMSInterface
     {
-        private static string CinemaInterfaceMiss { get; } = "影院接口获取失败!";
+        private TspSoapServiceImplService cxService;
+        CinemaService _cinemaService;
+        ScreenInfoService _screenInfoService;
+
+        /// <summary>
+        /// 默认全部不进行压缩
+        /// </summary>
+        private const string pCompress = "0";
+
+        #region ctor
+        public CxInterface()
+        {
+            cxService = new TspSoapServiceImplService();
+            _cinemaService = new CinemaService();
+            _screenInfoService = new ScreenInfoService();
+        }
+        #endregion
 
         /// <summary>
         /// 查询影院基本信息
@@ -19,7 +41,43 @@ namespace NetSaleSvc.Api.CTMS
         [CheckForNullArgumentsAspect]
         public CTMSQueryCinemaReply QueryCinema(UserCinemaViewEntity userCinema)
         {
-            throw new Exception(CinemaInterfaceMiss);
+            CTMSQueryCinemaReply reply = new CTMSQueryCinemaReply();
+
+            string queryCinemaResult = cxService.QueryCinemaInfo(userCinema.RealUserName,
+                userCinema.CinemaCode, pCompress,
+                GenerateVerifyInfo(userCinema.RealUserName, userCinema.CinemaCode, pCompress, userCinema.RealPassword));
+
+            CxQueryCinemaInfoResult cxReply = queryCinemaResult.Deserialize<CxQueryCinemaInfoResult>();
+
+            if (cxReply.ResultCode == "0")
+            {
+                //更新影院信息
+                CinemaEntity cinema = _cinemaService.GetCinemaByCinemaCode(userCinema.CinemaCode);
+                cinema.Name = cxReply.Cinema.CinemaName;
+                cinema.Address = cxReply.Cinema.Address;
+                cinema.ScreenCount = cxReply.Cinema.ScreenCount;
+                _cinemaService.Update(cinema);
+                //更新影厅信息
+                var oldScreens = _screenInfoService.GetScreenListByCinemaCode(userCinema.CinemaCode);
+
+                var newScreens = cxReply.Cinema.Screens.ScreenVO.Select(
+                    x => x.MapToEntity(
+                        oldScreens.Where(y => y.SCode == x.ScreenCode).SingleOrDefault()
+                            ?? new ScreenInfoEntity { CCode = userCinema.CinemaCode })).ToList();
+
+                //插入或更新最新影厅信息
+                _screenInfoService.BulkMerge(newScreens, oldScreens);
+
+                reply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                reply.Status = StatusEnum.Failure;
+            }
+            reply.ErrorCode = cxReply.ResultCode;
+            reply.ErrorMessage = cxReply.Message;
+
+            return reply;
         }
 
         /// <summary>
@@ -31,7 +89,11 @@ namespace NetSaleSvc.Api.CTMS
         [CheckForNullArgumentsAspect]
         public CTMSQuerySeatReply QuerySeat(UserCinemaViewEntity userCinema, ScreenInfoEntity screen)
         {
-            throw new Exception(CinemaInterfaceMiss);
+            CTMSQuerySeatReply reply = new CTMSQuerySeatReply();
+
+            //TODO
+
+            return reply;
         }
 
         /// <summary>
@@ -44,7 +106,11 @@ namespace NetSaleSvc.Api.CTMS
         [CheckForNullArgumentsAspect]
         public CTMSQueryFilmReply QueryFilm(UserCinemaViewEntity userCinema, DateTime StartDate, DateTime EndDate)
         {
-            throw new Exception(CinemaInterfaceMiss);
+            CTMSQueryFilmReply reply = new CTMSQueryFilmReply();
+
+            //TODO
+
+            return reply;
         }
 
         /// <summary>
@@ -57,7 +123,11 @@ namespace NetSaleSvc.Api.CTMS
         [CheckForNullArgumentsAspect]
         public CTMSQuerySessionReply QuerySession(UserCinemaViewEntity userCinema, DateTime StartDate, DateTime EndDate)
         {
-            throw new Exception(CinemaInterfaceMiss);
+            CTMSQuerySessionReply reply = new CTMSQuerySessionReply();
+
+            //TODO
+
+            return reply;
         }
 
         /// <summary>
@@ -71,7 +141,11 @@ namespace NetSaleSvc.Api.CTMS
         public CTMSQuerySessionSeatReply QuerySessionSeat(UserCinemaViewEntity userCinema,
             string SessionCode, SessionSeatStatusEnum Status)
         {
-            throw new Exception(CinemaInterfaceMiss);
+            CTMSQuerySessionSeatReply reply = new CTMSQuerySessionSeatReply();
+
+            //TODO
+
+            return reply;
         }
 
         /// <summary>
@@ -83,7 +157,11 @@ namespace NetSaleSvc.Api.CTMS
         [CheckForNullArgumentsAspect]
         public CTMSLockSeatReply LockSeat(UserCinemaViewEntity userCinema, OrderViewEntity order)
         {
-            throw new Exception(CinemaInterfaceMiss);
+            CTMSLockSeatReply reply = new CTMSLockSeatReply();
+
+            //TODO
+
+            return reply;
         }
 
         /// <summary>
@@ -95,7 +173,11 @@ namespace NetSaleSvc.Api.CTMS
         [CheckForNullArgumentsAspect]
         public CTMSReleaseSeatReply ReleaseSeat(UserCinemaViewEntity userCinema, OrderViewEntity order)
         {
-            throw new Exception(CinemaInterfaceMiss);
+            CTMSReleaseSeatReply reply = new CTMSReleaseSeatReply();
+
+            //TODO
+
+            return reply;
         }
 
         /// <summary>
@@ -107,7 +189,11 @@ namespace NetSaleSvc.Api.CTMS
         [CheckForNullArgumentsAspect]
         public CTMSSubmitOrderReply SubmitOrder(UserCinemaViewEntity userCinema, OrderViewEntity order)
         {
-            throw new Exception(CinemaInterfaceMiss);
+            CTMSSubmitOrderReply reply = new CTMSSubmitOrderReply();
+
+            //TODO
+
+            return reply;
         }
 
         /// <summary>
@@ -119,7 +205,11 @@ namespace NetSaleSvc.Api.CTMS
         [CheckForNullArgumentsAspect]
         public CTMSQueryPrintReply QueryPrint(UserCinemaViewEntity userCinema, OrderViewEntity order)
         {
-            throw new Exception(CinemaInterfaceMiss);
+            CTMSQueryPrintReply reply = new CTMSQueryPrintReply();
+
+            //TODO
+
+            return reply;
         }
 
         /// <summary>
@@ -131,7 +221,11 @@ namespace NetSaleSvc.Api.CTMS
         [CheckForNullArgumentsAspect]
         public CTMSRefundTicketReply RefundTicket(UserCinemaViewEntity userCinema, OrderViewEntity order)
         {
-            throw new Exception(CinemaInterfaceMiss);
+            CTMSRefundTicketReply reply = new CTMSRefundTicketReply();
+
+            //TODO
+
+            return reply;
         }
 
         /// <summary>
@@ -143,7 +237,11 @@ namespace NetSaleSvc.Api.CTMS
         [CheckForNullArgumentsAspect]
         public CTMSQueryOrderReply QueryOrder(UserCinemaViewEntity userCinema, OrderViewEntity order)
         {
-            throw new Exception(CinemaInterfaceMiss);
+            CTMSQueryOrderReply reply = new CTMSQueryOrderReply();
+
+            //TODO
+
+            return reply;
         }
 
         /// <summary>
@@ -155,7 +253,11 @@ namespace NetSaleSvc.Api.CTMS
         [CheckForNullArgumentsAspect]
         public CTMSQueryTicketReply QueryTicket(UserCinemaViewEntity userCinema, OrderViewEntity order)
         {
-            throw new Exception(CinemaInterfaceMiss);
+            CTMSQueryTicketReply reply = new CTMSQueryTicketReply();
+
+            //TODO
+
+            return reply;
         }
 
         /// <summary>
@@ -167,7 +269,25 @@ namespace NetSaleSvc.Api.CTMS
         [CheckForNullArgumentsAspect]
         public CTMSFetchTicketReply FetchTicket(UserCinemaViewEntity userCinema, OrderViewEntity order)
         {
-            throw new Exception(CinemaInterfaceMiss);
+            CTMSFetchTicketReply reply = new CTMSFetchTicketReply();
+
+            //TODO
+
+            return reply;
         }
+
+        #region private method
+        /// <summary>
+        /// 生成校验信息，数组中参数需要按顺序存放，否则将导致校验信息不正确
+        /// </summary>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        private string GenerateVerifyInfo(params string[] items)
+        {
+            string sourceString = string.Join("", items);
+
+            return MD5Helper.MD5Encrypt(sourceString.ToLower());
+        }
+        #endregion
     }
 }

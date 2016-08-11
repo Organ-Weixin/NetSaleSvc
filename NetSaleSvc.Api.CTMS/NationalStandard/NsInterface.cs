@@ -26,6 +26,7 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
         private SeatInfoService _seatInfoService;
         private FilmInfoService _filmInfoService;
         private SessionInfoService _sessionInfoService;
+        private CinemaService _cinemaService;
         #endregion
 
         #region ctor
@@ -37,6 +38,7 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
             _seatInfoService = new SeatInfoService();
             _filmInfoService = new FilmInfoService();
             _sessionInfoService = new SessionInfoService();
+            _cinemaService = new CinemaService();
         }
         #endregion
 
@@ -57,7 +59,7 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
 
             if (reply.QueryCinemaReply.Status == StatusEnum.Success.GetDescription())
             {
-                SaveScreenInfos(userCinema.CinemaCode, reply);
+                SaveCinemaInfos(userCinema.CinemaCode, reply);
                 queryCinemaReply.Status = StatusEnum.Success;
             }
             else
@@ -224,6 +226,7 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
         /// <param name="userCinema"></param>
         /// <param name="QueryXml"></param>
         /// <returns></returns>
+        [CheckForNullArgumentsAspect]
         public CTMSLockSeatReply LockSeat(UserCinemaViewEntity userCinema, OrderViewEntity order)
         {
             CTMSLockSeatReply lockSeatReply = new CTMSLockSeatReply();
@@ -262,6 +265,7 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
         /// <param name="userCinema"></param>
         /// <param name="order"></param>
         /// <returns></returns>
+        [CheckForNullArgumentsAspect]
         public CTMSReleaseSeatReply ReleaseSeat(UserCinemaViewEntity userCinema, OrderViewEntity order)
         {
             CTMSReleaseSeatReply releaseSeatReply = new CTMSReleaseSeatReply();
@@ -297,6 +301,7 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
         /// <param name="userCinema"></param>
         /// <param name="order"></param>
         /// <returns></returns>
+        [CheckForNullArgumentsAspect]
         public CTMSSubmitOrderReply SubmitOrder(UserCinemaViewEntity userCinema, OrderViewEntity order)
         {
             CTMSSubmitOrderReply submitOrderReply = new CTMSSubmitOrderReply();
@@ -345,6 +350,7 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
         /// <param name="userCinema"></param>
         /// <param name="order"></param>
         /// <returns></returns>
+        [CheckForNullArgumentsAspect]
         public CTMSQueryPrintReply QueryPrint(UserCinemaViewEntity userCinema, OrderViewEntity order)
         {
             CTMSQueryPrintReply queryPrintReply = new CTMSQueryPrintReply();
@@ -380,6 +386,7 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
         /// <param name="userCinema"></param>
         /// <param name="order"></param>
         /// <returns></returns>
+        [CheckForNullArgumentsAspect]
         public CTMSRefundTicketReply RefundTicket(UserCinemaViewEntity userCinema, OrderViewEntity order)
         {
             CTMSRefundTicketReply refundTicketReply = new CTMSRefundTicketReply();
@@ -416,6 +423,7 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
         /// <param name="userCinema"></param>
         /// <param name="order"></param>
         /// <returns></returns>
+        [CheckForNullArgumentsAspect]
         public CTMSQueryOrderReply QueryOrder(UserCinemaViewEntity userCinema, OrderViewEntity order)
         {
             CTMSQueryOrderReply queryOrderReply = new CTMSQueryOrderReply();
@@ -474,6 +482,7 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
         /// <param name="userCinema"></param>
         /// <param name="order"></param>
         /// <returns></returns>
+        [CheckForNullArgumentsAspect]
         public CTMSQueryTicketReply QueryTicket(UserCinemaViewEntity userCinema, OrderViewEntity order)
         {
             CTMSQueryTicketReply queryTicketReply = new CTMSQueryTicketReply();
@@ -521,6 +530,7 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
         /// <param name="userCinema"></param>
         /// <param name="order"></param>
         /// <returns></returns>
+        [CheckForNullArgumentsAspect]
         public CTMSFetchTicketReply FetchTicket(UserCinemaViewEntity userCinema, OrderViewEntity order)
         {
             CTMSFetchTicketReply fetchTicketReply = new CTMSFetchTicketReply();
@@ -567,8 +577,15 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
         /// </summary>
         /// <param name="userCinema"></param>
         /// <param name="reply"></param>
-        private void SaveScreenInfos(string CinemaCode, nsOnlineTicketingServiceReply reply)
+        private void SaveCinemaInfos(string CinemaCode, nsOnlineTicketingServiceReply reply)
         {
+            //更新影院信息
+            CinemaEntity cinema = _cinemaService.GetCinemaByCinemaCode(CinemaCode);
+            cinema.Name = reply.QueryCinemaReply.Cinema.Name;
+            cinema.Address = reply.QueryCinemaReply.Cinema.Address;
+            cinema.ScreenCount = reply.QueryCinemaReply.Cinema.ScreenCount;
+            _cinemaService.Update(cinema);
+
             var oldScreens = _screenInfoService.GetScreenListByCinemaCode(CinemaCode);
 
             var newScreens = reply.QueryCinemaReply.Cinema.Screen.Select(

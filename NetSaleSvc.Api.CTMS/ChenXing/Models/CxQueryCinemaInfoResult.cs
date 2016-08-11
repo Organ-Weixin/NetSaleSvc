@@ -1,74 +1,73 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace NetSaleSvc.Api.CTMS.NationalStandard.Models
+namespace NetSaleSvc.Api.CTMS.ChenXing.Models
 {
-    [XmlType("QueryCinemaReply")]
-    public class nsQueryCinemaReply : nsBaseReply
+    [XmlRoot("QueryCinemaInfoResult")]
+    public class CxQueryCinemaInfoResult : CxBaseReply
     {
         [XmlElement]
-        public nsQueryCinemaReplyCinema Cinema { get; set; }
+        public CxQueryCinemaInfoResultCinema Cinema { get; set; }
     }
 
-    /// <summary>
-    /// Cinema节点
-    /// </summary>
-    public class nsQueryCinemaReplyCinema
+    public class CxQueryCinemaInfoResultCinema
     {
         /// <summary>
         /// 影院编码
         /// </summary>
-        [XmlAttribute]
-        public string Code { get; set; }
+        [XmlElement]
+        public string CinemaCode { get; set; }
 
         /// <summary>
         /// 影院名称
         /// </summary>
-        [XmlAttribute]
-        public string Name { get; set; }
+        [XmlElement]
+        public string CinemaName { get; set; }
 
         /// <summary>
         /// 影院地址
         /// </summary>
-        [XmlAttribute]
+        [XmlElement]
         public string Address { get; set; }
 
         /// <summary>
-        /// 影院影厅数量
+        /// 影厅数量
         /// </summary>
-        [XmlAttribute]
+        [XmlElement]
         public int ScreenCount { get; set; }
 
+        /// <summary>
+        /// 影厅信息
+        /// </summary>
+        [XmlElement]
+        public CxQueryCinemaInfoResultScreens Screens { get; set; }
+    }
+
+    public class CxQueryCinemaInfoResultScreens
+    {
         /// <summary>
         /// 影厅列表
         /// </summary>
         [XmlElement]
-        public List<nsQueryCinemaReplyScreen> Screen { get; set; }
+        public List<CxQueryCinemaInfoResultScreenVO> ScreenVO { get; set; }
     }
 
-    /// <summary>
-    /// 影厅实体
-    /// </summary>
-    public class nsQueryCinemaReplyScreen
+    public class CxQueryCinemaInfoResultScreenVO
     {
         /// <summary>
         /// 影厅编码
         /// </summary>
         [XmlElement]
-        public string Code { get; set; }
+        public string ScreenCode { get; set; }
 
         /// <summary>
         /// 影厅名称
         /// </summary>
         [XmlElement]
-        public string Name { get; set; }
+        public string ScreenName { get; set; }
 
         /// <summary>
-        /// 影厅座位数量
+        /// 座位数量
         /// </summary>
         [XmlElement]
         public int SeatCount { get; set; }

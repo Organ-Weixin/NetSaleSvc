@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NetSaleSvc.Entity.Models;
+﻿using NetSaleSvc.Entity.Models;
 using NetSaleSvc.Entity.Enum;
 using NetSaleSvc.Api.CTMS.NationalStandard;
+using NetSaleSvc.Api.CTMS.ChenXing;
 
 namespace NetSaleSvc.Api.CTMS
 {
@@ -26,7 +22,7 @@ namespace NetSaleSvc.Api.CTMS
                 case CinemaTypeEnum.NationalStandard:
                     return new NsInterface();
                 case CinemaTypeEnum.ChenXing:
-                    return new DefaultCTMSInterface();
+                    return new CxInterface();
                 case CinemaTypeEnum.DingXin:
                     return new DefaultCTMSInterface();
                 case CinemaTypeEnum.ManTianXing:

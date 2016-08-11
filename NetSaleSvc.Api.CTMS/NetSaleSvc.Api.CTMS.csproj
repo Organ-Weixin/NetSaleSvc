@@ -49,6 +49,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChenXing\CxInterface.cs" />
+    <Compile Include="ChenXing\Models\CxBaseReply.cs" />
+    <Compile Include="ChenXing\Models\CxQueryCinemaInfoResult.cs" />
+    <Compile Include="ChenXing\Models\ModelMapper.cs" />
     <Compile Include="CTMSInterfaceFactory.cs" />
     <Compile Include="DefaultCTMSInterface.cs" />
     <Compile Include="ICTMSInterface.cs" />
@@ -187,6 +191,7 @@
   <ItemGroup>
     <None Include="Web References\NsFetchTicket\FetchTicketSvc.disco" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\PostSharp.4.2.29\tools\PostSharp.targets" Condition="Exists('..\packages\PostSharp.4.2.29\tools\PostSharp.targets')" />
   <Target Name="EnsurePostSharpImported" BeforeTargets="BeforeBuild" Condition="'$(PostSharp30Imported)' == ''">

@@ -13,11 +13,13 @@ namespace NetSaleSvc.Service
     {
         #region ctor
         private readonly IRepository<CinemaViewEntity> _cinemaViewRepository;
+        private readonly IRepository<CinemaEntity> _cinemaRepository;
 
         public CinemaService()
         {
             //TODO: 移除内部依赖
             _cinemaViewRepository = new Repository<CinemaViewEntity>();
+            _cinemaRepository = new Repository<CinemaEntity>();
         }
         #endregion
 
@@ -29,6 +31,25 @@ namespace NetSaleSvc.Service
         public CinemaViewEntity GetCinemaViewByCinemaCode(string CinemaCode)
         {
             return _cinemaViewRepository.Query.Where(x => x.Code == CinemaCode).SingleOrDefault();
+        }
+
+        /// <summary>
+        /// 获取Cinema实体
+        /// </summary>
+        /// <param name="CinemaCode"></param>
+        /// <returns></returns>
+        public CinemaEntity GetCinemaByCinemaCode(string CinemaCode)
+        {
+            return _cinemaRepository.Query.Where(x => x.Code == CinemaCode).SingleOrDefault();
+        }
+
+        /// <summary>
+        /// 更新
+        /// </summary>
+        /// <param name="entity"></param>
+        public void Update(CinemaEntity entity)
+        {
+            _cinemaRepository.Update(entity);
         }
     }
 }
