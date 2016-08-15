@@ -29,7 +29,8 @@ namespace NetSaleSvc.Service
         /// <returns></returns>
         public ScreenInfoEntity GetScreenInfo(string CinemaCode, string ScreenCode)
         {
-            return _screenInfoRepository.Query.Where(x => x.CCode == CinemaCode && x.SCode == ScreenCode).SingleOrDefault();
+            return _screenInfoRepository.Query.Where(x => x.CCode == CinemaCode
+                && x.SCode == ScreenCode).SingleOrDefault();
         }
 
         /// <summary>

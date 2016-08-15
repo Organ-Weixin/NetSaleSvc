@@ -52,6 +52,7 @@
     <Compile Include="ChenXing\CxInterface.cs" />
     <Compile Include="ChenXing\Models\CxBaseReply.cs" />
     <Compile Include="ChenXing\Models\CxQueryCinemaInfoResult.cs" />
+    <Compile Include="ChenXing\Models\CxQuerySeatInfoResult.cs" />
     <Compile Include="ChenXing\Models\ModelMapper.cs" />
     <Compile Include="CTMSInterfaceFactory.cs" />
     <Compile Include="DefaultCTMSInterface.cs" />

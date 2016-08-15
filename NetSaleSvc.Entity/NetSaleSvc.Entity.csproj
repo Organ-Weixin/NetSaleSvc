@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enum\CinemaTypeEnum.cs" />
+    <Compile Include="Enum\LoveFlagEnum.cs" />
     <Compile Include="Enum\OrderStatusEnum.cs" />
     <Compile Include="Enum\PricePlanTypeEnum.cs" />
     <Compile Include="Enum\PrintStatusEnum.cs" />

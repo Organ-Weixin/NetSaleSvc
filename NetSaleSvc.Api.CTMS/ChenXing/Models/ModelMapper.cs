@@ -22,5 +22,25 @@ namespace NetSaleSvc.Api.CTMS.ChenXing.Models
 
             return entity;
         }
+
+        /// <summary>
+        /// 影厅座位信息转为entity
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public static ScreenSeatInfoEntity MapToEntity(this CxQuerySeatInfoResultScreenSite model, ScreenSeatInfoEntity entity)
+        {
+            entity.SeatCode = model.SeatCode;
+            entity.GroupCode = model.GroupCode;
+            entity.RowNum = model.RowNum;
+            entity.ColumnNum = model.ColumnNum;
+            entity.XCoord = model.XCoord;
+            entity.YCoord = model.YCoord;
+            entity.Status = model.Status;
+            entity.UpdateTime = DateTime.Now;
+
+            return entity;
+        }
     }
 }

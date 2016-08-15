@@ -74,7 +74,7 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
         }
 
         /// <summary>
-        /// 获取影院基础信息
+        /// 获取影厅座位信息
         /// </summary>
         /// <param name="userCinema"></param>
         /// <param name="screen"></param>
@@ -614,7 +614,7 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
                         {
                             CinemaCode = CinemaCode,
                             ScreenCode = ScreenCode,
-                            LoveFlag = "N"
+                            LoveFlag = LoveFlagEnum.Normal.GetDescription()
                         })).ToList();
 
             //插入或更新最新座位

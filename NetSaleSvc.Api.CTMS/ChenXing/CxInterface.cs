@@ -3,10 +3,7 @@ using NetSaleSvc.Entity.Enum;
 using NetSaleSvc.Entity.Models;
 using NetSaleSvc.Util;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NetSaleSvc.Api.CTMS.CxService;
 using NetSaleSvc.Api.CTMS.ChenXing.Models;
 using NetSaleSvc.Service;
@@ -15,9 +12,12 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
 {
     public class CxInterface : ICTMSInterface
     {
+        #region private fields
         private TspSoapServiceImplService cxService;
-        CinemaService _cinemaService;
-        ScreenInfoService _screenInfoService;
+        private CinemaService _cinemaService;
+        private ScreenInfoService _screenInfoService;
+        private SeatInfoService _seatInfoService;
+        #endregion
 
         /// <summary>
         /// 默认全部不进行压缩
@@ -30,6 +30,7 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
             cxService = new TspSoapServiceImplService();
             _cinemaService = new CinemaService();
             _screenInfoService = new ScreenInfoService();
+            _seatInfoService = new SeatInfoService();
         }
         #endregion
 
@@ -91,7 +92,61 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
         {
             CTMSQuerySeatReply reply = new CTMSQuerySeatReply();
 
-            //TODO
+            string querySeatReply = cxService.QuerySeatInfo(userCinema.RealUserName, userCinema.CinemaCode,
+                screen.SCode, pCompress,
+                GenerateVerifyInfo(userCinema.RealUserName, userCinema.CinemaCode, screen.SCode, pCompress, userCinema.RealPassword));
+
+            CxQuerySeatInfoResult cxReply = querySeatReply.Deserialize<CxQuerySeatInfoResult>();
+
+            if (cxReply.ResultCode == "0")
+            {
+
+                var oldSeats = _seatInfoService.GetScreenSeats(userCinema.CinemaCode, screen.SCode).NotNull();
+
+                var newSeats = cxReply.ScreenSites.ScreenSite.Select(
+                    x => x.MapToEntity(
+                        oldSeats.Where(y => y.SeatCode == x.SeatCode).SingleOrDefault()
+                            ?? new ScreenSeatInfoEntity
+                            {
+                                CinemaCode = userCinema.CinemaCode,
+                                ScreenCode = screen.SCode,
+                                LoveFlag = LoveFlagEnum.Normal.GetDescription()
+                            })).ToList();
+                //辰星的GroupCode用于标识情侣座，需要另外处理
+                var seatByGroup = newSeats.GroupBy(x => x.GroupCode);
+                foreach (var seats in seatByGroup)
+                {
+                    if (seats.Count() == 2)
+                    {
+                        var firstSeat = seats.First();
+                        var SecondSeat = seats.Last();
+
+                        if (firstSeat.XCoord < SecondSeat.XCoord)
+                        {
+                            firstSeat.LoveFlag = LoveFlagEnum.LEFT.GetDescription();
+                            SecondSeat.LoveFlag = LoveFlagEnum.RIGHT.GetDescription();
+                        }
+                        else
+                        {
+                            firstSeat.LoveFlag = LoveFlagEnum.RIGHT.GetDescription();
+                            SecondSeat.LoveFlag = LoveFlagEnum.LEFT.GetDescription();
+                        }
+                    }
+                }
+                //处理完情侣座后将辰星座位的所有GroupCode置为0000000000000001
+                newSeats.ForEach(x => x.GroupCode = "0000000000000001");
+
+                //插入或更新最新座位
+                _seatInfoService.BulkMerge(newSeats, oldSeats);
+
+                reply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                reply.Status = StatusEnum.Failure;
+            }
+            reply.ErrorCode = cxReply.ResultCode;
+            reply.ErrorMessage = cxReply.Message;
 
             return reply;
         }
