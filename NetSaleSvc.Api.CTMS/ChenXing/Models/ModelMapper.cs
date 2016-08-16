@@ -42,5 +42,35 @@ namespace NetSaleSvc.Api.CTMS.ChenXing.Models
 
             return entity;
         }
+
+        /// <summary>
+        /// 影片信息转为entity
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public static FilmInfoEntity MapToEntity(this CxQueryFilmInfoResultFilmInfoVO model, FilmInfoEntity entity)
+        {
+            entity.FilmCode = model.FilmCode;
+            entity.FilmName = model.FilmName;
+            entity.Version = model.Version;
+            entity.Duration = model.Duration;
+
+            DateTime PublishDate;
+            if (DateTime.TryParse(model.PublishDate, out PublishDate))
+            {
+                entity.PublishDate = PublishDate;
+            }
+            else
+            {
+                entity.PublishDate = null;
+            }
+            entity.Publisher = model.Publisher;
+            entity.Producer = model.Producer;
+            entity.Director = model.Director;
+            entity.Cast = model.Cast;
+            entity.Introduction = model.Introduction;
+
+            return entity;
+        }
     }
 }

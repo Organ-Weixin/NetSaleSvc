@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetSaleSvc.Util
 {
     public static class LinqExtension
     {
+        public static IEnumerable<T> Distinct<T, V>(this IEnumerable<T> source, Func<T, V> keySelector)
+        {
+            return source.Distinct(new CommonEqualityComparer<T, V>(keySelector));
+        }
+
         public static IEnumerable<TResult> FullOuterGroupJoin<TA, TB, TKey, TResult>(
             this IEnumerable<TA> a,
             IEnumerable<TB> b,

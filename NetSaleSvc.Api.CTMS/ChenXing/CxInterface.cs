@@ -7,6 +7,10 @@ using System.Linq;
 using NetSaleSvc.Api.CTMS.CxService;
 using NetSaleSvc.Api.CTMS.ChenXing.Models;
 using NetSaleSvc.Service;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace NetSaleSvc.Api.CTMS.ChenXing
 {
@@ -17,6 +21,7 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
         private CinemaService _cinemaService;
         private ScreenInfoService _screenInfoService;
         private SeatInfoService _seatInfoService;
+        private FilmInfoService _filmInfoService;
         #endregion
 
         /// <summary>
@@ -31,6 +36,7 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
             _cinemaService = new CinemaService();
             _screenInfoService = new ScreenInfoService();
             _seatInfoService = new SeatInfoService();
+            _filmInfoService = new FilmInfoService();
         }
         #endregion
 
@@ -100,7 +106,6 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
 
             if (cxReply.ResultCode == "0")
             {
-
                 var oldSeats = _seatInfoService.GetScreenSeats(userCinema.CinemaCode, screen.SCode).NotNull();
 
                 var newSeats = cxReply.ScreenSites.ScreenSite.Select(
@@ -162,9 +167,67 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
         public CTMSQueryFilmReply QueryFilm(UserCinemaViewEntity userCinema, DateTime StartDate, DateTime EndDate)
         {
             CTMSQueryFilmReply reply = new CTMSQueryFilmReply();
+            List<CxQueryFilmInfoResultFilmInfoVO> FilmList = new List<CxQueryFilmInfoResultFilmInfoVO>();
 
-            //TODO
+            //异步获取每日上映影片信息
+            var manualEvents = new List<EventWaitHandle>();
+            for (var planDate = StartDate; planDate <= EndDate; planDate = planDate.AddDays(1))
+            {
+                var mre = new ManualResetEvent(false);
+                manualEvents.Add(mre);
+                QueryFilmInfoSyncModel model = new QueryFilmInfoSyncModel
+                {
+                    CurrentDate = planDate,
+                    Mre = mre
+                };
+                ThreadPool.QueueUserWorkItem((o) =>
+                {
+                    var param = o as QueryFilmInfoSyncModel;
+                    string queryFilmResult = cxService.QueryFilmInfo(userCinema.RealUserName, userCinema.CinemaCode,
+                        param.CurrentDate.ToString("yyyy-MM-dd"), pCompress,
+                        GenerateVerifyInfo(userCinema.RealUserName, userCinema.CinemaCode, param.CurrentDate.ToString("yyyy-MM-dd"), pCompress, userCinema.RealPassword));
 
+                    CxQueryFilmInfoResult cxReply = queryFilmResult.Deserialize<CxQueryFilmInfoResult>();
+
+                    if (cxReply.ResultCode == "0")
+                    {
+                        lock ((FilmList as ICollection).SyncRoot)
+                        {
+                            if (cxReply.FilmInfoVOs != null)
+                            {
+                                FilmList.AddRange(cxReply.FilmInfoVOs.FilmInfoVO.NotNull());
+                            }
+                        }
+                    }
+
+                    param.Mre.Set();
+                }, model);
+            }
+            WaitHandle.WaitAll(manualEvents.ToArray());
+
+            if (FilmList.Count > 0)
+            {
+                //去除重复
+                FilmList = FilmList.Distinct(x => x.FilmCode).ToList();
+                var FilmCodes = FilmList.Select(x => x.FilmCode);
+                var ExitedFilms = _filmInfoService.GetFilmInfosByCodes(FilmCodes);
+
+                var entities = FilmList.Select(x => x.MapToEntity(
+                    ExitedFilms.Where(y => y.FilmCode == x.FilmCode).SingleOrDefault() ?? new FilmInfoEntity()));
+
+                _filmInfoService.BulkMerge(entities, ExitedFilms);
+
+                reply.Status = StatusEnum.Success;
+                reply.ErrorCode = "0";
+                reply.ErrorMessage = "成功";
+                reply.films = entities;
+            }
+            else
+            {
+                reply.Status = StatusEnum.Failure;
+                reply.ErrorCode = "-1";
+                reply.ErrorMessage = "在售影片信息不存在";
+            }
             return reply;
         }
 
