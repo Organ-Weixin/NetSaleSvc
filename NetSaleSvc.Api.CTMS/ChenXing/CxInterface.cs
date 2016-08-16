@@ -7,7 +7,6 @@ using System.Linq;
 using NetSaleSvc.Api.CTMS.CxService;
 using NetSaleSvc.Api.CTMS.ChenXing.Models;
 using NetSaleSvc.Service;
-using System.Threading.Tasks;
 using System.Threading;
 using System.Collections.Generic;
 using System.Collections;
@@ -22,6 +21,7 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
         private ScreenInfoService _screenInfoService;
         private SeatInfoService _seatInfoService;
         private FilmInfoService _filmInfoService;
+        private SessionInfoService _sessionInfoService;
         #endregion
 
         /// <summary>
@@ -37,6 +37,7 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
             _screenInfoService = new ScreenInfoService();
             _seatInfoService = new SeatInfoService();
             _filmInfoService = new FilmInfoService();
+            _sessionInfoService = new SessionInfoService();
         }
         #endregion
 
@@ -175,14 +176,14 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
             {
                 var mre = new ManualResetEvent(false);
                 manualEvents.Add(mre);
-                QueryFilmInfoSyncModel model = new QueryFilmInfoSyncModel
+                QueryInfoSyncModel model = new QueryInfoSyncModel
                 {
                     CurrentDate = planDate,
                     Mre = mre
                 };
                 ThreadPool.QueueUserWorkItem((o) =>
                 {
-                    var param = o as QueryFilmInfoSyncModel;
+                    var param = o as QueryInfoSyncModel;
                     string queryFilmResult = cxService.QueryFilmInfo(userCinema.RealUserName, userCinema.CinemaCode,
                         param.CurrentDate.ToString("yyyy-MM-dd"), pCompress,
                         GenerateVerifyInfo(userCinema.RealUserName, userCinema.CinemaCode, param.CurrentDate.ToString("yyyy-MM-dd"), pCompress, userCinema.RealPassword));
@@ -226,7 +227,7 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
             {
                 reply.Status = StatusEnum.Failure;
                 reply.ErrorCode = "-1";
-                reply.ErrorMessage = "在售影片信息不存在";
+                reply.ErrorMessage = "在售影片信息查询失败";
             }
             return reply;
         }
@@ -242,8 +243,71 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
         public CTMSQuerySessionReply QuerySession(UserCinemaViewEntity userCinema, DateTime StartDate, DateTime EndDate)
         {
             CTMSQuerySessionReply reply = new CTMSQuerySessionReply();
+            List<CxQueryPlanInfoResultCinemaPlan> SessionList = new List<CxQueryPlanInfoResultCinemaPlan>();
 
-            //TODO
+            //异步获取每日排期信息
+            var manualEvents = new List<EventWaitHandle>();
+            for (var planDate = StartDate; planDate <= EndDate; planDate = planDate.AddDays(1))
+            {
+                var mre = new ManualResetEvent(false);
+                manualEvents.Add(mre);
+                QueryInfoSyncModel model = new QueryInfoSyncModel
+                {
+                    CurrentDate = planDate,
+                    Mre = mre
+                };
+                ThreadPool.QueueUserWorkItem((o) =>
+                {
+                    var param = o as QueryInfoSyncModel;
+                    string querySessionResult = cxService.QueryPlanInfo(userCinema.RealUserName, userCinema.CinemaCode,
+                        param.CurrentDate.ToString("yyyy-MM-dd"), pCompress,
+                        GenerateVerifyInfo(userCinema.RealUserName, userCinema.CinemaCode, param.CurrentDate.ToString("yyyy-MM-dd"), pCompress, userCinema.RealPassword));
+
+                    CxQueryPlanInfoResult cxReply = querySessionResult.Deserialize<CxQueryPlanInfoResult>();
+
+                    if (cxReply.ResultCode == "0")
+                    {
+                        lock ((SessionList as ICollection).SyncRoot)
+                        {
+                            if (cxReply.CinemaPlans != null)
+                            {
+                                SessionList.AddRange(cxReply.CinemaPlans.CinemaPlan.NotNull());
+                            }
+                        }
+                    }
+
+                    param.Mre.Set();
+                }, model);
+            }
+            WaitHandle.WaitAll(manualEvents.ToArray());
+
+            if (SessionList.Count > 0)
+            {
+                var oldSessions = _sessionInfoService.GetSessions(userCinema.CinemaCode, userCinema.UserId, StartDate, EndDate);
+
+                var newSessions = SessionList.Select(
+                    x => x.MapToEntity(
+                        oldSessions.Where(y => y.SCode == x.FeatureAppNo).SingleOrDefault()
+                            ?? new SessionInfoEntity
+                            {
+                                CCode = userCinema.CinemaCode,
+                                SCode = x.FeatureAppNo,
+                                UserID = userCinema.UserId
+                            })).ToList();
+
+                //插入或更新最新放映计划
+                _sessionInfoService.BulkMerge(newSessions, oldSessions);
+
+                reply.Status = StatusEnum.Success;
+                reply.ErrorCode = "0";
+                reply.ErrorMessage = "成功";
+            }
+            else
+            {
+                reply.Status = StatusEnum.Failure;
+                reply.ErrorCode = "-1";
+                reply.ErrorMessage = "放映计划查询失败";
+            }
 
             return reply;
         }
@@ -261,7 +325,34 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
         {
             CTMSQuerySessionSeatReply reply = new CTMSQuerySessionSeatReply();
 
-            //TODO
+            string queryPlanSeatResult = cxService.QueryPlanSeat(userCinema.RealUserName,
+                userCinema.CinemaCode, SessionCode, Status.GetDescription(), pCompress,
+                GenerateVerifyInfo(userCinema.RealUserName,
+                userCinema.CinemaCode, SessionCode, Status.GetDescription(),
+                pCompress,userCinema.RealPassword));
+
+            CxQueryPlanSeatResult cxReply = queryPlanSeatResult.Deserialize<CxQueryPlanSeatResult>();
+
+            if (cxReply.ResultCode == "0")
+            {
+                reply.SessionSeats = cxReply.PlanSiteStates.PlanSiteState.Select(x =>
+                    new SessionSeatEntity
+                    {
+                        SeatCode = x.SeatCode,
+                        RowNum = x.RowNum,
+                        ColumnNum = x.ColumnNum,
+                        Status = x.Status.CastToEnum<SessionSeatStatusEnum>()
+                    });
+
+                reply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                reply.Status = StatusEnum.Failure;
+            }
+
+            reply.ErrorCode = cxReply.ResultCode;
+            reply.ErrorMessage = cxReply.Message;
 
             return reply;
         }

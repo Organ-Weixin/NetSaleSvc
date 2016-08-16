@@ -53,9 +53,11 @@
     <Compile Include="ChenXing\Models\CxBaseReply.cs" />
     <Compile Include="ChenXing\Models\CxQueryCinemaInfoResult.cs" />
     <Compile Include="ChenXing\Models\CxQueryFilmInfoResult.cs" />
+    <Compile Include="ChenXing\Models\CxQueryPlanInfoResult.cs" />
+    <Compile Include="ChenXing\Models\CxQueryPlanSeatResult.cs" />
     <Compile Include="ChenXing\Models\CxQuerySeatInfoResult.cs" />
     <Compile Include="ChenXing\Models\ModelMapper.cs" />
-    <Compile Include="ChenXing\Models\QueryFilmInfoSyncModel.cs" />
+    <Compile Include="ChenXing\Models\QueryInfoSyncModel.cs" />
     <Compile Include="CTMSInterfaceFactory.cs" />
     <Compile Include="DefaultCTMSInterface.cs" />
     <Compile Include="ICTMSInterface.cs" />

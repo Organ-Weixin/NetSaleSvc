@@ -1,5 +1,7 @@
 ﻿using NetSaleSvc.Entity.Models;
+using NetSaleSvc.Util;
 using System;
+using System.Linq;
 
 namespace NetSaleSvc.Api.CTMS.ChenXing.Models
 {
@@ -69,6 +71,32 @@ namespace NetSaleSvc.Api.CTMS.ChenXing.Models
             entity.Director = model.Director;
             entity.Cast = model.Cast;
             entity.Introduction = model.Introduction;
+
+            return entity;
+        }
+
+        /// <summary>
+        /// 放映计划信息转为entity
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public static SessionInfoEntity MapToEntity(this CxQueryPlanInfoResultCinemaPlan model, SessionInfoEntity entity)
+        {
+            entity.ScreenCode = model.ScreenCode;
+            entity.StartTime = DateTime.Parse(model.StartTime);
+
+            var filmInfo = model.Films.Film.FirstOrDefault() ?? new CxQueryPlanInfoResultFilm();
+            entity.FilmCode = filmInfo.FilmCode;
+            entity.FilmName = filmInfo.FilmName;
+            entity.Duration = filmInfo.Duration;
+            entity.Language = filmInfo.Lang;
+            entity.StandardPrice = model.Price.StandardPrice;
+            entity.LowestPrice = model.Price.LowestPrice;
+            entity.IsAvalible = true;
+            entity.PlaythroughFlag = model.PlaythroughFlag;
+            entity.Dimensional = FilmCodeUtil.GetFilmDimensional(filmInfo.FilmCode);
+            entity.Sequence = filmInfo.Sequence;
 
             return entity;
         }
