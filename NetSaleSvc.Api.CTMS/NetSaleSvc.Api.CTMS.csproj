@@ -50,14 +50,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChenXing\CxInterface.cs" />
-    <Compile Include="ChenXing\Models\CxBaseReply.cs" />
-    <Compile Include="ChenXing\Models\CxQueryCinemaInfoResult.cs" />
-    <Compile Include="ChenXing\Models\CxQueryFilmInfoResult.cs" />
-    <Compile Include="ChenXing\Models\CxQueryPlanInfoResult.cs" />
-    <Compile Include="ChenXing\Models\CxQueryPlanSeatResult.cs" />
-    <Compile Include="ChenXing\Models\CxQuerySeatInfoResult.cs" />
-    <Compile Include="ChenXing\Models\ModelMapper.cs" />
-    <Compile Include="ChenXing\Models\QueryInfoSyncModel.cs" />
+    <Compile Include="ChenXing\Models\Query\CxLockSeatParameter.cs" />
+    <Compile Include="ChenXing\Models\Query\CxReleaseSeatParameter.cs" />
+    <Compile Include="ChenXing\Models\Query\QueryXmlUtil.cs" />
+    <Compile Include="ChenXing\Models\Reply\CxBaseReply.cs" />
+    <Compile Include="ChenXing\Models\Reply\CxLockSeatResult.cs" />
+    <Compile Include="ChenXing\Models\Reply\CxQueryCinemaInfoResult.cs" />
+    <Compile Include="ChenXing\Models\Reply\CxQueryFilmInfoResult.cs" />
+    <Compile Include="ChenXing\Models\Reply\CxQueryPlanInfoResult.cs" />
+    <Compile Include="ChenXing\Models\Reply\CxQueryPlanSeatResult.cs" />
+    <Compile Include="ChenXing\Models\Reply\CxQuerySeatInfoResult.cs" />
+    <Compile Include="ChenXing\Models\Reply\CxReleaseSeatResult.cs" />
+    <Compile Include="ChenXing\Models\Reply\ModelMapper.cs" />
+    <Compile Include="ChenXing\Models\Query\QueryInfoSyncModel.cs" />
     <Compile Include="CTMSInterfaceFactory.cs" />
     <Compile Include="DefaultCTMSInterface.cs" />
     <Compile Include="ICTMSInterface.cs" />

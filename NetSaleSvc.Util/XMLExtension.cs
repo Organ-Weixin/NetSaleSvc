@@ -73,8 +73,9 @@ namespace NetSaleSvc.Util
                     return (T)xmlserializer.Deserialize(reader);
                 }
             }
-            catch
+            catch (Exception e)
             {
+                string error = e.Message;
                 return default(T);
             }
         }

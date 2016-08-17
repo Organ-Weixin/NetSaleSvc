@@ -25,7 +25,7 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard.Models
         /// 自动解锁时间
         /// </summary>
         [XmlAttribute]
-        public DateTime AutoUnlockDatetime { get; set; }
+        public string AutoUnlockDatetime { get; set; }
 
         /// <summary>
         /// 排期编码

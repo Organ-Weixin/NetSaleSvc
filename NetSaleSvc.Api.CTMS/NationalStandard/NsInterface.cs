@@ -240,7 +240,7 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
             if (reply.LockSeatReply.Status == StatusEnum.Success.GetDescription())
             {
                 order.orderBaseInfo.LockOrderCode = reply.LockSeatReply.Order.OrderCode;
-                order.orderBaseInfo.AutoUnlockDatetime = reply.LockSeatReply.Order.AutoUnlockDatetime;
+                order.orderBaseInfo.AutoUnlockDatetime = DateTime.Parse(reply.LockSeatReply.Order.AutoUnlockDatetime);
                 order.orderBaseInfo.LockTime = DateTime.Now;
                 order.orderBaseInfo.OrderStatus = OrderStatusEnum.Locked;
 

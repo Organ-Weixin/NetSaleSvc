@@ -329,7 +329,7 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
                 userCinema.CinemaCode, SessionCode, Status.GetDescription(), pCompress,
                 GenerateVerifyInfo(userCinema.RealUserName,
                 userCinema.CinemaCode, SessionCode, Status.GetDescription(),
-                pCompress,userCinema.RealPassword));
+                pCompress, userCinema.RealPassword));
 
             CxQueryPlanSeatResult cxReply = queryPlanSeatResult.Deserialize<CxQueryPlanSeatResult>();
 
@@ -368,7 +368,45 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
         {
             CTMSLockSeatReply reply = new CTMSLockSeatReply();
 
-            //TODO
+            CxLockSeatParameter param = new CxLockSeatParameter
+            {
+                AppCode = userCinema.RealUserName,
+                CinemaCode = userCinema.CinemaCode,
+                FeatureAppNo = order.orderBaseInfo.SessionCode,
+                SeatInfos = new CxLockSeatXmlSeatInfos
+                {
+                    SeatCode = order.orderSeatDetails.Select(x => x.SeatCode).ToList()
+                },
+                Compress = pCompress,
+                VerifyInfo = GenerateVerifyInfo(userCinema.RealUserName,
+                    userCinema.CinemaCode,
+                    order.orderBaseInfo.SessionCode,
+                    string.Join("", order.orderSeatDetails.Select(x => x.SeatCode).ToArray()),
+                    pCompress,
+                    userCinema.RealPassword)
+            };
+
+            string lockSeatResult = cxService.LockSeat(QueryXmlUtil.ToXml(param));
+
+            CxLockSeatResult cxReply = lockSeatResult.Deserialize<CxLockSeatResult>();
+
+            if (cxReply.ResultCode == "0")
+            {
+                order.orderBaseInfo.LockOrderCode = cxReply.OrderCode;
+                order.orderBaseInfo.AutoUnlockDatetime = DateTime.Parse(cxReply.AutoUnlockDatetime);
+                order.orderBaseInfo.LockTime = DateTime.Now;
+                order.orderBaseInfo.OrderStatus = OrderStatusEnum.Locked;
+                reply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                order.orderBaseInfo.OrderStatus = OrderStatusEnum.LockFail;
+                order.orderBaseInfo.ErrorMessage = cxReply.Message;
+                reply.Status = StatusEnum.Failure;
+            }
+
+            reply.ErrorCode = cxReply.ResultCode;
+            reply.ErrorMessage = cxReply.Message;
 
             return reply;
         }
@@ -384,7 +422,43 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
         {
             CTMSReleaseSeatReply reply = new CTMSReleaseSeatReply();
 
-            //TODO
+            CxReleaseSeatParameter param = new CxReleaseSeatParameter
+            {
+                AppCode = userCinema.RealUserName,
+                CinemaCode = userCinema.CinemaCode,
+                OrderCode = order.orderBaseInfo.LockOrderCode,
+                FeatureAppNo = order.orderBaseInfo.SessionCode,
+                SeatInfos = new CxReleaseSeatXmlSeatInfos
+                {
+                    SeatCode = order.orderSeatDetails.Select(x => x.SeatCode).ToList()
+                },
+                Compress = pCompress,
+                VerifyInfo = GenerateVerifyInfo(userCinema.RealUserName,
+                    userCinema.CinemaCode, order.orderBaseInfo.LockOrderCode,
+                    order.orderBaseInfo.SessionCode,
+                    string.Join("", order.orderSeatDetails.Select(x => x.SeatCode).ToArray()),
+                    pCompress,
+                    userCinema.RealPassword)
+            };
+
+            string releaseSeatResult = cxService.ReleaseSeat(QueryXmlUtil.ToXml(param));
+
+            CxReleaseSeatResult cxReply = releaseSeatResult.Deserialize<CxReleaseSeatResult>();
+
+            if (cxReply.ResultCode == "0")
+            {
+                order.orderBaseInfo.OrderStatus = OrderStatusEnum.Released;
+                reply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                order.orderBaseInfo.OrderStatus = OrderStatusEnum.ReleaseFail;
+                order.orderBaseInfo.ErrorMessage = cxReply.Message;
+                reply.Status = StatusEnum.Failure;
+            }
+
+            reply.ErrorCode = cxReply.ResultCode;
+            reply.ErrorMessage = cxReply.Message;
 
             return reply;
         }
