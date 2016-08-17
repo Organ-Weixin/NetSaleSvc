@@ -3,6 +3,7 @@ using NetSaleSvc.Entity.Enum;
 using NetSaleSvc.Api.CTMS.NationalStandard;
 using NetSaleSvc.Api.CTMS.ChenXing;
 using NetSaleSvc.Api.CTMS.ManTianXing;
+using NetSaleSvc.Api.CTMS.DingXin;
 
 namespace NetSaleSvc.Api.CTMS
 {
@@ -25,7 +26,7 @@ namespace NetSaleSvc.Api.CTMS
                 case CinemaTypeEnum.ChenXing:
                     return new CxInterface();
                 case CinemaTypeEnum.DingXin:
-                    return new DefaultCTMSInterface();
+                    return new DxInterface();
                 case CinemaTypeEnum.ManTianXing:
                     return new MtxInterface();
                 case CinemaTypeEnum.HuoLieNiao:

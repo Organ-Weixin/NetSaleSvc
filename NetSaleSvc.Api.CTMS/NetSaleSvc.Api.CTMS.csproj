@@ -76,6 +76,7 @@
     <Compile Include="ChenXing\Models\Query\QueryInfoSyncModel.cs" />
     <Compile Include="CTMSInterfaceFactory.cs" />
     <Compile Include="DefaultCTMSInterface.cs" />
+    <Compile Include="DingXin\DxInterface.cs" />
     <Compile Include="ICTMSInterface.cs" />
     <Compile Include="ManTianXing\MtxInterface.cs" />
     <Compile Include="Models\CTMSBaseReply.cs" />
@@ -214,6 +215,7 @@
     <None Include="Web References\NsFetchTicket\FetchTicketSvc.disco" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="DingXin\Models\" />
     <Folder Include="ManTianXing\Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
