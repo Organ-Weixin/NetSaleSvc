@@ -730,7 +730,95 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
         {
             CTMSFetchTicketReply reply = new CTMSFetchTicketReply();
 
-            //TODO
+            //先请求出票
+            CxApplyFetchTicketParameter applyParam = new CxApplyFetchTicketParameter
+            {
+                AppCode = userCinema.RealUserName,
+                CinemaCode = userCinema.CinemaCode,
+                Tickets=new CxApplyFetchTicketParameterTickets
+                {
+                    Ticket = new List<CxApplyFetchTicketParameterTicket>
+                    {
+                        new CxApplyFetchTicketParameterTicket
+                        {
+                            PrintNo = order.orderBaseInfo.PrintNo,
+                            VerifyCodeMD5 = order.orderBaseInfo.VerifyCode
+                        }
+                    }
+                },
+                Compress = pCompress,
+                VerifyInfo = GenerateVerifyInfo(userCinema.RealUserName, userCinema.CinemaCode,
+                    order.orderBaseInfo.PrintNo, order.orderBaseInfo.VerifyCode, pCompress,
+                    userCinema.RealPassword)
+            };
+
+            string applyFetchTicketResult = cxService.ApplyFetchTicket(QueryXmlUtil.ToXml(applyParam));
+
+            CxApplyFetchTicketResult cxApplyReply = applyFetchTicketResult.Deserialize<CxApplyFetchTicketResult>();
+
+            if (cxApplyReply.ResultCode == "0")
+            {
+                if (cxApplyReply.Tickets!=null&& cxApplyReply.Tickets.Ticket != null 
+                    && cxApplyReply.Tickets.Ticket.Count > 0)
+                {
+                    var Ticket = cxApplyReply.Tickets.Ticket.First();
+                    if (Ticket.ReturnValue == 0)
+                    {
+                        //请求成功，然后确认出票
+                        CxFetchTicketParameter fetchParam = new CxFetchTicketParameter
+                        {
+                            AppCode = userCinema.RealUserName,
+                            CinemaCode = userCinema.CinemaCode,
+                            Tickets = new CxFetchTicketParameterTickets
+                            {
+                                Ticket = new List<CxFetchTicketParameterTicket>
+                                {
+                                    new CxFetchTicketParameterTicket
+                                    {
+                                        PrintNo = order.orderBaseInfo.PrintNo
+                                    }
+                                }
+                            },
+                            Compress = pCompress,
+                            VerifyInfo = GenerateVerifyInfo(userCinema.RealUserName, userCinema.CinemaCode,
+                                order.orderBaseInfo.PrintNo, pCompress, userCinema.RealPassword)
+                        };
+
+                        string fetchTicketResult = cxService.FetchTicket(QueryXmlUtil.ToXml(fetchParam));
+
+                        CxFetchTicketResult cxfetchReply = fetchTicketResult.Deserialize<CxFetchTicketResult>();
+                        if (cxfetchReply.ResultCode == "0")
+                        {
+                            reply.Status = StatusEnum.Success;
+                        }
+                        else
+                        {
+                            reply.Status = StatusEnum.Failure;
+                            reply.ErrorCode = cxfetchReply.ResultCode;
+                            reply.ErrorMessage = cxfetchReply.Message;
+                        }
+                    }
+                    else if (Ticket.ReturnValue == 1)
+                    {
+                        reply.Status = StatusEnum.Failure;
+                        reply.ErrorCode = "-1";
+                        reply.ErrorMessage = "电影票已打印";
+                    }
+                    else
+                    {
+                        reply.Status = StatusEnum.Failure;
+                        reply.ErrorCode = "-1";
+                        reply.ErrorMessage = "未知错误";
+                    }
+                }
+                
+            }
+            else
+            {
+                reply.Status = StatusEnum.Failure;
+                reply.ErrorCode = cxApplyReply.ResultCode;
+                reply.ErrorMessage = cxApplyReply.Message;
+            }
 
             return reply;
         }

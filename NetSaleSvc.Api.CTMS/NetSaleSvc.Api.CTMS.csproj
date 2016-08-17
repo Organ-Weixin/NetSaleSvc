@@ -50,13 +50,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChenXing\CxInterface.cs" />
+    <Compile Include="ChenXing\Models\Query\CxApplyFetchTicketParameter.cs" />
+    <Compile Include="ChenXing\Models\Query\CxFetchTicketParameter.cs" />
     <Compile Include="ChenXing\Models\Query\CxLockSeatParameter.cs" />
     <Compile Include="ChenXing\Models\Query\CxQueryTicketInfoParameter.cs" />
     <Compile Include="ChenXing\Models\Query\CxReleaseSeatParameter.cs" />
     <Compile Include="ChenXing\Models\Query\CxSubmitOrderParameter.cs" />
     <Compile Include="ChenXing\Models\Query\QueryXmlUtil.cs" />
+    <Compile Include="ChenXing\Models\Reply\CxApplyFetchTicketResult.cs" />
     <Compile Include="ChenXing\Models\Reply\CxBaseReply.cs" />
     <Compile Include="ChenXing\Models\Reply\CxCancelOrderResult.cs" />
+    <Compile Include="ChenXing\Models\Reply\CxFetchTicketResult.cs" />
     <Compile Include="ChenXing\Models\Reply\CxLockSeatResult.cs" />
     <Compile Include="ChenXing\Models\Reply\CxQueryCinemaInfoResult.cs" />
     <Compile Include="ChenXing\Models\Reply\CxQueryDeliveryStatusResult.cs" />
