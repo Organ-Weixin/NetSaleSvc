@@ -616,8 +616,39 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
         {
             CTMSQueryOrderReply reply = new CTMSQueryOrderReply();
 
-            //TODO
+            //查询订单状态
+            string queryOrderStatusResult = cxService.QueryOrderStatus(userCinema.RealUserName, userCinema.CinemaCode,
+                order.orderBaseInfo.SubmitOrderCode, pCompress,
+                GenerateVerifyInfo(userCinema.RealUserName, userCinema.CinemaCode,
+                order.orderBaseInfo.SubmitOrderCode, pCompress, userCinema.RealPassword));
 
+            CxQueryOrderStatusReply queryOrderStatusReply = queryOrderStatusResult.Deserialize<CxQueryOrderStatusReply>();
+
+            if (queryOrderStatusReply.ResultCode == "0" && queryOrderStatusReply.OrderStatus != "1")
+            {
+                if (queryOrderStatusReply.OrderStatus == "2")
+                {
+                    order.orderBaseInfo.OrderStatus = OrderStatusEnum.Refund;
+                    order.orderBaseInfo.RefundTime = order.orderBaseInfo.RefundTime ?? DateTime.Now;
+                }
+
+                //查询打印状态
+                QueryPrint(userCinema, order);
+
+                reply.Status = StatusEnum.Success;
+            }
+            else if (queryOrderStatusReply.OrderStatus == "1")
+            {
+                reply.Status = StatusEnum.Failure;
+                reply.ErrorCode = "-1";
+                reply.ErrorMessage = "订单交易状态：提交失败！";
+            }
+            else
+            {
+                reply.Status = StatusEnum.Failure;
+                reply.ErrorCode = queryOrderStatusReply.ResultCode;
+                reply.ErrorMessage = queryOrderStatusReply.Message;
+            }
             return reply;
         }
 
