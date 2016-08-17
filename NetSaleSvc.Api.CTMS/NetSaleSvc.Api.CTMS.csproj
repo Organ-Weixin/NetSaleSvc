@@ -58,6 +58,7 @@
     <Compile Include="ChenXing\Models\Reply\CxCancelOrderResult.cs" />
     <Compile Include="ChenXing\Models\Reply\CxLockSeatResult.cs" />
     <Compile Include="ChenXing\Models\Reply\CxQueryCinemaInfoResult.cs" />
+    <Compile Include="ChenXing\Models\Reply\CxQueryDeliveryStatusResult.cs" />
     <Compile Include="ChenXing\Models\Reply\CxQueryFilmInfoResult.cs" />
     <Compile Include="ChenXing\Models\Reply\CxQueryPlanInfoResult.cs" />
     <Compile Include="ChenXing\Models\Reply\CxQueryPlanSeatResult.cs" />

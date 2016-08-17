@@ -543,7 +543,29 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
         {
             CTMSQueryPrintReply reply = new CTMSQueryPrintReply();
 
-            //TODO
+            string queryPrintResult = cxService.QueryDeliveryStatus(userCinema.RealUserName, userCinema.CinemaCode,
+                order.orderBaseInfo.PrintNo, order.orderBaseInfo.VerifyCode, pCompress,
+                GenerateVerifyInfo(userCinema.RealUserName, userCinema.CinemaCode,
+                order.orderBaseInfo.PrintNo, order.orderBaseInfo.VerifyCode, pCompress, userCinema.RealPassword));
+
+            CxQueryDeliveryStatusResult cxReply = queryPrintResult.Deserialize<CxQueryDeliveryStatusResult>();
+
+            if (cxReply.ResultCode == "0")
+            {
+                order.orderBaseInfo.PrintStatus = cxReply.PrintStatus.CastToEnum<YesOrNoEnum>();
+                if (order.orderBaseInfo.PrintStatus == YesOrNoEnum.Yes)
+                {
+                    order.orderBaseInfo.PrintTime = DateTime.Parse(cxReply.PrintTime);
+                }
+                reply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                reply.Status = StatusEnum.Failure;
+            }
+
+            reply.ErrorCode = cxReply.ResultCode;
+            reply.ErrorMessage = cxReply.Message;
 
             return reply;
         }
