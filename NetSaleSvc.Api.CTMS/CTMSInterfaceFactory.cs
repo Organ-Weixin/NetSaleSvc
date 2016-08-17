@@ -28,7 +28,7 @@ namespace NetSaleSvc.Api.CTMS
                 case CinemaTypeEnum.DingXin:
                     return new DxInterface();
                 case CinemaTypeEnum.ManTianXing:
-                    return new MtxInterface();
+                    return new MtxInterface(userCinema.Url);
                 case CinemaTypeEnum.HuoLieNiao:
                     return new DefaultCTMSInterface();
                 case CinemaTypeEnum.DianYing1905:

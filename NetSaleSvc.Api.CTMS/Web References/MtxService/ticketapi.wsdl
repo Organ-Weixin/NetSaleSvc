@@ -1,0 +1,1494 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:ns="http://webservice.main.cmts.cn" xmlns:ns1="http://org.apache.axis2/xsd" targetNamespace="http://webservice.main.cmts.cn" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation>ticketapi</wsdl:documentation>
+  <wsdl:types>
+    <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://webservice.main.cmts.cn">
+      <xs:element name="LiveRealCheckSeatState">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pXmlString" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="LiveRealCheckSeatStateResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetPlanSiteStatistic">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pAppCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pCinemaID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pFeatureAppNo" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pTokenID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pVerifyInfo" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetPlanSiteStatisticResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetOrderStatus">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pAppCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pCinemaID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pSerialNum" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pTokenID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pVerifyInfo" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetOrderStatusResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetOrderState">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pAppCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pCinemaID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pSerialNum" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pVerifyInfo" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetOrderStateResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetHallAllSeat">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pAppCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pCinemaID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pHallID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pVerifyInfo" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetHallAllSeatResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetHallSiteArea">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pAppCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pCinemaID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pHallID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pTokenID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pVerifyInfo" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetHallSiteAreaResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetCinemaPlan">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pAppCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pCinemaID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pPlanDate" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pTokenID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pVerifyInfo" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetCinemaPlanResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetOrderMsg">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pAppCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pCinemaID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pOrderNO" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pValidCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pVerifyInfo" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetOrderMsgResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="UnLockOrderCenCin">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pAppCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pCinemaID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pOrderNO" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pTokenID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pVerifyInfo" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="UnLockOrderCenCinResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ModifyOrderPayPrice">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pAppCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pCinemaID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pOrderNO" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pAppPric" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pBalancePric" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pTokenID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pVerifyInfo" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ModifyOrderPayPriceResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="BackTicket">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pAppCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pCinemaID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pOrderNO" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pDesc" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pTokenID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pVerifyInfo" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="BackTicketResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetFeatureRulePrice">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pAppCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pCinemaID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pFeatureNo" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pVerifyInfo" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetFeatureRulePriceResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetHall">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pAppCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pCinemaID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pTokenID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pVerifyInfo" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetHallResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetHallSite">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pAppCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pCinemaID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pHallID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pTokenID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pVerifyInfo" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetHallSiteResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetPlanSiteStateQlJson">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pAppCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pCinemaID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pFeatureAppNo" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pVerifyInfo" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetPlanSiteStateQlJsonResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetJsonSiteState">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pAppCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pCinemaID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pFeatureAppNo" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pVerifyInfo" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetJsonSiteStateResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetPlanSiteStateRule">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pAppCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pCinemaID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pPayType" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pFeatureAppNo" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pVerifyInfo" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetPlanSiteStateRuleResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetPlanSiteState">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pAppCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pCinemaID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pFeatureAppNo" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pTokenID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pVerifyInfo" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetPlanSiteStateResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetCinema">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pAppCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pTokenID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pVerifyInfo" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetCinemaResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetCinemaAllPlan">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pAppCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pCinemaID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pTokenID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pVerifyInfo" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetCinemaAllPlanResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SellTicket">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pXmlString" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SellTicketResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AppPrintTicket">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pAppCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pCinemaID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pOrderNO" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pValidCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pRequestType" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pTokenID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pVerifyInfo" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AppPrintTicketResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AddSPInfo">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pXmlString" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AddSPInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ConfirmSPInfo">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pJsonString" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ConfirmSPInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="BackSellGoods">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pAppCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pCinemaID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pOrderNo" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pPayseqNo" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pVerifyInfo" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="BackSellGoodsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetCinemaPlanJson">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pAppCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pCinemaID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pPlanDate" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pVerifyInfo" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetCinemaPlanJsonResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetPlanCannotSellSeat">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="pAppCode" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pCinemaID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pFeatureAppNo" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pSerial" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="pVerifyInfo" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetPlanCannotSellSeatResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="GetCinemaPlanRequest">
+    <wsdl:part name="parameters" element="ns:GetCinemaPlan" />
+  </wsdl:message>
+  <wsdl:message name="GetCinemaPlanResponse">
+    <wsdl:part name="parameters" element="ns:GetCinemaPlanResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPlanSiteStatisticRequest">
+    <wsdl:part name="parameters" element="ns:GetPlanSiteStatistic" />
+  </wsdl:message>
+  <wsdl:message name="GetPlanSiteStatisticResponse">
+    <wsdl:part name="parameters" element="ns:GetPlanSiteStatisticResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOrderStatusRequest">
+    <wsdl:part name="parameters" element="ns:GetOrderStatus" />
+  </wsdl:message>
+  <wsdl:message name="GetOrderStatusResponse">
+    <wsdl:part name="parameters" element="ns:GetOrderStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="LiveRealCheckSeatStateRequest">
+    <wsdl:part name="parameters" element="ns:LiveRealCheckSeatState" />
+  </wsdl:message>
+  <wsdl:message name="LiveRealCheckSeatStateResponse">
+    <wsdl:part name="parameters" element="ns:LiveRealCheckSeatStateResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetHallSiteAreaRequest">
+    <wsdl:part name="parameters" element="ns:GetHallSiteArea" />
+  </wsdl:message>
+  <wsdl:message name="GetHallSiteAreaResponse">
+    <wsdl:part name="parameters" element="ns:GetHallSiteAreaResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddSPInfoRequest">
+    <wsdl:part name="parameters" element="ns:AddSPInfo" />
+  </wsdl:message>
+  <wsdl:message name="AddSPInfoResponse">
+    <wsdl:part name="parameters" element="ns:AddSPInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetHallRequest">
+    <wsdl:part name="parameters" element="ns:GetHall" />
+  </wsdl:message>
+  <wsdl:message name="GetHallResponse">
+    <wsdl:part name="parameters" element="ns:GetHallResponse" />
+  </wsdl:message>
+  <wsdl:message name="SellTicketRequest">
+    <wsdl:part name="parameters" element="ns:SellTicket" />
+  </wsdl:message>
+  <wsdl:message name="SellTicketResponse">
+    <wsdl:part name="parameters" element="ns:SellTicketResponse" />
+  </wsdl:message>
+  <wsdl:message name="ModifyOrderPayPriceRequest">
+    <wsdl:part name="parameters" element="ns:ModifyOrderPayPrice" />
+  </wsdl:message>
+  <wsdl:message name="ModifyOrderPayPriceResponse">
+    <wsdl:part name="parameters" element="ns:ModifyOrderPayPriceResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOrderMsgRequest">
+    <wsdl:part name="parameters" element="ns:GetOrderMsg" />
+  </wsdl:message>
+  <wsdl:message name="GetOrderMsgResponse">
+    <wsdl:part name="parameters" element="ns:GetOrderMsgResponse" />
+  </wsdl:message>
+  <wsdl:message name="AppPrintTicketRequest">
+    <wsdl:part name="parameters" element="ns:AppPrintTicket" />
+  </wsdl:message>
+  <wsdl:message name="AppPrintTicketResponse">
+    <wsdl:part name="parameters" element="ns:AppPrintTicketResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOrderStateRequest">
+    <wsdl:part name="parameters" element="ns:GetOrderState" />
+  </wsdl:message>
+  <wsdl:message name="GetOrderStateResponse">
+    <wsdl:part name="parameters" element="ns:GetOrderStateResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPlanSiteStateRuleRequest">
+    <wsdl:part name="parameters" element="ns:GetPlanSiteStateRule" />
+  </wsdl:message>
+  <wsdl:message name="GetPlanSiteStateRuleResponse">
+    <wsdl:part name="parameters" element="ns:GetPlanSiteStateRuleResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetHallSiteRequest">
+    <wsdl:part name="parameters" element="ns:GetHallSite" />
+  </wsdl:message>
+  <wsdl:message name="GetHallSiteResponse">
+    <wsdl:part name="parameters" element="ns:GetHallSiteResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetJsonSiteStateRequest">
+    <wsdl:part name="parameters" element="ns:GetJsonSiteState" />
+  </wsdl:message>
+  <wsdl:message name="GetJsonSiteStateResponse">
+    <wsdl:part name="parameters" element="ns:GetJsonSiteStateResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCinemaAllPlanRequest">
+    <wsdl:part name="parameters" element="ns:GetCinemaAllPlan" />
+  </wsdl:message>
+  <wsdl:message name="GetCinemaAllPlanResponse">
+    <wsdl:part name="parameters" element="ns:GetCinemaAllPlanResponse" />
+  </wsdl:message>
+  <wsdl:message name="BackSellGoodsRequest">
+    <wsdl:part name="parameters" element="ns:BackSellGoods" />
+  </wsdl:message>
+  <wsdl:message name="BackSellGoodsResponse">
+    <wsdl:part name="parameters" element="ns:BackSellGoodsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetHallAllSeatRequest">
+    <wsdl:part name="parameters" element="ns:GetHallAllSeat" />
+  </wsdl:message>
+  <wsdl:message name="GetHallAllSeatResponse">
+    <wsdl:part name="parameters" element="ns:GetHallAllSeatResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCinemaRequest">
+    <wsdl:part name="parameters" element="ns:GetCinema" />
+  </wsdl:message>
+  <wsdl:message name="GetCinemaResponse">
+    <wsdl:part name="parameters" element="ns:GetCinemaResponse" />
+  </wsdl:message>
+  <wsdl:message name="BackTicketRequest">
+    <wsdl:part name="parameters" element="ns:BackTicket" />
+  </wsdl:message>
+  <wsdl:message name="BackTicketResponse">
+    <wsdl:part name="parameters" element="ns:BackTicketResponse" />
+  </wsdl:message>
+  <wsdl:message name="ConfirmSPInfoRequest">
+    <wsdl:part name="parameters" element="ns:ConfirmSPInfo" />
+  </wsdl:message>
+  <wsdl:message name="ConfirmSPInfoResponse">
+    <wsdl:part name="parameters" element="ns:ConfirmSPInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPlanCannotSellSeatRequest">
+    <wsdl:part name="parameters" element="ns:GetPlanCannotSellSeat" />
+  </wsdl:message>
+  <wsdl:message name="GetPlanCannotSellSeatResponse">
+    <wsdl:part name="parameters" element="ns:GetPlanCannotSellSeatResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetFeatureRulePriceRequest">
+    <wsdl:part name="parameters" element="ns:GetFeatureRulePrice" />
+  </wsdl:message>
+  <wsdl:message name="GetFeatureRulePriceResponse">
+    <wsdl:part name="parameters" element="ns:GetFeatureRulePriceResponse" />
+  </wsdl:message>
+  <wsdl:message name="UnLockOrderCenCinRequest">
+    <wsdl:part name="parameters" element="ns:UnLockOrderCenCin" />
+  </wsdl:message>
+  <wsdl:message name="UnLockOrderCenCinResponse">
+    <wsdl:part name="parameters" element="ns:UnLockOrderCenCinResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPlanSiteStateQlJsonRequest">
+    <wsdl:part name="parameters" element="ns:GetPlanSiteStateQlJson" />
+  </wsdl:message>
+  <wsdl:message name="GetPlanSiteStateQlJsonResponse">
+    <wsdl:part name="parameters" element="ns:GetPlanSiteStateQlJsonResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPlanSiteStateRequest">
+    <wsdl:part name="parameters" element="ns:GetPlanSiteState" />
+  </wsdl:message>
+  <wsdl:message name="GetPlanSiteStateResponse">
+    <wsdl:part name="parameters" element="ns:GetPlanSiteStateResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCinemaPlanJsonRequest">
+    <wsdl:part name="parameters" element="ns:GetCinemaPlanJson" />
+  </wsdl:message>
+  <wsdl:message name="GetCinemaPlanJsonResponse">
+    <wsdl:part name="parameters" element="ns:GetCinemaPlanJsonResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ticketapiPortType">
+    <wsdl:operation name="GetCinemaPlan">
+      <wsdl:input wsaw:Action="urn:GetCinemaPlan" message="ns:GetCinemaPlanRequest" />
+      <wsdl:output wsaw:Action="urn:GetCinemaPlanResponse" message="ns:GetCinemaPlanResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPlanSiteStatistic">
+      <wsdl:input wsaw:Action="urn:GetPlanSiteStatistic" message="ns:GetPlanSiteStatisticRequest" />
+      <wsdl:output wsaw:Action="urn:GetPlanSiteStatisticResponse" message="ns:GetPlanSiteStatisticResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderStatus">
+      <wsdl:input wsaw:Action="urn:GetOrderStatus" message="ns:GetOrderStatusRequest" />
+      <wsdl:output wsaw:Action="urn:GetOrderStatusResponse" message="ns:GetOrderStatusResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="LiveRealCheckSeatState">
+      <wsdl:input wsaw:Action="urn:LiveRealCheckSeatState" message="ns:LiveRealCheckSeatStateRequest" />
+      <wsdl:output wsaw:Action="urn:LiveRealCheckSeatStateResponse" message="ns:LiveRealCheckSeatStateResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHallSiteArea">
+      <wsdl:input wsaw:Action="urn:GetHallSiteArea" message="ns:GetHallSiteAreaRequest" />
+      <wsdl:output wsaw:Action="urn:GetHallSiteAreaResponse" message="ns:GetHallSiteAreaResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="AddSPInfo">
+      <wsdl:input wsaw:Action="urn:AddSPInfo" message="ns:AddSPInfoRequest" />
+      <wsdl:output wsaw:Action="urn:AddSPInfoResponse" message="ns:AddSPInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHall">
+      <wsdl:input wsaw:Action="urn:GetHall" message="ns:GetHallRequest" />
+      <wsdl:output wsaw:Action="urn:GetHallResponse" message="ns:GetHallResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="SellTicket">
+      <wsdl:input wsaw:Action="urn:SellTicket" message="ns:SellTicketRequest" />
+      <wsdl:output wsaw:Action="urn:SellTicketResponse" message="ns:SellTicketResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="ModifyOrderPayPrice">
+      <wsdl:input wsaw:Action="urn:ModifyOrderPayPrice" message="ns:ModifyOrderPayPriceRequest" />
+      <wsdl:output wsaw:Action="urn:ModifyOrderPayPriceResponse" message="ns:ModifyOrderPayPriceResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderMsg">
+      <wsdl:input wsaw:Action="urn:GetOrderMsg" message="ns:GetOrderMsgRequest" />
+      <wsdl:output wsaw:Action="urn:GetOrderMsgResponse" message="ns:GetOrderMsgResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="AppPrintTicket">
+      <wsdl:input wsaw:Action="urn:AppPrintTicket" message="ns:AppPrintTicketRequest" />
+      <wsdl:output wsaw:Action="urn:AppPrintTicketResponse" message="ns:AppPrintTicketResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderState">
+      <wsdl:input wsaw:Action="urn:GetOrderState" message="ns:GetOrderStateRequest" />
+      <wsdl:output wsaw:Action="urn:GetOrderStateResponse" message="ns:GetOrderStateResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPlanSiteStateRule">
+      <wsdl:input wsaw:Action="urn:GetPlanSiteStateRule" message="ns:GetPlanSiteStateRuleRequest" />
+      <wsdl:output wsaw:Action="urn:GetPlanSiteStateRuleResponse" message="ns:GetPlanSiteStateRuleResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHallSite">
+      <wsdl:input wsaw:Action="urn:GetHallSite" message="ns:GetHallSiteRequest" />
+      <wsdl:output wsaw:Action="urn:GetHallSiteResponse" message="ns:GetHallSiteResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetJsonSiteState">
+      <wsdl:input wsaw:Action="urn:GetJsonSiteState" message="ns:GetJsonSiteStateRequest" />
+      <wsdl:output wsaw:Action="urn:GetJsonSiteStateResponse" message="ns:GetJsonSiteStateResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCinemaAllPlan">
+      <wsdl:input wsaw:Action="urn:GetCinemaAllPlan" message="ns:GetCinemaAllPlanRequest" />
+      <wsdl:output wsaw:Action="urn:GetCinemaAllPlanResponse" message="ns:GetCinemaAllPlanResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="BackSellGoods">
+      <wsdl:input wsaw:Action="urn:BackSellGoods" message="ns:BackSellGoodsRequest" />
+      <wsdl:output wsaw:Action="urn:BackSellGoodsResponse" message="ns:BackSellGoodsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHallAllSeat">
+      <wsdl:input wsaw:Action="urn:GetHallAllSeat" message="ns:GetHallAllSeatRequest" />
+      <wsdl:output wsaw:Action="urn:GetHallAllSeatResponse" message="ns:GetHallAllSeatResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCinema">
+      <wsdl:input wsaw:Action="urn:GetCinema" message="ns:GetCinemaRequest" />
+      <wsdl:output wsaw:Action="urn:GetCinemaResponse" message="ns:GetCinemaResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="BackTicket">
+      <wsdl:input wsaw:Action="urn:BackTicket" message="ns:BackTicketRequest" />
+      <wsdl:output wsaw:Action="urn:BackTicketResponse" message="ns:BackTicketResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmSPInfo">
+      <wsdl:input wsaw:Action="urn:ConfirmSPInfo" message="ns:ConfirmSPInfoRequest" />
+      <wsdl:output wsaw:Action="urn:ConfirmSPInfoResponse" message="ns:ConfirmSPInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPlanCannotSellSeat">
+      <wsdl:input wsaw:Action="urn:GetPlanCannotSellSeat" message="ns:GetPlanCannotSellSeatRequest" />
+      <wsdl:output wsaw:Action="urn:GetPlanCannotSellSeatResponse" message="ns:GetPlanCannotSellSeatResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFeatureRulePrice">
+      <wsdl:input wsaw:Action="urn:GetFeatureRulePrice" message="ns:GetFeatureRulePriceRequest" />
+      <wsdl:output wsaw:Action="urn:GetFeatureRulePriceResponse" message="ns:GetFeatureRulePriceResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="UnLockOrderCenCin">
+      <wsdl:input wsaw:Action="urn:UnLockOrderCenCin" message="ns:UnLockOrderCenCinRequest" />
+      <wsdl:output wsaw:Action="urn:UnLockOrderCenCinResponse" message="ns:UnLockOrderCenCinResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPlanSiteStateQlJson">
+      <wsdl:input wsaw:Action="urn:GetPlanSiteStateQlJson" message="ns:GetPlanSiteStateQlJsonRequest" />
+      <wsdl:output wsaw:Action="urn:GetPlanSiteStateQlJsonResponse" message="ns:GetPlanSiteStateQlJsonResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPlanSiteState">
+      <wsdl:input wsaw:Action="urn:GetPlanSiteState" message="ns:GetPlanSiteStateRequest" />
+      <wsdl:output wsaw:Action="urn:GetPlanSiteStateResponse" message="ns:GetPlanSiteStateResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCinemaPlanJson">
+      <wsdl:input wsaw:Action="urn:GetCinemaPlanJson" message="ns:GetCinemaPlanJsonRequest" />
+      <wsdl:output wsaw:Action="urn:GetCinemaPlanJsonResponse" message="ns:GetCinemaPlanJsonResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ticketapiSoap11Binding" type="ns:ticketapiPortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetCinemaPlan">
+      <soap:operation soapAction="urn:GetCinemaPlan" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPlanSiteStatistic">
+      <soap:operation soapAction="urn:GetPlanSiteStatistic" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderStatus">
+      <soap:operation soapAction="urn:GetOrderStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LiveRealCheckSeatState">
+      <soap:operation soapAction="urn:LiveRealCheckSeatState" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHallSiteArea">
+      <soap:operation soapAction="urn:GetHallSiteArea" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddSPInfo">
+      <soap:operation soapAction="urn:AddSPInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHall">
+      <soap:operation soapAction="urn:GetHall" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SellTicket">
+      <soap:operation soapAction="urn:SellTicket" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderMsg">
+      <soap:operation soapAction="urn:GetOrderMsg" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyOrderPayPrice">
+      <soap:operation soapAction="urn:ModifyOrderPayPrice" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AppPrintTicket">
+      <soap:operation soapAction="urn:AppPrintTicket" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderState">
+      <soap:operation soapAction="urn:GetOrderState" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHallSite">
+      <soap:operation soapAction="urn:GetHallSite" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPlanSiteStateRule">
+      <soap:operation soapAction="urn:GetPlanSiteStateRule" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetJsonSiteState">
+      <soap:operation soapAction="urn:GetJsonSiteState" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCinemaAllPlan">
+      <soap:operation soapAction="urn:GetCinemaAllPlan" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHallAllSeat">
+      <soap:operation soapAction="urn:GetHallAllSeat" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BackSellGoods">
+      <soap:operation soapAction="urn:BackSellGoods" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCinema">
+      <soap:operation soapAction="urn:GetCinema" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BackTicket">
+      <soap:operation soapAction="urn:BackTicket" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmSPInfo">
+      <soap:operation soapAction="urn:ConfirmSPInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPlanCannotSellSeat">
+      <soap:operation soapAction="urn:GetPlanCannotSellSeat" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFeatureRulePrice">
+      <soap:operation soapAction="urn:GetFeatureRulePrice" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnLockOrderCenCin">
+      <soap:operation soapAction="urn:UnLockOrderCenCin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPlanSiteStateQlJson">
+      <soap:operation soapAction="urn:GetPlanSiteStateQlJson" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPlanSiteState">
+      <soap:operation soapAction="urn:GetPlanSiteState" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCinemaPlanJson">
+      <soap:operation soapAction="urn:GetCinemaPlanJson" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ticketapiSoap12Binding" type="ns:ticketapiPortType">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetCinemaPlan">
+      <soap12:operation soapAction="urn:GetCinemaPlan" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPlanSiteStatistic">
+      <soap12:operation soapAction="urn:GetPlanSiteStatistic" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderStatus">
+      <soap12:operation soapAction="urn:GetOrderStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LiveRealCheckSeatState">
+      <soap12:operation soapAction="urn:LiveRealCheckSeatState" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHallSiteArea">
+      <soap12:operation soapAction="urn:GetHallSiteArea" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddSPInfo">
+      <soap12:operation soapAction="urn:AddSPInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHall">
+      <soap12:operation soapAction="urn:GetHall" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SellTicket">
+      <soap12:operation soapAction="urn:SellTicket" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderMsg">
+      <soap12:operation soapAction="urn:GetOrderMsg" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyOrderPayPrice">
+      <soap12:operation soapAction="urn:ModifyOrderPayPrice" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AppPrintTicket">
+      <soap12:operation soapAction="urn:AppPrintTicket" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderState">
+      <soap12:operation soapAction="urn:GetOrderState" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHallSite">
+      <soap12:operation soapAction="urn:GetHallSite" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPlanSiteStateRule">
+      <soap12:operation soapAction="urn:GetPlanSiteStateRule" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetJsonSiteState">
+      <soap12:operation soapAction="urn:GetJsonSiteState" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCinemaAllPlan">
+      <soap12:operation soapAction="urn:GetCinemaAllPlan" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHallAllSeat">
+      <soap12:operation soapAction="urn:GetHallAllSeat" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BackSellGoods">
+      <soap12:operation soapAction="urn:BackSellGoods" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCinema">
+      <soap12:operation soapAction="urn:GetCinema" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BackTicket">
+      <soap12:operation soapAction="urn:BackTicket" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmSPInfo">
+      <soap12:operation soapAction="urn:ConfirmSPInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPlanCannotSellSeat">
+      <soap12:operation soapAction="urn:GetPlanCannotSellSeat" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFeatureRulePrice">
+      <soap12:operation soapAction="urn:GetFeatureRulePrice" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnLockOrderCenCin">
+      <soap12:operation soapAction="urn:UnLockOrderCenCin" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPlanSiteStateQlJson">
+      <soap12:operation soapAction="urn:GetPlanSiteStateQlJson" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPlanSiteState">
+      <soap12:operation soapAction="urn:GetPlanSiteState" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCinemaPlanJson">
+      <soap12:operation soapAction="urn:GetCinemaPlanJson" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ticketapiHttpBinding" type="ns:ticketapiPortType">
+    <http:binding verb="POST" />
+    <wsdl:operation name="GetCinemaPlan">
+      <http:operation location="GetCinemaPlan" />
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPlanSiteStatistic">
+      <http:operation location="GetPlanSiteStatistic" />
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderStatus">
+      <http:operation location="GetOrderStatus" />
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LiveRealCheckSeatState">
+      <http:operation location="LiveRealCheckSeatState" />
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHallSiteArea">
+      <http:operation location="GetHallSiteArea" />
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddSPInfo">
+      <http:operation location="AddSPInfo" />
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHall">
+      <http:operation location="GetHall" />
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SellTicket">
+      <http:operation location="SellTicket" />
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderMsg">
+      <http:operation location="GetOrderMsg" />
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyOrderPayPrice">
+      <http:operation location="ModifyOrderPayPrice" />
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AppPrintTicket">
+      <http:operation location="AppPrintTicket" />
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderState">
+      <http:operation location="GetOrderState" />
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHallSite">
+      <http:operation location="GetHallSite" />
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPlanSiteStateRule">
+      <http:operation location="GetPlanSiteStateRule" />
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetJsonSiteState">
+      <http:operation location="GetJsonSiteState" />
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCinemaAllPlan">
+      <http:operation location="GetCinemaAllPlan" />
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHallAllSeat">
+      <http:operation location="GetHallAllSeat" />
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BackSellGoods">
+      <http:operation location="BackSellGoods" />
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCinema">
+      <http:operation location="GetCinema" />
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BackTicket">
+      <http:operation location="BackTicket" />
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmSPInfo">
+      <http:operation location="ConfirmSPInfo" />
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPlanCannotSellSeat">
+      <http:operation location="GetPlanCannotSellSeat" />
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFeatureRulePrice">
+      <http:operation location="GetFeatureRulePrice" />
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnLockOrderCenCin">
+      <http:operation location="UnLockOrderCenCin" />
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPlanSiteStateQlJson">
+      <http:operation location="GetPlanSiteStateQlJson" />
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPlanSiteState">
+      <http:operation location="GetPlanSiteState" />
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCinemaPlanJson">
+      <http:operation location="GetCinemaPlanJson" />
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ticketapi">
+    <wsdl:port name="ticketapiHttpSoap11Endpoint" binding="ns:ticketapiSoap11Binding">
+      <soap:address location="http://ticket.mvtapi.com:8760/ticketapi/services/ticketapi.ticketapiHttpSoap11Endpoint/" />
+    </wsdl:port>
+    <wsdl:port name="ticketapiHttpSoap12Endpoint" binding="ns:ticketapiSoap12Binding">
+      <soap12:address location="http://ticket.mvtapi.com:8760/ticketapi/services/ticketapi.ticketapiHttpSoap12Endpoint/" />
+    </wsdl:port>
+    <wsdl:port name="ticketapiHttpEndpoint" binding="ns:ticketapiHttpBinding">
+      <http:address location="http://ticket.mvtapi.com:8760/ticketapi/services/ticketapi.ticketapiHttpEndpoint/" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

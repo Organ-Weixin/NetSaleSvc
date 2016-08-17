@@ -7,7 +7,6 @@ using System;
 using System.Linq;
 using NetSaleSvc.Util;
 using NetSaleSvc.Entity.Enum;
-using NetSaleSvc.Api.CTMS.Models;
 using System.Collections.Generic;
 
 namespace NetSaleSvc.Api.Core

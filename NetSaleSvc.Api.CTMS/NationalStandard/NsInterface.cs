@@ -1,9 +1,6 @@
 ﻿using NetSaleSvc.Entity.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NetSaleSvc.Api.CTMS.NationalStandardService;
 using NetSaleSvc.Api.CTMS.NationalStandard.Models;
 using NetSaleSvc.Util;
