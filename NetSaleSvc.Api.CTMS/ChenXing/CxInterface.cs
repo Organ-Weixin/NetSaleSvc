@@ -663,7 +663,58 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
         {
             CTMSQueryTicketReply reply = new CTMSQueryTicketReply();
 
-            //TODO
+            CxQueryTicketInfoParameter param = new CxQueryTicketInfoParameter
+            {
+                AppCode = userCinema.RealUserName,
+                CinemaCode = userCinema.CinemaCode,
+                Tickets = new CxQueryTicketInfoParameterTickets
+                {
+                    Ticket = new List<CxQueryTicketInfoParameterTicket>
+                    {
+                        new CxQueryTicketInfoParameterTicket
+                        {
+                            PrintNo = order.orderBaseInfo.PrintNo
+                        }
+                    }
+                },
+                Compress = pCompress,
+                VerifyInfo = GenerateVerifyInfo(userCinema.RealUserName, userCinema.CinemaCode+"d",
+                    order.orderBaseInfo.PrintNo, pCompress, userCinema.RealPassword)
+            };
+
+            string queryTicketResult = cxService.QueryTicketInfo(QueryXmlUtil.ToXml(param));
+
+            CxQueryTicketInfoResult cxReply = queryTicketResult.Deserialize<CxQueryTicketInfoResult>();
+
+            if (cxReply.ResultCode == "0")
+            {
+                if (cxReply.Tickets != null && cxReply.Tickets.Ticket != null && cxReply.Tickets.Ticket.Count > 0)
+                {
+                    order.orderSeatDetails.ForEach(x =>
+                    {
+                        var ticket = cxReply.Tickets.Ticket.Where(y => y.SeatCode == x.SeatCode).SingleOrDefault();
+                        if (ticket != null)
+                        {
+                            x.TicketInfoCode = ticket.TicketInfoCode;
+                            x.FilmTicketCode = ticket.TicketCode;
+                            byte printFlag = 0;
+                            if (byte.TryParse(ticket.PrintFlag, out printFlag))
+                            {
+                                x.PrintFlag = printFlag;
+                            }
+                        }
+                    });
+                }
+
+                reply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                reply.Status = StatusEnum.Failure;
+            }
+
+            reply.ErrorCode = cxReply.ResultCode;
+            reply.ErrorMessage = cxReply.Message;
 
             return reply;
         }
