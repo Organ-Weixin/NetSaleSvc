@@ -52,8 +52,10 @@
     <Compile Include="ChenXing\CxInterface.cs" />
     <Compile Include="ChenXing\Models\Query\CxLockSeatParameter.cs" />
     <Compile Include="ChenXing\Models\Query\CxReleaseSeatParameter.cs" />
+    <Compile Include="ChenXing\Models\Query\CxSubmitOrderParameter.cs" />
     <Compile Include="ChenXing\Models\Query\QueryXmlUtil.cs" />
     <Compile Include="ChenXing\Models\Reply\CxBaseReply.cs" />
+    <Compile Include="ChenXing\Models\Reply\CxCancelOrderResult.cs" />
     <Compile Include="ChenXing\Models\Reply\CxLockSeatResult.cs" />
     <Compile Include="ChenXing\Models\Reply\CxQueryCinemaInfoResult.cs" />
     <Compile Include="ChenXing\Models\Reply\CxQueryFilmInfoResult.cs" />
@@ -61,6 +63,7 @@
     <Compile Include="ChenXing\Models\Reply\CxQueryPlanSeatResult.cs" />
     <Compile Include="ChenXing\Models\Reply\CxQuerySeatInfoResult.cs" />
     <Compile Include="ChenXing\Models\Reply\CxReleaseSeatResult.cs" />
+    <Compile Include="ChenXing\Models\Reply\CxSubmitOrderResult.cs" />
     <Compile Include="ChenXing\Models\Reply\ModelMapper.cs" />
     <Compile Include="ChenXing\Models\Query\QueryInfoSyncModel.cs" />
     <Compile Include="CTMSInterfaceFactory.cs" />

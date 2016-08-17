@@ -474,7 +474,60 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
         {
             CTMSSubmitOrderReply reply = new CTMSSubmitOrderReply();
 
-            //TODO
+            CxSubmitOrderParameter param = new CxSubmitOrderParameter()
+            {
+                AppCode = userCinema.RealUserName,
+                CinemaCode = userCinema.CinemaCode,
+                OrderCode = order.orderBaseInfo.LockOrderCode,
+                FeatureAppNo = order.orderBaseInfo.SessionCode,
+                MobilePhone = order.orderBaseInfo.MobilePhone,
+                SeatInfos = new CxSubmitOrderParameterSeatInfos
+                {
+                    SeatInfo = order.orderSeatDetails.Select(x => new CxSubmitOrderParameterSeatInfo
+                    {
+                        SeatCode = x.SeatCode,
+                        Price = (x.Price + x.Fee).ToString("0.00")
+                    }).ToList()
+                },
+                Compress = pCompress,
+                VerifyInfo = GenerateVerifyInfo(userCinema.RealUserName,
+                    userCinema.CinemaCode, order.orderBaseInfo.LockOrderCode,
+                    order.orderBaseInfo.SessionCode, order.orderBaseInfo.MobilePhone,
+                    string.Join("", order.orderSeatDetails.Select(x => (x.SeatCode + (x.Price + x.Fee).ToString("0.00"))).ToArray()),
+                    pCompress,
+                    userCinema.RealPassword)
+            };
+
+            string submitOrderResult = cxService.SubmitOrder(QueryXmlUtil.ToXml(param));
+
+            CxSubmitOrderResult cxReply = submitOrderResult.Deserialize<CxSubmitOrderResult>();
+
+            if (cxReply.ResultCode == "0")
+            {
+                order.orderBaseInfo.SubmitOrderCode = cxReply.OrderCode;
+                order.orderBaseInfo.PrintNo = cxReply.PrintNo;
+                order.orderBaseInfo.VerifyCode = cxReply.VerifyCode;
+                order.orderSeatDetails.ForEach(x =>
+                {
+                    var newSeat = cxReply.SeatInfos.SeatInfo.Where(y => y.SeatCode == x.SeatCode).SingleOrDefault();
+                    if (newSeat != null)
+                    {
+                        x.FilmTicketCode = newSeat.FilmTicketCode;
+                    }
+                });
+                order.orderBaseInfo.OrderStatus = OrderStatusEnum.Complete;
+                order.orderBaseInfo.SubmitTime = DateTime.Now;
+                reply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                order.orderBaseInfo.OrderStatus = OrderStatusEnum.SubmitFail;
+                order.orderBaseInfo.ErrorMessage = cxReply.Message;
+                reply.Status = StatusEnum.Failure;
+            }
+
+            reply.ErrorCode = cxReply.ResultCode;
+            reply.ErrorMessage = cxReply.Message;
 
             return reply;
         }
@@ -506,7 +559,26 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
         {
             CTMSRefundTicketReply reply = new CTMSRefundTicketReply();
 
-            //TODO
+            string refundTicketResult = cxService.CancelOrder(userCinema.RealUserName, userCinema.CinemaCode,
+                order.orderBaseInfo.PrintNo, order.orderBaseInfo.VerifyCode, pCompress,
+                GenerateVerifyInfo(userCinema.RealUserName, userCinema.CinemaCode,
+                order.orderBaseInfo.PrintNo, order.orderBaseInfo.VerifyCode, pCompress, userCinema.RealPassword));
+
+            CxCancelOrderResult cxReply = refundTicketResult.Deserialize<CxCancelOrderResult>();
+
+            if (cxReply.ResultCode == "0")
+            {
+                order.orderBaseInfo.OrderStatus = OrderStatusEnum.Refund;
+                order.orderBaseInfo.RefundTime = DateTime.Now;
+                reply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                reply.Status = StatusEnum.Failure;
+            }
+
+            reply.ErrorCode = cxReply.ResultCode;
+            reply.ErrorMessage = cxReply.Message;
 
             return reply;
         }
