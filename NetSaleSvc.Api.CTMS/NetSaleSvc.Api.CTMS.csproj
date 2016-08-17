@@ -77,6 +77,7 @@
     <Compile Include="CTMSInterfaceFactory.cs" />
     <Compile Include="DefaultCTMSInterface.cs" />
     <Compile Include="ICTMSInterface.cs" />
+    <Compile Include="ManTianXing\MtxInterface.cs" />
     <Compile Include="Models\CTMSBaseReply.cs" />
     <Compile Include="Models\CTMSFetchTicketReply.cs" />
     <Compile Include="Models\CTMSLockSeatReply.cs" />
@@ -212,7 +213,9 @@
   <ItemGroup>
     <None Include="Web References\NsFetchTicket\FetchTicketSvc.disco" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ManTianXing\Models\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\PostSharp.4.2.29\tools\PostSharp.targets" Condition="Exists('..\packages\PostSharp.4.2.29\tools\PostSharp.targets')" />
   <Target Name="EnsurePostSharpImported" BeforeTargets="BeforeBuild" Condition="'$(PostSharp30Imported)' == ''">
