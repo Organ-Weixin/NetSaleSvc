@@ -84,6 +84,7 @@
     <Compile Include="ICTMSInterface.cs" />
     <Compile Include="ManTianXing\Models\ModelMapper.cs" />
     <Compile Include="ManTianXing\Models\mtxBaseReply.cs" />
+    <Compile Include="ManTianXing\Models\mtxGetCinemaPlanResult.cs" />
     <Compile Include="ManTianXing\Models\mtxGetHallResult.cs" />
     <Compile Include="ManTianXing\Models\mtxGetHallAllSeatResult.cs" />
     <Compile Include="ManTianXing\MtxInterface.cs" />

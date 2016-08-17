@@ -55,5 +55,35 @@ namespace NetSaleSvc.Api.CTMS.ManTianXing.Models
 
             return entity;
         }
+
+        /// <summary>
+        /// 放映计划信息转为entity
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public static SessionInfoEntity MapToEntity(this mtxGetCinemaPlanResultCinemaPlan model, SessionInfoEntity entity)
+        {
+            entity.ScreenCode = model.HallNo;
+            entity.StartTime = DateTime.Parse($"{model.FeatureDate} {model.FeatureTime}");
+            entity.FilmCode = model.FilmNo;
+            entity.FilmName = model.FilmName;
+
+            DateTime endTime = DateTime.Parse($"{model.FeatureDate} {model.TotalTime}");
+            if (endTime < entity.StartTime)
+            {
+                endTime = endTime.AddDays(1);
+            }
+            entity.Duration = (int)(endTime - entity.StartTime).TotalMinutes;
+            entity.Language = model.CopyLanguage;
+            entity.StandardPrice = model.StandPric;
+            entity.LowestPrice = model.ProtectPrice;
+            entity.IsAvalible = true;
+            entity.PlaythroughFlag = "No";
+            entity.Dimensional = model.CopyType;
+            entity.Sequence = 1;
+
+            return entity;
+        }
     }
 }

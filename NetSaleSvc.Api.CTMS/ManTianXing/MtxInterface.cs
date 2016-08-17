@@ -7,6 +7,7 @@ using NetSaleSvc.Service;
 using NetSaleSvc.Util;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -38,7 +39,7 @@ namespace NetSaleSvc.Api.CTMS.ManTianXing
             _filmInfoService = new FilmInfoService();
             _sessionInfoService = new SessionInfoService();
             _cinemaService = new CinemaService();
-        } 
+        }
         #endregion
 
         /// <summary>
@@ -138,8 +139,48 @@ namespace NetSaleSvc.Api.CTMS.ManTianXing
         {
             CTMSQueryFilmReply reply = new CTMSQueryFilmReply();
 
-            //TODO
+            //满天星没有获取影片接口，从排期中获取
+            QuerySession(userCinema, StartDate, EndDate);
 
+            var sessions = _sessionInfoService.GetSessions(userCinema.CinemaCode, userCinema.UserId, StartDate, EndDate);
+
+            var allfilmList = sessions.Distinct(x => x.FilmCode)
+                .Select(x => new FilmInfoEntity
+                {
+                    FilmCode = x.FilmCode,
+                    FilmName = x.FilmName,
+                    Version = x.Dimensional,
+                    Duration = x.Duration.GetValueOrDefault(0).ToString(),
+                }).ToList();
+
+            var existedFilms = _filmInfoService.GetFilmInfosByCodes(allfilmList.Select(x => x.FilmCode)).ToList();
+
+            existedFilms.AddRange(allfilmList.Except(existedFilms));
+
+            //过滤名称相同但编码不同的影片
+            var distinctFilmList = new List<FilmInfoEntity>();
+            var filmGroups = existedFilms.GroupBy(x => x.FilmName);
+            foreach (var filmGroup in filmGroups)
+            {
+                if (filmGroup.Count() > 1)
+                {
+                    //优先选择信息比较全的
+                    var selectFilm = filmGroup.Where(x => x.PublishDate != null
+                    || !string.IsNullOrEmpty(x.Publisher) || !string.IsNullOrEmpty(x.Producer)
+                    || !string.IsNullOrEmpty(x.Director) || !string.IsNullOrEmpty(x.Cast)
+                    || !string.IsNullOrEmpty(x.Introduction)).FirstOrDefault() ?? filmGroup.First();
+
+                    distinctFilmList.Add(selectFilm);
+                }
+                else if (filmGroup.Count() > 0)
+                {
+                    distinctFilmList.Add(filmGroup.First());
+                }
+            }
+
+            reply.Status = StatusEnum.Success;
+            reply.films = distinctFilmList;
+            
             return reply;
         }
 
@@ -155,7 +196,39 @@ namespace NetSaleSvc.Api.CTMS.ManTianXing
         {
             CTMSQuerySessionReply reply = new CTMSQuerySessionReply();
 
-            //TODO
+            //不传日期则获取影院所有排期
+            string getCinemaPlanResult = mtxService.GetCinemaPlan(userCinema.RealUserName, userCinema.CinemaCode,
+                string.Empty, TokenId,
+                GenerateVerifyInfo(userCinema.RealUserName, userCinema.CinemaCode, string.Empty, TokenId, Token, userCinema.RealPassword));
+
+            mtxGetCinemaPlanResult mtxReply = getCinemaPlanResult.Deserialize<mtxGetCinemaPlanResult>();
+
+            if (mtxReply.ResultCode == "0")
+            {
+                var oldSessions = _sessionInfoService.GetSessions(userCinema.CinemaCode, userCinema.UserId, StartDate, EndDate);
+
+                var newSessions = mtxReply.CinemaPlans.CinemaPlan
+                    //只取可用或过场的排期
+                    .Where(x => (x.SetClose == 1 || x.SetClose == 2) && (x.UseSign == 0 || x.UseSign == 1))
+                    .Select(x => x.MapToEntity(
+                        oldSessions.Where(y => y.SCode == x.FeatureAppNo).SingleOrDefault()
+                            ?? new SessionInfoEntity
+                            {
+                                CCode = userCinema.CinemaCode,
+                                SCode = x.FeatureAppNo,
+                                UserID = userCinema.UserId
+                            })).Where(x => x.StartTime > StartDate && x.StartTime < EndDate.AddDays(1));
+
+                //插入或更新最新放映计划
+                _sessionInfoService.BulkMerge(newSessions, oldSessions);
+
+                reply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                reply.Status = StatusEnum.Failure;
+            }
+            reply.ErrorCode = mtxReply.ResultCode;
 
             return reply;
         }
