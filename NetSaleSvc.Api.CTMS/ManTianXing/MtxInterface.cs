@@ -1,6 +1,7 @@
 ﻿using NetSaleSvc.Api.CTMS.ManTianXing.Models;
 using NetSaleSvc.Api.CTMS.Models;
 using NetSaleSvc.Api.CTMS.MtxService;
+using NetSaleSvc.Api.CTMS.Util;
 using NetSaleSvc.Entity.Enum;
 using NetSaleSvc.Entity.Models;
 using NetSaleSvc.Service;
@@ -180,7 +181,7 @@ namespace NetSaleSvc.Api.CTMS.ManTianXing
 
             reply.Status = StatusEnum.Success;
             reply.films = distinctFilmList;
-            
+
             return reply;
         }
 
@@ -276,6 +277,8 @@ namespace NetSaleSvc.Api.CTMS.ManTianXing
                 reply.Status = StatusEnum.Failure;
             }
 
+            reply.ErrorCode = mtxReply.ResultCode;
+
             return reply;
         }
 
@@ -290,7 +293,50 @@ namespace NetSaleSvc.Api.CTMS.ManTianXing
         {
             CTMSLockSeatReply reply = new CTMSLockSeatReply();
 
-            //TODO
+            mtxRealCheckSeatStateParameter param = new mtxRealCheckSeatStateParameter
+            {
+                AppCode = userCinema.RealUserName,
+                CinemaId = userCinema.CinemaCode,
+                FeatureAppNo = order.orderBaseInfo.SessionCode,
+                SerialNum = order.orderBaseInfo.SerialNum = DateTime.Now.ToString("yyyyMMddHHmmssfff" + RandomHelper.CreatePwd(3)),
+                SeatInfos = new mtxRealCheckSeatStateParameterSeatInfos
+                {
+                    SeatInfo = order.orderSeatDetails.Select(x => new mtxRealCheckSeatStateParameterSeatInfo
+                    {
+                        SeatNo = x.SeatCode,
+                        TicketPrice = x.Price,
+                        Handlingfee = x.Fee
+                    }).ToList()
+                },
+                PayType = order.orderBaseInfo.PayType,
+                RecvMobilePhone = "15700002025",    //不能为空，默认填一个
+                TokenID = TokenId,
+                VerifyInfo = GenerateVerifyInfo(userCinema.RealUserName, userCinema.CinemaCode,
+                    order.orderBaseInfo.SessionCode, order.orderBaseInfo.SerialNum, order.orderBaseInfo.TicketCount.ToString(),
+                    order.orderBaseInfo.PayType, "15700002025", TokenId, Token, userCinema.RealPassword)
+            };
+
+            string realCheckSeatStateResult = mtxService.LiveRealCheckSeatState(QueryXmlUtil.ToXml(param));
+
+            mtxRealCheckSeatStateResult mtxReply = realCheckSeatStateResult.Deserialize<mtxRealCheckSeatStateResult>();
+
+            if (mtxReply.ResultCode == "0")
+            {
+                order.orderBaseInfo.LockOrderCode = mtxReply.OrderNo;
+                order.orderBaseInfo.AutoUnlockDatetime = DateTime.Now.AddMinutes(10);    //满天星没有自动解锁时间返回，此处默认锁定10分钟
+                order.orderBaseInfo.LockTime = DateTime.Now;
+                order.orderBaseInfo.OrderStatus = OrderStatusEnum.Locked;
+                reply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                order.orderBaseInfo.OrderStatus = OrderStatusEnum.LockFail;
+                order.orderBaseInfo.ErrorMessage = mtxReply.ResultCode;
+
+                reply.Status = StatusEnum.Failure;
+            }
+
+            reply.ErrorCode = mtxReply.ResultCode;
 
             return reply;
         }

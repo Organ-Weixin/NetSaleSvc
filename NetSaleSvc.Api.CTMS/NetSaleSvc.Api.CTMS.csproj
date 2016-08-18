@@ -60,7 +60,8 @@
     <Compile Include="ChenXing\Models\Query\CxQueryTicketInfoParameter.cs" />
     <Compile Include="ChenXing\Models\Query\CxReleaseSeatParameter.cs" />
     <Compile Include="ChenXing\Models\Query\CxSubmitOrderParameter.cs" />
-    <Compile Include="ChenXing\Models\Query\QueryXmlUtil.cs" />
+    <Compile Include="ManTianXing\Models\Reply\mtxRealCheckSeatStateResult.cs" />
+    <Compile Include="Util\QueryXmlUtil.cs" />
     <Compile Include="ChenXing\Models\Reply\CxApplyFetchTicketResult.cs" />
     <Compile Include="ChenXing\Models\Reply\CxBaseReply.cs" />
     <Compile Include="ChenXing\Models\Reply\CxCancelOrderResult.cs" />
@@ -83,11 +84,12 @@
     <Compile Include="DingXin\DxInterface.cs" />
     <Compile Include="ICTMSInterface.cs" />
     <Compile Include="ManTianXing\Models\ModelMapper.cs" />
-    <Compile Include="ManTianXing\Models\mtxBaseReply.cs" />
-    <Compile Include="ManTianXing\Models\mtxGetCinemaPlanResult.cs" />
-    <Compile Include="ManTianXing\Models\mtxGetHallResult.cs" />
-    <Compile Include="ManTianXing\Models\mtxGetHallAllSeatResult.cs" />
-    <Compile Include="ManTianXing\Models\mtxGetPlanSiteStateResult.cs" />
+    <Compile Include="ManTianXing\Models\Query\mtxRealCheckSeatStateParameter.cs" />
+    <Compile Include="ManTianXing\Models\Reply\mtxBaseReply.cs" />
+    <Compile Include="ManTianXing\Models\Reply\mtxGetCinemaPlanResult.cs" />
+    <Compile Include="ManTianXing\Models\Reply\mtxGetHallResult.cs" />
+    <Compile Include="ManTianXing\Models\Reply\mtxGetHallAllSeatResult.cs" />
+    <Compile Include="ManTianXing\Models\Reply\mtxGetPlanSiteStateResult.cs" />
     <Compile Include="ManTianXing\MtxInterface.cs" />
     <Compile Include="Models\CTMSBaseReply.cs" />
     <Compile Include="Models\CTMSFetchTicketReply.cs" />

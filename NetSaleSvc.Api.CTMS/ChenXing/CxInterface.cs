@@ -10,6 +10,7 @@ using NetSaleSvc.Service;
 using System.Threading;
 using System.Collections.Generic;
 using System.Collections;
+using NetSaleSvc.Api.CTMS.Util;
 
 namespace NetSaleSvc.Api.CTMS.ChenXing
 {

@@ -322,6 +322,14 @@ namespace NetSaleSvc.Entity.Models
         /// 错误信息（锁座或提交订单失败错误信息）
         /// </summary>
         public virtual string ErrorMessage { get; set; }
+        /// <summary>
+        /// 订单流水号，满天星需要，其他系统一般为空
+        /// </summary>
+        public virtual string SerialNum { get; set; }
+        /// <summary>
+        /// 满天星付费类型，其他系统一般为空
+        /// </summary>
+        public virtual string PayType { get; set; }
     }
 
     /// <summary>
@@ -367,7 +375,7 @@ namespace NetSaleSvc.Entity.Models
         /// <summary>
         /// 中间件ID
         /// </summary>
-        public virtual int? MId { get; set; }
+        public virtual int MId { get; set; }
         /// <summary>
         /// 影院编码
         /// </summary>

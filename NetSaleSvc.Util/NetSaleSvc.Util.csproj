@@ -53,6 +53,7 @@
     <Compile Include="ListExtension.cs" />
     <Compile Include="Aspect\CheckForNullArgumentsAspect.cs" />
     <Compile Include="MD5Helper.cs" />
+    <Compile Include="RandomHelper.cs" />
     <Compile Include="XMLExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -136,6 +136,19 @@ namespace NetSaleSvc.Api.Models
             orderBaseInfo.TotalFee = queryXmlObj.Order.Seat.Sum(x => x.Fee);
             orderBaseInfo.OrderStatus = OrderStatusEnum.Created;
             orderBaseInfo.Created = DateTime.Now;
+
+            if (userCinema.CinemaType == CinemaTypeEnum.ManTianXing)
+            {
+                //数据库中会员及非会员支付类型以逗号分隔存于PayType字段中，会员在前
+                if (queryXmlObj.Order.PayType == "1")
+                {
+                    orderBaseInfo.PayType = userCinema.PayType.Split(',')?.First();
+                }
+                else
+                {
+                    orderBaseInfo.PayType = userCinema.PayType.Split(',')?.Last();
+                }
+            }
             order.orderBaseInfo = orderBaseInfo;
 
             order.orderSeatDetails = queryXmlObj.Order.Seat.Select(

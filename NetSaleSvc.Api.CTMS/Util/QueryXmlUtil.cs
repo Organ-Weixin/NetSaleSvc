@@ -1,7 +1,6 @@
 ﻿using NetSaleSvc.Util;
-using System.Xml;
 
-namespace NetSaleSvc.Api.CTMS.ChenXing.Models
+namespace NetSaleSvc.Api.CTMS.Util
 {
     public static class QueryXmlUtil
     {
