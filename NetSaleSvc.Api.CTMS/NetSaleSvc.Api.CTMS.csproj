@@ -61,6 +61,7 @@
     <Compile Include="ChenXing\Models\Query\CxReleaseSeatParameter.cs" />
     <Compile Include="ChenXing\Models\Query\CxSubmitOrderParameter.cs" />
     <Compile Include="ManTianXing\Models\Reply\mtxRealCheckSeatStateResult.cs" />
+    <Compile Include="ManTianXing\Models\Reply\mtxUnLockOrderCenCinResult.cs" />
     <Compile Include="Util\QueryXmlUtil.cs" />
     <Compile Include="ChenXing\Models\Reply\CxApplyFetchTicketResult.cs" />
     <Compile Include="ChenXing\Models\Reply\CxBaseReply.cs" />

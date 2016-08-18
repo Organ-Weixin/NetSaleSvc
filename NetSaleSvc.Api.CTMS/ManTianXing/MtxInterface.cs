@@ -33,7 +33,10 @@ namespace NetSaleSvc.Api.CTMS.ManTianXing
         public MtxInterface(string Url)
         {
             mtxService = new ticketapi();
-            mtxService.Url = Url;
+            if (!string.IsNullOrEmpty(Url))
+            {
+                mtxService.Url = Url;
+            }
 
             _screenInfoService = new ScreenInfoService();
             _seatInfoService = new SeatInfoService();
@@ -352,7 +355,27 @@ namespace NetSaleSvc.Api.CTMS.ManTianXing
         {
             CTMSReleaseSeatReply reply = new CTMSReleaseSeatReply();
 
-            //TODO
+            string unLockOrderCenCinResult = mtxService.UnLockOrderCenCin(userCinema.RealUserName, userCinema.CinemaCode,
+                order.orderBaseInfo.LockOrderCode, TokenId,
+                GenerateVerifyInfo(userCinema.RealUserName, userCinema.CinemaCode,
+                order.orderBaseInfo.LockOrderCode, TokenId, Token, userCinema.RealPassword));
+
+            mtxUnLockOrderCenCinResult mtxReply = unLockOrderCenCinResult.Deserialize<mtxUnLockOrderCenCinResult>();
+
+            if (mtxReply.ResultCode == "0")
+            {
+                order.orderBaseInfo.OrderStatus = OrderStatusEnum.Released;
+                reply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                order.orderBaseInfo.OrderStatus = OrderStatusEnum.ReleaseFail;
+                order.orderBaseInfo.ErrorMessage = mtxReply.ResultCode;
+
+                reply.Status = StatusEnum.Failure;
+            }
+
+            reply.ErrorCode = mtxReply.ResultCode;
 
             return reply;
         }
