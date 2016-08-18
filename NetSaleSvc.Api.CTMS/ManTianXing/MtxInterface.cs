@@ -217,7 +217,7 @@ namespace NetSaleSvc.Api.CTMS.ManTianXing
                                 CCode = userCinema.CinemaCode,
                                 SCode = x.FeatureAppNo,
                                 UserID = userCinema.UserId
-                            })).Where(x => x.StartTime > StartDate && x.StartTime < EndDate.AddDays(1));
+                            })).Where(x => x.StartTime > StartDate && x.StartTime < EndDate.AddDays(1)).ToList();
 
                 //插入或更新最新放映计划
                 _sessionInfoService.BulkMerge(newSessions, oldSessions);
@@ -246,7 +246,35 @@ namespace NetSaleSvc.Api.CTMS.ManTianXing
         {
             CTMSQuerySessionSeatReply reply = new CTMSQuerySessionSeatReply();
 
-            //TODO
+            string getPlanSiteStateResult = mtxService.GetPlanSiteState(userCinema.RealUserName, userCinema.CinemaCode,
+                SessionCode, TokenId, GenerateVerifyInfo(userCinema.RealUserName, userCinema.CinemaCode,
+                SessionCode, TokenId, Token, userCinema.RealPassword));
+
+            mtxGetPlanSiteStateResult mtxReply = getPlanSiteStateResult.Deserialize<mtxGetPlanSiteStateResult>();
+
+            if (mtxReply.ResultCode == "0")
+            {
+                var sessionSeats = mtxReply.PlanSiteStates.PlanSiteState.Select(x =>
+                    new SessionSeatEntity
+                    {
+                        SeatCode = x.SeatNo,
+                        RowNum = x.SeatRow,
+                        ColumnNum = x.SeatCol,
+                        Status = getSessionSeatStatus(x.SeatState)
+                    });
+
+                if (Status != SessionSeatStatusEnum.All)
+                {
+                    sessionSeats = sessionSeats.Where(x => x.Status == Status);
+                }
+
+                reply.SessionSeats = sessionSeats;
+                reply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                reply.Status = StatusEnum.Failure;
+            }
 
             return reply;
         }
@@ -404,6 +432,32 @@ namespace NetSaleSvc.Api.CTMS.ManTianXing
             string t2 = BitConverter.ToString(md5.ComputeHash(UTF8Encoding.Default.GetBytes(ConvertString)), 4, 8);
             t2 = t2.Replace("-", "").ToLower();
             return t2;
+        }
+
+        /// <summary>
+        /// 满天星排期座位状态转换
+        /// </summary>
+        /// <param name="seatState"></param>
+        /// <returns></returns>
+        private SessionSeatStatusEnum getSessionSeatStatus(string seatState)
+        {
+            switch (seatState)
+            {
+                case "-1":
+                case "4":
+                case "9":
+                    return SessionSeatStatusEnum.Unavailable;
+                case "0":
+                    return SessionSeatStatusEnum.Available;
+                case "1":
+                    return SessionSeatStatusEnum.Sold;
+                case "3":
+                    return SessionSeatStatusEnum.Booked;
+                case "7":
+                    return SessionSeatStatusEnum.Locked;
+                default:
+                    return SessionSeatStatusEnum.Unavailable;
+            }
         }
         #endregion
     }

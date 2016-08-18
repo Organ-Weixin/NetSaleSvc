@@ -87,6 +87,7 @@
     <Compile Include="ManTianXing\Models\mtxGetCinemaPlanResult.cs" />
     <Compile Include="ManTianXing\Models\mtxGetHallResult.cs" />
     <Compile Include="ManTianXing\Models\mtxGetHallAllSeatResult.cs" />
+    <Compile Include="ManTianXing\Models\mtxGetPlanSiteStateResult.cs" />
     <Compile Include="ManTianXing\MtxInterface.cs" />
     <Compile Include="Models\CTMSBaseReply.cs" />
     <Compile Include="Models\CTMSFetchTicketReply.cs" />
