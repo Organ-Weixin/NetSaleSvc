@@ -330,6 +330,10 @@ namespace NetSaleSvc.Entity.Models
         /// 满天星付费类型，其他系统一般为空
         /// </summary>
         public virtual string PayType { get; set; }
+        /// <summary>
+        /// 满天星取票密码（虽然现在根本没卵用，但先保存），其他系统一般为空
+        /// </summary>
+        public virtual string Printpassword { get; set; }
     }
 
     /// <summary>

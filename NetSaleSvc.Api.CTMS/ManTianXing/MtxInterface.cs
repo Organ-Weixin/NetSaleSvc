@@ -391,7 +391,57 @@ namespace NetSaleSvc.Api.CTMS.ManTianXing
         {
             CTMSSubmitOrderReply reply = new CTMSSubmitOrderReply();
 
-            //TODO
+            mtxSellTicketParameter param = new mtxSellTicketParameter
+            {
+                AppCode = userCinema.RealUserName,
+                CinemaId = userCinema.CinemaCode,
+                FeatureAppNo = order.orderBaseInfo.SessionCode,
+                SerialNum = order.orderBaseInfo.SerialNum,
+                Printpassword = order.orderBaseInfo.Printpassword = userCinema.CinemaCode + RandomHelper.CreatePwd(8),
+                Balance = "0",    //默认认为已全部支付
+                PayType = order.orderBaseInfo.PayType,
+                RecvMobilePhone = order.orderBaseInfo.MobilePhone,
+                SendType = "100",    //默认短信，同样毫无卵用
+                PayResult = "0",    //默认已成功支付
+                IsCmtsPay = "false",    //怎么可能是满天星收钱
+                IsCmtsSendCode = "false",    //不需要满天星这么好
+                PayMobile = order.orderBaseInfo.MobilePhone,
+                BookSign = "0",
+                Payed = (order.orderBaseInfo.TotalPrice + order.orderBaseInfo.TotalFee).ToString("0.##"),
+                SendModeID = string.Empty,    //不知道是啥玩意
+                PaySeqNo = string.Empty,    //TODO: 会员卡交易流水号，暂时不支持会员卡，后续处理（初步想法是不需要接入商传入此值，而是由本平台会员卡接口存入数据库，然后从数据库读取）
+                TokenID = TokenId
+            };
+            //校验信息
+            param.VerifyInfo = GenerateVerifyInfo(param.AppCode, param.CinemaId, param.FeatureAppNo, param.SerialNum,
+                param.Printpassword, param.Balance, param.PayType, param.RecvMobilePhone, param.SendType, param.PayResult,
+                param.IsCmtsPay, param.IsCmtsSendCode, param.PayMobile, param.BookSign, param.Payed, param.SendModeID,
+                param.PaySeqNo, param.TokenID, Token, userCinema.RealPassword);
+
+            string sellTicketResult = mtxService.SellTicket(QueryXmlUtil.ToXml(param));
+
+            mtxSellTicketResult mtxReply = sellTicketResult.Deserialize<mtxSellTicketResult>();
+
+            if (mtxReply.ResultCode == "0")
+            {
+                order.orderBaseInfo.SubmitOrderCode = mtxReply.OrderNo;
+                order.orderBaseInfo.PrintNo = mtxReply.OrderNo;
+                order.orderBaseInfo.VerifyCode = mtxReply.ValidCode;
+
+                order.orderBaseInfo.OrderStatus = OrderStatusEnum.Submited;
+                order.orderBaseInfo.SubmitTime = DateTime.Now;
+
+                reply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                order.orderBaseInfo.OrderStatus = OrderStatusEnum.SubmitFail;
+                order.orderBaseInfo.ErrorMessage = mtxReply.ResultCode;
+
+                reply.Status = StatusEnum.Failure;
+            }
+
+            reply.ErrorCode = mtxReply.ResultCode;
 
             return reply;
         }
@@ -407,8 +457,29 @@ namespace NetSaleSvc.Api.CTMS.ManTianXing
         {
             CTMSQueryPrintReply reply = new CTMSQueryPrintReply();
 
-            //TODO
+            string getOrderStatusResult = mtxService.GetOrderStatus(userCinema.RealUserName, userCinema.CinemaCode,
+                order.orderBaseInfo.SerialNum, TokenId,
+                GenerateVerifyInfo(userCinema.RealUserName, userCinema.CinemaCode,
+                order.orderBaseInfo.SerialNum, TokenId, Token, userCinema.RealPassword));
 
+            mtxGetOrderStatusResult mtxReply = getOrderStatusResult.Deserialize<mtxGetOrderStatusResult>();
+
+            if (mtxReply.ResultCode == "0")
+            {
+                order.orderBaseInfo.PrintStatus = mtxReply.OrderStatus == "8" ? YesOrNoEnum.Yes : YesOrNoEnum.No;
+                if (order.orderBaseInfo.PrintStatus == YesOrNoEnum.Yes)
+                {
+                    //无法获知取票时间，默认当前时间
+                    order.orderBaseInfo.PrintTime = DateTime.Now;
+                }
+                reply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                reply.Status = StatusEnum.Failure;
+            }
+
+            reply.ErrorCode = mtxReply.ResultCode;
             return reply;
         }
 
@@ -423,7 +494,25 @@ namespace NetSaleSvc.Api.CTMS.ManTianXing
         {
             CTMSRefundTicketReply reply = new CTMSRefundTicketReply();
 
-            //TODO
+            string backTicketResult = mtxService.BackTicket(userCinema.RealUserName, userCinema.CinemaCode,
+                order.orderBaseInfo.SubmitOrderCode, "正常退票", TokenId,
+                GenerateVerifyInfo(userCinema.RealUserName, userCinema.CinemaCode,
+                order.orderBaseInfo.SubmitOrderCode, TokenId, Token, userCinema.RealPassword));
+
+            mtxBackTicketResult mtxReply = backTicketResult.Deserialize<mtxBackTicketResult>();
+
+            if (mtxReply.ResultCode == "0")
+            {
+                order.orderBaseInfo.OrderStatus = OrderStatusEnum.Refund;
+                order.orderBaseInfo.RefundTime = DateTime.Now;
+                reply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                reply.Status = StatusEnum.Failure;
+            }
+
+            reply.ErrorCode = mtxReply.ResultCode;
 
             return reply;
         }
@@ -439,7 +528,46 @@ namespace NetSaleSvc.Api.CTMS.ManTianXing
         {
             CTMSQueryOrderReply reply = new CTMSQueryOrderReply();
 
-            //TODO
+            string getOrderStatusResult = mtxService.GetOrderStatus(userCinema.RealUserName, userCinema.CinemaCode,
+                order.orderBaseInfo.SerialNum, TokenId,
+                GenerateVerifyInfo(userCinema.RealUserName, userCinema.CinemaCode,
+                order.orderBaseInfo.SerialNum, TokenId, Token, userCinema.RealPassword));
+
+            mtxGetOrderStatusResult mtxReply = getOrderStatusResult.Deserialize<mtxGetOrderStatusResult>();
+
+            if (mtxReply.ResultCode == "0" 
+                && (mtxReply.OrderStatus == "7" || mtxReply.OrderStatus == "8" || mtxReply.OrderStatus == "9"))
+            {
+                if (mtxReply.OrderStatus == "7")
+                {
+                    order.orderBaseInfo.OrderStatus = OrderStatusEnum.Refund;
+                    order.orderBaseInfo.RefundTime = DateTime.Now;
+                }
+                else
+                {
+                    //不管是8：已打票还是9：地面售票成功都代表影院已成功确认订单
+                    order.orderBaseInfo.OrderStatus = OrderStatusEnum.Complete;
+
+                    order.orderBaseInfo.PrintStatus = mtxReply.OrderStatus == "8" ? YesOrNoEnum.Yes : YesOrNoEnum.No;
+                    if (order.orderBaseInfo.PrintStatus == YesOrNoEnum.Yes)
+                    {
+                        //无法获知取票时间，默认当前时间
+                        order.orderBaseInfo.PrintTime = DateTime.Now;
+                    }
+                }
+
+                //调一下获取影票信息接口以便获取影票编码等信息
+                QueryTicket(userCinema, order);
+                
+                reply.Status = StatusEnum.Success;
+                reply.ErrorCode = mtxReply.ResultCode;
+            }
+            else
+            {
+                reply.Status = StatusEnum.Failure;
+                reply.ErrorCode = "-1";
+                reply.ErrorMessage = "影院出票还未成功！";
+            }
 
             return reply;
         }
