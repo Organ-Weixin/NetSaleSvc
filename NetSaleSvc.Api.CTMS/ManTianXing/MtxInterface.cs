@@ -535,7 +535,7 @@ namespace NetSaleSvc.Api.CTMS.ManTianXing
 
             mtxGetOrderStatusResult mtxReply = getOrderStatusResult.Deserialize<mtxGetOrderStatusResult>();
 
-            if (mtxReply.ResultCode == "0" 
+            if (mtxReply.ResultCode == "0"
                 && (mtxReply.OrderStatus == "7" || mtxReply.OrderStatus == "8" || mtxReply.OrderStatus == "9"))
             {
                 if (mtxReply.OrderStatus == "7")
@@ -558,7 +558,7 @@ namespace NetSaleSvc.Api.CTMS.ManTianXing
 
                 //调一下获取影票信息接口以便获取影票编码等信息
                 QueryTicket(userCinema, order);
-                
+
                 reply.Status = StatusEnum.Success;
                 reply.ErrorCode = mtxReply.ResultCode;
             }
@@ -583,7 +583,51 @@ namespace NetSaleSvc.Api.CTMS.ManTianXing
         {
             CTMSQueryTicketReply reply = new CTMSQueryTicketReply();
 
-            //TODO
+            string appPrintTicketResult = mtxService.AppPrintTicket(userCinema.RealUserName, userCinema.CinemaCode,
+                order.orderBaseInfo.SubmitOrderCode, order.orderBaseInfo.VerifyCode, "0", TokenId,
+                GenerateVerifyInfo(userCinema.RealUserName, userCinema.CinemaCode,
+                order.orderBaseInfo.SubmitOrderCode, order.orderBaseInfo.VerifyCode, "0", TokenId, Token,
+                userCinema.RealPassword));
+
+            mtxAppPrintTicketResult mtxReply = appPrintTicketResult.Deserialize<mtxAppPrintTicketResult>();
+
+            if (mtxReply.ResultCode == "0")
+            {
+                order.orderBaseInfo.PrintStatus = mtxReply.PrintType == "1" ? YesOrNoEnum.Yes : YesOrNoEnum.No;
+                if (order.orderBaseInfo.PrintStatus == YesOrNoEnum.Yes)
+                {
+                    order.orderBaseInfo.PrintTime = DateTime.Now;
+                }
+
+                if (mtxReply.SeatInfos != null && mtxReply.SeatInfos.SeatInfo != null
+                    && mtxReply.SeatInfos.SeatInfo.Count > 0)
+                {
+                    order.orderSeatDetails.ForEach(x =>
+                    {
+                        var ticket = mtxReply.SeatInfos.SeatInfo.Where(y => y.SeatCol == x.ColumnNum
+                        && y.SeatRow == x.RowNum).SingleOrDefault();
+                        if (ticket != null)
+                        {
+                            x.TicketInfoCode = ticket.TicketNo;
+                            x.FilmTicketCode = ticket.TicketNo2;
+                            byte printFlag = 0;
+                            if (byte.TryParse(mtxReply.PrintType, out printFlag))
+                            {
+                                x.PrintFlag = printFlag;
+                            }
+                        }
+                    });
+                }
+
+                reply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                reply.Status = StatusEnum.Failure;
+            }
+
+            reply.ErrorCode = mtxReply.ResultCode;
+            reply.ErrorMessage = mtxReply.ResultDesc;
 
             return reply;
         }
@@ -599,7 +643,28 @@ namespace NetSaleSvc.Api.CTMS.ManTianXing
         {
             CTMSFetchTicketReply reply = new CTMSFetchTicketReply();
 
-            //TODO
+            string appPrintTicketResult = mtxService.AppPrintTicket(userCinema.RealUserName, userCinema.CinemaCode,
+                order.orderBaseInfo.SubmitOrderCode, order.orderBaseInfo.VerifyCode, "1", TokenId,
+                GenerateVerifyInfo(userCinema.RealUserName, userCinema.CinemaCode,
+                order.orderBaseInfo.SubmitOrderCode, order.orderBaseInfo.VerifyCode, "1", TokenId, Token,
+                userCinema.RealPassword));
+
+            mtxAppPrintTicketResult mtxReply = appPrintTicketResult.Deserialize<mtxAppPrintTicketResult>();
+
+            if (mtxReply.ResultCode == "0")
+            {
+                order.orderBaseInfo.PrintStatus = YesOrNoEnum.Yes;
+                order.orderBaseInfo.PrintTime = DateTime.Now;
+
+                reply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                reply.Status = StatusEnum.Failure;
+            }
+
+            reply.ErrorCode = mtxReply.ResultCode;
+            reply.ErrorMessage = mtxReply.ResultDesc;
 
             return reply;
         }

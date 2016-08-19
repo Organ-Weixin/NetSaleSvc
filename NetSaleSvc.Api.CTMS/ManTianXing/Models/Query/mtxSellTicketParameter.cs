@@ -3,7 +3,7 @@
 namespace NetSaleSvc.Api.CTMS.ManTianXing.Models
 {
     [XmlRoot("SellTicketParameter")]
-    class mtxSellTicketParameter
+    public class mtxSellTicketParameter
     {
         /// <summary>
         /// 应用编码

@@ -548,6 +548,9 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
 
                 if (fetchReply.ResultCode == "0")
                 {
+                    order.orderBaseInfo.PrintStatus = YesOrNoEnum.Yes;
+                    order.orderBaseInfo.PrintTime = DateTime.Now;
+
                     fetchTicketReply.Status = StatusEnum.Success;
                 }
                 else

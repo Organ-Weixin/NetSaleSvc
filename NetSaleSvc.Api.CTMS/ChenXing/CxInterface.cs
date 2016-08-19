@@ -790,6 +790,9 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
                         CxFetchTicketResult cxfetchReply = fetchTicketResult.Deserialize<CxFetchTicketResult>();
                         if (cxfetchReply.ResultCode == "0")
                         {
+                            order.orderBaseInfo.PrintStatus = YesOrNoEnum.Yes;
+                            order.orderBaseInfo.PrintTime = DateTime.Now;
+
                             reply.Status = StatusEnum.Success;
                         }
                         else
