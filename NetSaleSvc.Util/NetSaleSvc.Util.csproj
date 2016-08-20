@@ -49,6 +49,7 @@
     <Compile Include="DateTimeExtension.cs" />
     <Compile Include="EnumExtension.cs" />
     <Compile Include="FilmCodeUtil.cs" />
+    <Compile Include="HttpHelper.cs" />
     <Compile Include="LinqExtension.cs" />
     <Compile Include="ListExtension.cs" />
     <Compile Include="Aspect\CheckForNullArgumentsAspect.cs" />

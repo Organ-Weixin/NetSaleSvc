@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cinema\CinemaService.cs" />
+    <Compile Include="DXCodeID\DXCodeIDService.cs" />
     <Compile Include="FilmInfo\FilmInfoService.cs" />
     <Compile Include="Order\OrderService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

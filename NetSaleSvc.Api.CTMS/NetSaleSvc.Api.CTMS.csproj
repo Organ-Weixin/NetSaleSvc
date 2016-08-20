@@ -77,6 +77,10 @@
     <Compile Include="CTMSInterfaceFactory.cs" />
     <Compile Include="DefaultCTMSInterface.cs" />
     <Compile Include="DingXin\DxInterface.cs" />
+    <Compile Include="DingXin\Models\Reply\DxBaseReply.cs" />
+    <Compile Include="DingXin\Models\Reply\DxQueryCinemaReply.cs" />
+    <Compile Include="DingXin\Models\Reply\DxQuerySeatReply.cs" />
+    <Compile Include="DingXin\Models\Reply\ModelMapper.cs" />
     <Compile Include="ICTMSInterface.cs" />
     <Compile Include="ManTianXing\MtxInterface.cs" />
     <Compile Include="Models\CTMSBaseReply.cs" />
@@ -215,7 +219,7 @@
     <None Include="Web References\NsFetchTicket\FetchTicketSvc.disco" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DingXin\Models\" />
+    <Folder Include="DingXin\Models\Query\" />
     <Folder Include="ManTianXing\Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
