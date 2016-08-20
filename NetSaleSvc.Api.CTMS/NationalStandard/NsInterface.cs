@@ -1,9 +1,6 @@
 ﻿using NetSaleSvc.Entity.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NetSaleSvc.Api.CTMS.NationalStandardService;
 using NetSaleSvc.Api.CTMS.NationalStandard.Models;
 using NetSaleSvc.Util;
@@ -551,6 +548,9 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
 
                 if (fetchReply.ResultCode == "0")
                 {
+                    order.orderBaseInfo.PrintStatus = YesOrNoEnum.Yes;
+                    order.orderBaseInfo.PrintTime = DateTime.Now;
+
                     fetchTicketReply.Status = StatusEnum.Success;
                 }
                 else

@@ -7,7 +7,6 @@ using System;
 using System.Linq;
 using NetSaleSvc.Util;
 using NetSaleSvc.Entity.Enum;
-using NetSaleSvc.Api.CTMS.Models;
 using System.Collections.Generic;
 
 namespace NetSaleSvc.Api.Core
@@ -1035,34 +1034,43 @@ namespace NetSaleSvc.Api.Core
         [CheckForNullArgumentsAspect]
         private SubmitOrderReply SubmitOrder(SubmitOrderReply reply, UserCinemaViewEntity userCinema, OrderViewEntity order)
         {
-            _CTMSInterface = CTMSInterfaceFactory.Create(userCinema);
-            var CTMSReply = _CTMSInterface.SubmitOrder(userCinema, order);
-
-            if (CTMSReply.Status == StatusEnum.Success)
+            try
             {
-                reply.Order = new SubmitOrderReplyOrder();
-                reply.Order.CinemaType = userCinema.CinemaType;
-                reply.Order.OrderCode = order.orderBaseInfo.SubmitOrderCode;
-                reply.Order.SessionCode = order.orderBaseInfo.SessionCode;
-                reply.Order.Count = order.orderBaseInfo.TicketCount;
-                reply.Order.PrintNo = order.orderBaseInfo.PrintNo;
-                reply.Order.VerifyCode = order.orderBaseInfo.VerifyCode;
-                reply.Order.Seat = order.orderSeatDetails.Select(x =>
-                    new SubmitOrderReplySeat
-                    {
-                        SeatCode = x.SeatCode,
-                        FilmTicketCode = x.FilmTicketCode
-                    }).ToList();
+                _CTMSInterface = CTMSInterfaceFactory.Create(userCinema);
+                var CTMSReply = _CTMSInterface.SubmitOrder(userCinema, order);
 
-                reply.SetSuccessReply();
+                if (CTMSReply.Status == StatusEnum.Success)
+                {
+                    reply.Order = new SubmitOrderReplyOrder();
+                    reply.Order.CinemaType = userCinema.CinemaType;
+                    reply.Order.OrderCode = order.orderBaseInfo.SubmitOrderCode;
+                    reply.Order.SessionCode = order.orderBaseInfo.SessionCode;
+                    reply.Order.Count = order.orderBaseInfo.TicketCount;
+                    reply.Order.PrintNo = order.orderBaseInfo.PrintNo;
+                    reply.Order.VerifyCode = order.orderBaseInfo.VerifyCode;
+                    reply.Order.Seat = order.orderSeatDetails.Select(x =>
+                        new SubmitOrderReplySeat
+                        {
+                            SeatCode = x.SeatCode,
+                            FilmTicketCode = x.FilmTicketCode
+                        }).ToList();
+
+                    reply.SetSuccessReply();
+                }
+                else
+                {
+                    reply.GetErrorFromCTMSReply(CTMSReply);
+                }
             }
-            else
+            catch
             {
-                reply.GetErrorFromCTMSReply(CTMSReply);
+                throw;
             }
-
-            //更新订单信息
-            _orderService.Update(order);
+            finally
+            {
+                //更新订单信息
+                _orderService.Update(order);
+            }
 
             return reply;
         }
@@ -1111,29 +1119,38 @@ namespace NetSaleSvc.Api.Core
         [CheckForNullArgumentsAspect]
         private RefundTicketReply RefundTicket(RefundTicketReply reply, UserCinemaViewEntity userCinema, OrderViewEntity order)
         {
-            _CTMSInterface = CTMSInterfaceFactory.Create(userCinema);
-            var CTMSReply = _CTMSInterface.RefundTicket(userCinema, order);
-
-            if (CTMSReply.Status == StatusEnum.Success)
+            try
             {
-                reply.Order = new RefundTicketReplyOrder();
-                reply.Order.OrderCode = order.orderBaseInfo.SubmitOrderCode;
-                reply.Order.PrintNo = order.orderBaseInfo.PrintNo;
-                reply.Order.VerifyCode = order.orderBaseInfo.VerifyCode;
-                reply.Order.Status = order.orderBaseInfo.OrderStatus == OrderStatusEnum.Refund ? YesOrNoEnum.Yes : YesOrNoEnum.No;
-                reply.Order.RefundTime = reply.Order.Status == YesOrNoEnum.Yes
-                    ? order.orderBaseInfo.RefundTime.GetValueOrDefault(DateTime.Now).ToFormatStringWithT()
-                    : string.Empty;
+                _CTMSInterface = CTMSInterfaceFactory.Create(userCinema);
+                var CTMSReply = _CTMSInterface.RefundTicket(userCinema, order);
 
-                reply.SetSuccessReply();
+                if (CTMSReply.Status == StatusEnum.Success)
+                {
+                    reply.Order = new RefundTicketReplyOrder();
+                    reply.Order.OrderCode = order.orderBaseInfo.SubmitOrderCode;
+                    reply.Order.PrintNo = order.orderBaseInfo.PrintNo;
+                    reply.Order.VerifyCode = order.orderBaseInfo.VerifyCode;
+                    reply.Order.Status = order.orderBaseInfo.OrderStatus == OrderStatusEnum.Refund ? YesOrNoEnum.Yes : YesOrNoEnum.No;
+                    reply.Order.RefundTime = reply.Order.Status == YesOrNoEnum.Yes
+                        ? order.orderBaseInfo.RefundTime.GetValueOrDefault(DateTime.Now).ToFormatStringWithT()
+                        : string.Empty;
+
+                    reply.SetSuccessReply();
+                }
+                else
+                {
+                    reply.GetErrorFromCTMSReply(CTMSReply);
+                }
             }
-            else
+            catch
             {
-                reply.GetErrorFromCTMSReply(CTMSReply);
+                throw;
             }
-
-            //更新订单信息
-            _orderService.UpdateOrderBaseInfo(order.orderBaseInfo);
+            finally
+            {
+                //更新订单信息
+                _orderService.UpdateOrderBaseInfo(order.orderBaseInfo);
+            }
 
             return reply;
         }

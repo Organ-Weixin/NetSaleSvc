@@ -11,5 +11,8 @@
     <Setting Name="NetSaleSvc_Api_CTMS_NsFetchTicket_FetchTicketSvc" Type="(Web Service URL)" Scope="Application">
       <Value Profile="(Default)">http://ccz.80piao.com:89/FetchTicketSvc.asmx</Value>
     </Setting>
+    <Setting Name="NetSaleSvc_Api_CTMS_MtxService_ticketapi" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://ticket.mvtapi.com:8760/ticketapi/services/ticketapi.ticketapiHttpSoap11Endpoint/</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

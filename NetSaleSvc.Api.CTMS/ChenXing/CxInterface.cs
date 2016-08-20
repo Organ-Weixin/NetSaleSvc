@@ -10,6 +10,7 @@ using NetSaleSvc.Service;
 using System.Threading;
 using System.Collections.Generic;
 using System.Collections;
+using NetSaleSvc.Api.CTMS.Util;
 
 namespace NetSaleSvc.Api.CTMS.ChenXing
 {
@@ -789,6 +790,9 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
                         CxFetchTicketResult cxfetchReply = fetchTicketResult.Deserialize<CxFetchTicketResult>();
                         if (cxfetchReply.ResultCode == "0")
                         {
+                            order.orderBaseInfo.PrintStatus = YesOrNoEnum.Yes;
+                            order.orderBaseInfo.PrintTime = DateTime.Now;
+
                             reply.Status = StatusEnum.Success;
                         }
                         else

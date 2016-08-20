@@ -52,5 +52,16 @@ namespace NetSaleSvc.Api.CTMS.Properties {
                 return ((string)(this["NetSaleSvc_Api_CTMS_NsFetchTicket_FetchTicketSvc"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://ticket.mvtapi.com:8760/ticketapi/services/ticketapi.ticketapiHttpSoap11End" +
+            "point/")]
+        public string NetSaleSvc_Api_CTMS_MtxService_ticketapi {
+            get {
+                return ((string)(this["NetSaleSvc_Api_CTMS_MtxService_ticketapi"]));
+            }
+        }
     }
 }

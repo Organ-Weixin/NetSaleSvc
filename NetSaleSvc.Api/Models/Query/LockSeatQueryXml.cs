@@ -34,6 +34,12 @@ namespace NetSaleSvc.Api.Models
         public int Count { get; set; }
 
         /// <summary>
+        /// 支付方式，满天星专用，其他系统忽略。1表示会员支付，其他表示非会员支付
+        /// </summary>
+        [XmlAttribute]
+        public string PayType { get; set; }
+
+        /// <summary>
         /// 座位列表
         /// </summary>
         [XmlElement]

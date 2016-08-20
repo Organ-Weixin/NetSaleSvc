@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PostSharp, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
       <HintPath>..\packages\PostSharp.4.2.29\lib\net35-client\PostSharp.dll</HintPath>
       <Private>True</Private>
@@ -56,7 +60,14 @@
     <Compile Include="ChenXing\Models\Query\CxQueryTicketInfoParameter.cs" />
     <Compile Include="ChenXing\Models\Query\CxReleaseSeatParameter.cs" />
     <Compile Include="ChenXing\Models\Query\CxSubmitOrderParameter.cs" />
-    <Compile Include="ChenXing\Models\Query\QueryXmlUtil.cs" />
+    <Compile Include="ManTianXing\Models\Query\mtxSellTicketParameter.cs" />
+    <Compile Include="ManTianXing\Models\Reply\mtxAppPrintTicketResult.cs" />
+    <Compile Include="ManTianXing\Models\Reply\mtxBackTicketResult.cs" />
+    <Compile Include="ManTianXing\Models\Reply\mtxGetOrderStatusResult.cs" />
+    <Compile Include="ManTianXing\Models\Reply\mtxRealCheckSeatStateResult.cs" />
+    <Compile Include="ManTianXing\Models\Reply\mtxSellTicketResult.cs" />
+    <Compile Include="ManTianXing\Models\Reply\mtxUnLockOrderCenCinResult.cs" />
+    <Compile Include="Util\QueryXmlUtil.cs" />
     <Compile Include="ChenXing\Models\Reply\CxApplyFetchTicketResult.cs" />
     <Compile Include="ChenXing\Models\Reply\CxBaseReply.cs" />
     <Compile Include="ChenXing\Models\Reply\CxCancelOrderResult.cs" />
@@ -72,7 +83,7 @@
     <Compile Include="ChenXing\Models\Reply\CxQueryTicketInfoResult.cs" />
     <Compile Include="ChenXing\Models\Reply\CxReleaseSeatResult.cs" />
     <Compile Include="ChenXing\Models\Reply\CxSubmitOrderResult.cs" />
-    <Compile Include="ChenXing\Models\Reply\ModelMapper.cs" />
+    <Compile Include="ChenXing\Models\ModelMapper.cs" />
     <Compile Include="ChenXing\Models\Query\QueryInfoSyncModel.cs" />
     <Compile Include="CTMSInterfaceFactory.cs" />
     <Compile Include="DefaultCTMSInterface.cs" />
@@ -82,6 +93,13 @@
     <Compile Include="DingXin\Models\Reply\DxQuerySeatReply.cs" />
     <Compile Include="DingXin\Models\Reply\ModelMapper.cs" />
     <Compile Include="ICTMSInterface.cs" />
+    <Compile Include="ManTianXing\Models\ModelMapper.cs" />
+    <Compile Include="ManTianXing\Models\Query\mtxRealCheckSeatStateParameter.cs" />
+    <Compile Include="ManTianXing\Models\Reply\mtxBaseReply.cs" />
+    <Compile Include="ManTianXing\Models\Reply\mtxGetCinemaPlanResult.cs" />
+    <Compile Include="ManTianXing\Models\Reply\mtxGetHallResult.cs" />
+    <Compile Include="ManTianXing\Models\Reply\mtxGetHallAllSeatResult.cs" />
+    <Compile Include="ManTianXing\Models\Reply\mtxGetPlanSiteStateResult.cs" />
     <Compile Include="ManTianXing\MtxInterface.cs" />
     <Compile Include="Models\CTMSBaseReply.cs" />
     <Compile Include="Models\CTMSFetchTicketReply.cs" />
@@ -122,6 +140,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Web References\CxService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\MtxService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
@@ -169,6 +192,17 @@
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>NetSaleSvc_Api_CTMS_NsFetchTicket_FetchTicketSvc</CachedSettingsPropName>
     </WebReferenceUrl>
+    <WebReferenceUrl Include="http://ticket.mvtapi.com:8760/ticketapi/services/ticketapi%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\MtxService\</RelPath>
+      <UpdateFromURL>http://ticket.mvtapi.com:8760/ticketapi/services/ticketapi%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>NetSaleSvc_Api_CTMS_MtxService_ticketapi</CachedSettingsPropName>
+    </WebReferenceUrl>
     <WebReferenceUrl Include="http://tsp.oristartech.cn:8080/tsp-ws/services/tsp/cinema%3fwsdl">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\CxService\</RelPath>
@@ -204,6 +238,11 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <None Include="Web References\CxService\TspSoapServiceImplService.wsdl" />
+    <None Include="Web References\MtxService\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\MtxService\ticketapi.wsdl" />
     <None Include="Web References\NationalStandardService\NsService.wsdl" />
     <None Include="Web References\NationalStandardService\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
