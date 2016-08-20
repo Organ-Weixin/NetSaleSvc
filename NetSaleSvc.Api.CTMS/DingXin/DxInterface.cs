@@ -4,10 +4,40 @@ using NetSaleSvc.Entity.Models;
 using NetSaleSvc.Util;
 using System;
 
+using NetSaleSvc.Api.CTMS.DingXin.Models;
+using NetSaleSvc.Service;
+using NetSaleSvc.Api.CTMS.NsFetchTicket;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace NetSaleSvc.Api.CTMS.DingXin
 {
     public class DxInterface : ICTMSInterface
     {
+        #region private fields
+        private FetchTicketSvc fetchTicketSvc;
+        private ScreenInfoService _screenInfoService;
+        private SeatInfoService _seatInfoService;
+        private FilmInfoService _filmInfoService;
+        private SessionInfoService _sessionInfoService;
+        private CinemaService _cinemaService;
+        private DXCodeIDService _dxCodeIDService;
+        #endregion
+
+        #region ctor
+        public DxInterface()
+        {
+            fetchTicketSvc = new FetchTicketSvc();
+            _screenInfoService = new ScreenInfoService();
+            _seatInfoService = new SeatInfoService();
+            _filmInfoService = new FilmInfoService();
+            _sessionInfoService = new SessionInfoService();
+            _cinemaService = new CinemaService();
+            _dxCodeIDService = new DXCodeIDService();
+        }
+        #endregion
+
+        #region public methods
         /// <summary>
         /// 查询影院基本信息
         /// </summary>
@@ -18,7 +48,44 @@ namespace NetSaleSvc.Api.CTMS.DingXin
         {
             CTMSQueryCinemaReply reply = new CTMSQueryCinemaReply();
 
-            //TODO
+            //鼎新请求参数
+            SortedDictionary<string, string> paramDic = new SortedDictionary<string, string>();
+            paramDic.Add("format", "xml");
+            paramDic.Add("cid", GetDXCinemaId(userCinema.CinemaCode));
+            paramDic.Add("pid", userCinema.RealUserName);
+
+            string queryCinemaResult = HttpHelper.VisitUrl(createVisitUrl(userCinema.Url,"/cinema/halls/",userCinema.RealPassword, FormatParam(paramDic)));
+
+             DxQueryCinemaReply dxReply = queryCinemaResult.Deserialize<DxQueryCinemaReply>();
+
+            if (dxReply.status == "1")
+            {
+                //更新影院信息
+                CinemaEntity cinema = _cinemaService.GetCinemaByCinemaCode(userCinema.CinemaCode);
+                //cinema.Name = dxReply.Cinema.CinemaName;
+                //cinema.Address = dxReply.Cinema.Address;
+                cinema.ScreenCount = dxReply.data.item.Count;
+                _cinemaService.Update(cinema);
+                //更新影厅信息
+                var oldScreens = _screenInfoService.GetScreenListByCinemaCode(userCinema.CinemaCode);
+
+                var newScreens = dxReply.data.item.Select(
+                    x => x.MapToEntity(
+                        oldScreens.Where(y => y.SCode == x.id).SingleOrDefault()
+                            ?? new ScreenInfoEntity { CCode = userCinema.CinemaCode })).ToList();
+
+                //插入或更新最新影厅信息
+                _screenInfoService.BulkMerge(newScreens, oldScreens);
+
+                reply.Status = StatusEnum.Success;
+
+            }
+            else
+            {
+                reply.Status = StatusEnum.Failure;
+            }
+            reply.ErrorCode = reply.ErrorCode;
+            reply.ErrorMessage = reply.ErrorMessage;
 
             return reply;
         }
@@ -33,8 +100,63 @@ namespace NetSaleSvc.Api.CTMS.DingXin
         public CTMSQuerySeatReply QuerySeat(UserCinemaViewEntity userCinema, ScreenInfoEntity screen)
         {
             CTMSQuerySeatReply reply = new CTMSQuerySeatReply();
+            //鼎新的请求参数
+            SortedDictionary<string, string> paramDic = new SortedDictionary<string, string>();
+            paramDic.Add("format", "xml");
+            paramDic.Add("cid", GetDXCinemaId(userCinema.CinemaCode));
+            paramDic.Add("pid", userCinema.RealUserName);
+            paramDic.Add("hall_id", screen.SCode);
 
-            //TODO
+            string querySeatResult = HttpHelper.VisitUrl(createVisitUrl(userCinema.Url, "/cinema/hall-seats/", userCinema.RealPassword, FormatParam(paramDic)));
+            DxQuerySeatReply dxReply= querySeatResult.Deserialize<DxQuerySeatReply>();
+            if (dxReply.status == "1")
+            {
+                var oldSeats = _seatInfoService.GetScreenSeats(userCinema.CinemaCode, screen.SCode).NotNull();
+
+                var newSeats = dxReply.data.item.Select(
+                    x => x.MapToEntity(
+                        oldSeats.Where(y => y.SeatCode == x.cineSeatId).SingleOrDefault()
+                            ?? new ScreenSeatInfoEntity
+                            {
+                                CinemaCode = userCinema.CinemaCode,
+                                ScreenCode = screen.SCode,
+                                LoveFlag = LoveFlagEnum.Normal.GetDescription()
+                            })).ToList();
+                //鼎新的loveseats用于标识情侣座，需要另外处理
+                var seatByGroup = newSeats.GroupBy(x => x.GroupCode);
+                foreach (var seats in seatByGroup)
+                {
+                    if (seats.Count() == 2)
+                    {
+                        var firstSeat = seats.First();
+                        var SecondSeat = seats.Last();
+
+                        if (firstSeat.XCoord < SecondSeat.XCoord)
+                        {
+                            firstSeat.LoveFlag = LoveFlagEnum.LEFT.GetDescription();
+                            SecondSeat.LoveFlag = LoveFlagEnum.RIGHT.GetDescription();
+                        }
+                        else
+                        {
+                            firstSeat.LoveFlag = LoveFlagEnum.RIGHT.GetDescription();
+                            SecondSeat.LoveFlag = LoveFlagEnum.LEFT.GetDescription();
+                        }
+                    }
+                }
+                //处理完情侣座后将鼎新座位的所有GroupCode置为0000000000000001
+                newSeats.ForEach(x => x.GroupCode = "0000000000000001");
+
+                //插入或更新最新座位
+                _seatInfoService.BulkMerge(newSeats, oldSeats);
+
+                reply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                reply.Status = StatusEnum.Failure;
+            }
+            reply.ErrorCode = dxReply.errorCode;
+            reply.ErrorMessage = dxReply.errorMessage;
 
             return reply;
         }
@@ -51,7 +173,9 @@ namespace NetSaleSvc.Api.CTMS.DingXin
         {
             CTMSQueryFilmReply reply = new CTMSQueryFilmReply();
 
-            //TODO
+            reply.Status = StatusEnum.Failure;
+            reply.ErrorCode = "-1";
+            reply.ErrorMessage = "在售影片信息查询失败";
 
             return reply;
         }
@@ -218,5 +342,37 @@ namespace NetSaleSvc.Api.CTMS.DingXin
 
             return reply;
         }
+        #endregion
+
+        #region private method
+        private string GetDXCinemaId(string CinemaCode)
+        {
+            return _dxCodeIDService.GetDXCodeByCinemaCode(CinemaCode).Id;
+        }
+        private static string FormatParam(SortedDictionary<string, string> param)
+        {
+            string url = "";
+            foreach (var key in param.Keys)
+            {
+                string value = param[key];
+                if (value != null)
+                    url += key + "=" + value.ToString() + "&";
+
+            }
+            if (url.Length > 0)
+                url = url.Substring(0, url.Length - 1); //remove last '&'
+            return url;
+        }
+
+        private string createVisitUrl(string middleUrl, string targetUrl,string pKeyInfo, string queryParams)
+        {
+            string sign = createSign(pKeyInfo,queryParams);
+            return middleUrl + targetUrl + "?" + queryParams + "&_sig=" + sign;
+        }
+        private string createSign(string pKeyInfo,string queryParams)
+        {
+            return MD5Helper.MD5Encrypt(MD5Helper.MD5Encrypt(pKeyInfo + queryParams).ToLower() + pKeyInfo).ToLower();
+        }
+        #endregion
     }
 }
