@@ -61,6 +61,8 @@
     <Compile Include="DingXin\Models\DxQueryCinemaPlaysReply.cs" />
     <Compile Include="DingXin\Models\DxQueryPartnerCinemasReply.cs" />
     <Compile Include="DingXin\Models\DxQuerySeatStatusReply.cs" />
+    <Compile Include="DingXin\Models\DxQueryTicketInfoReply.cs" />
+    <Compile Include="DingXin\Models\DxTicketPrintReply.cs" />
     <Compile Include="DingXin\Models\DxTicketRefundReply.cs" />
     <Compile Include="DingXin\Models\DxUnlockSeatReply.cs" />
     <Compile Include="ManTianXing\Models\Query\mtxSellTicketParameter.cs" />

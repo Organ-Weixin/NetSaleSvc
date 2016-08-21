@@ -550,7 +550,11 @@ namespace NetSaleSvc.Api.CTMS.DingXin
         {
             CTMSQueryPrintReply reply = new CTMSQueryPrintReply();
 
-            //TODO
+            var queryTicketReply = QueryTicket(userCinema, order);
+
+            reply.Status = queryTicketReply.Status;
+            reply.ErrorCode = queryTicketReply.ErrorCode;
+            reply.ErrorMessage = queryTicketReply.ErrorMessage;
 
             return reply;
         }
@@ -609,7 +613,11 @@ namespace NetSaleSvc.Api.CTMS.DingXin
         {
             CTMSQueryOrderReply reply = new CTMSQueryOrderReply();
 
-            //TODO
+            var queryTicketReply = QueryTicket(userCinema, order);
+
+            reply.Status = queryTicketReply.Status;
+            reply.ErrorCode = queryTicketReply.ErrorCode;
+            reply.ErrorMessage = queryTicketReply.ErrorMessage;
 
             return reply;
         }
@@ -625,7 +633,61 @@ namespace NetSaleSvc.Api.CTMS.DingXin
         {
             CTMSQueryTicketReply reply = new CTMSQueryTicketReply();
 
-            //TODO
+            SortedDictionary<string, string> paramDic = new SortedDictionary<string, string>
+            {
+                { "format", "json" },
+                { "cid", userCinema.DingXinId.ToString() },
+                { "pid", userCinema.RealUserName },
+                { "ticket_flag1", order.orderBaseInfo.PrintNo },
+                { "ticket_flag2", order.orderBaseInfo.VerifyCode }
+            };
+
+            string ticketInfoResult = HttpHelper.VisitUrl(createVisitUrl(userCinema.Url,
+                "/ticket/info/", userCinema.RealPassword, FormatParam(paramDic)));
+
+            DxQueryTicketInfoReply dxReply = ticketInfoResult.JsonDeserialize<DxQueryTicketInfoReply>();
+
+            if (dxReply.res.status == 1)
+            {
+                if (dxReply.res.data.ticketInfo != null && dxReply.res.data.ticketInfo.Count > 0)
+                {
+                    order.orderSeatDetails.ForEach(x =>
+                    {
+                        var ticket = dxReply.res.data.ticketInfo.Where(y => y.no == x.FilmTicketCode).SingleOrDefault();
+                        if (ticket != null)
+                        {
+                            x.TicketInfoCode = ticket.qrCode;
+                            byte printFlag = 0;
+                            if (byte.TryParse(ticket.printed, out printFlag))
+                            {
+                                x.PrintFlag = printFlag;
+                            }
+                        }
+                    });
+
+                    var firstTicket = dxReply.res.data.ticketInfo.First();
+                    order.orderBaseInfo.PrintStatus = firstTicket.printed == "1" ? YesOrNoEnum.Yes : YesOrNoEnum.No;
+                    if (order.orderBaseInfo.PrintStatus == YesOrNoEnum.Yes)
+                    {
+                        order.orderBaseInfo.PrintTime = DateTime.Parse(firstTicket.printTime);
+                    }
+
+                    //退票状态
+                    if (firstTicket.ticketStatus == 3)
+                    {
+                        order.orderBaseInfo.OrderStatus = OrderStatusEnum.Refund;
+                        order.orderBaseInfo.RefundTime = DateTime.Now;
+                    }
+                }
+
+                reply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                reply.Status = StatusEnum.Failure;
+            }
+            reply.ErrorCode = dxReply.res.errorCode;
+            reply.ErrorMessage = dxReply.res.errorMessage;
 
             return reply;
         }
@@ -641,7 +703,33 @@ namespace NetSaleSvc.Api.CTMS.DingXin
         {
             CTMSFetchTicketReply reply = new CTMSFetchTicketReply();
 
-            //TODO
+            SortedDictionary<string, string> paramDic = new SortedDictionary<string, string>
+            {
+                { "format", "json" },
+                { "cid", userCinema.DingXinId.ToString() },
+                { "pid", userCinema.RealUserName },
+                { "ticket_flag1", order.orderBaseInfo.PrintNo },
+                { "ticket_flag2", order.orderBaseInfo.VerifyCode }
+            };
+
+            string ticketPrintResult = HttpHelper.VisitUrl(createVisitUrl(userCinema.Url,
+                "/ticket/print/", userCinema.RealPassword, FormatParam(paramDic)));
+
+            DxTicketPrintReply dxReply = ticketPrintResult.JsonDeserialize<DxTicketPrintReply>();
+
+            if (dxReply.res.status == 1)
+            {
+                order.orderBaseInfo.PrintStatus = YesOrNoEnum.Yes;
+                order.orderBaseInfo.PrintTime = DateTime.Now;
+
+                reply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                reply.Status = StatusEnum.Failure;
+            }
+            reply.ErrorCode = dxReply.res.errorCode;
+            reply.ErrorMessage = dxReply.res.errorMessage;
 
             return reply;
         }
