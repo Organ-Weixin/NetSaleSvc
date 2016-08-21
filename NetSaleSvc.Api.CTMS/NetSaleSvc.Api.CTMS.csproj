@@ -56,8 +56,13 @@
     <Compile Include="ChenXing\Models\Query\CxQueryTicketInfoParameter.cs" />
     <Compile Include="ChenXing\Models\Query\CxReleaseSeatParameter.cs" />
     <Compile Include="ChenXing\Models\Query\CxSubmitOrderParameter.cs" />
+    <Compile Include="DingXin\Models\DxLockBuyReply.cs" />
+    <Compile Include="DingXin\Models\DxLockSeatReply.cs" />
     <Compile Include="DingXin\Models\DxQueryCinemaPlaysReply.cs" />
     <Compile Include="DingXin\Models\DxQueryPartnerCinemasReply.cs" />
+    <Compile Include="DingXin\Models\DxQuerySeatStatusReply.cs" />
+    <Compile Include="DingXin\Models\DxTicketRefundReply.cs" />
+    <Compile Include="DingXin\Models\DxUnlockSeatReply.cs" />
     <Compile Include="ManTianXing\Models\Query\mtxSellTicketParameter.cs" />
     <Compile Include="ManTianXing\Models\Reply\mtxAppPrintTicketResult.cs" />
     <Compile Include="ManTianXing\Models\Reply\mtxBackTicketResult.cs" />

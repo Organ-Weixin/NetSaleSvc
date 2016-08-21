@@ -323,7 +323,7 @@ namespace NetSaleSvc.Entity.Models
         /// </summary>
         public virtual string ErrorMessage { get; set; }
         /// <summary>
-        /// 订单流水号，满天星需要，其他系统一般为空
+        /// 供满天星和鼎新使用（满天星存储订单流水号，鼎新存储lockFlag）
         /// </summary>
         public virtual string SerialNum { get; set; }
         /// <summary>

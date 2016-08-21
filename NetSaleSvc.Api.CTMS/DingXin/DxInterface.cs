@@ -193,7 +193,7 @@ namespace NetSaleSvc.Api.CTMS.DingXin
         {
             CTMSQueryFilmReply reply = new CTMSQueryFilmReply();
 
-            //满天星没有获取影片接口，从排期中获取
+            //鼎新没有获取影片接口，从排期中获取
             QuerySession(userCinema, StartDate, EndDate);
 
             var sessions = _sessionInfoService.GetSessions(userCinema.CinemaCode, userCinema.UserId, StartDate, EndDate);
@@ -322,7 +322,49 @@ namespace NetSaleSvc.Api.CTMS.DingXin
         {
             CTMSQuerySessionSeatReply reply = new CTMSQuerySessionSeatReply();
 
-            //TODO
+            var session = _sessionInfoService.GetSessionInfo(userCinema.CinemaCode, SessionCode, userCinema.UserId);
+
+            SortedDictionary<string, string> paramDic = new SortedDictionary<string, string>
+            {
+                { "format", "json" },
+                { "cid", userCinema.DingXinId.ToString() },
+                { "pid", userCinema.RealUserName },
+                { "play_id", SessionCode },
+                { "play_update_time", session.DingXinUpdateTime }
+            };
+
+            string querySeatStatusResult = HttpHelper.VisitUrl(createVisitUrl(userCinema.Url,
+                "/play/seat-status/", userCinema.RealPassword, FormatParam(paramDic)));
+
+            DxQuerySeatStatusReply dxReply = querySeatStatusResult.JsonDeserialize<DxQuerySeatStatusReply>();
+
+            if (dxReply.res.status == 1)
+            {
+                var sessionSeats = dxReply.res.data
+                    //去除过道或走廊
+                    .Where(x => x.rowValue != "0" && x.columnValue != "0")
+                    .Select(x => new SessionSeatEntity
+                    {
+                        SeatCode = x.cineSeatId,
+                        RowNum = x.rowValue,
+                        ColumnNum = x.columnValue,
+                        Status = getSessionSeatStatus(x.seatStatus)
+                    });
+
+                if (Status != SessionSeatStatusEnum.All)
+                {
+                    sessionSeats = sessionSeats.Where(x => x.Status == Status);
+                }
+
+                reply.SessionSeats = sessionSeats;
+                reply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                reply.Status = StatusEnum.Failure;
+            }
+            reply.ErrorCode = dxReply.res.errorCode;
+            reply.ErrorMessage = dxReply.res.errorMessage;
 
             return reply;
         }
@@ -338,7 +380,42 @@ namespace NetSaleSvc.Api.CTMS.DingXin
         {
             CTMSLockSeatReply reply = new CTMSLockSeatReply();
 
-            //TODO
+            var session = _sessionInfoService.GetSessionInfo(userCinema.CinemaCode, order.orderBaseInfo.SessionCode, userCinema.UserId);
+            SortedDictionary<string, string> paramDic = new SortedDictionary<string, string>
+            {
+                { "format", "json" },
+                { "cid", userCinema.DingXinId.ToString() },
+                { "pid", userCinema.RealUserName },
+                { "play_id", order.orderBaseInfo.SessionCode },
+                { "seat_id", string.Join(",", order.orderSeatDetails.Select(x => x.SeatCode)) },
+                { "play_update_time", session.DingXinUpdateTime }
+            };
+
+            string lockSeatResult = HttpHelper.VisitUrl(createVisitUrl(userCinema.Url,
+                "/seat/lock/", userCinema.RealPassword, FormatParam(paramDic)));
+
+            DxLockSeatReply dxReply = lockSeatResult.JsonDeserialize<DxLockSeatReply>();
+
+            if (dxReply.res.status == 1)
+            {
+                //鼎新订单号由自己生成
+                order.orderBaseInfo.LockOrderCode = DateTime.Now.ToString("yyyyMMddHHmmssfff" + RandomHelper.CreatePwd(3));
+                order.orderBaseInfo.AutoUnlockDatetime = DateTime.Now.AddMinutes(10);    //鼎新没有自动解锁时间返回，此处默认锁定10分钟
+                order.orderBaseInfo.SerialNum = dxReply.res.data.lockFlag;
+                order.orderBaseInfo.LockTime = DateTime.Now;
+                order.orderBaseInfo.OrderStatus = OrderStatusEnum.Locked;
+
+                reply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                order.orderBaseInfo.OrderStatus = OrderStatusEnum.LockFail;
+                order.orderBaseInfo.ErrorMessage = dxReply.res.errorMessage;
+
+                reply.Status = StatusEnum.Failure;
+            }
+            reply.ErrorCode = dxReply.res.errorCode;
+            reply.ErrorMessage = dxReply.res.errorMessage;
 
             return reply;
         }
@@ -354,7 +431,42 @@ namespace NetSaleSvc.Api.CTMS.DingXin
         {
             CTMSReleaseSeatReply reply = new CTMSReleaseSeatReply();
 
-            //TODO
+            SortedDictionary<string, string> paramDic = new SortedDictionary<string, string>
+            {
+                { "format", "json" },
+                { "cid", userCinema.DingXinId.ToString() },
+                { "pid", userCinema.RealUserName },
+                { "play_id", order.orderBaseInfo.SessionCode },
+                { "seat_id", string.Join(",", order.orderSeatDetails.Select(x => x.SeatCode)) },
+                { "lock_flag", order.orderBaseInfo.SerialNum }
+            };
+
+            string unlockSeatResult = HttpHelper.VisitUrl(createVisitUrl(userCinema.Url,
+                "/seat/unlock/", userCinema.RealPassword, FormatParam(paramDic)));
+
+            DxUnlockSeatReply dxReply = unlockSeatResult.JsonDeserialize<DxUnlockSeatReply>();
+
+            if (dxReply.res.status == 1)
+            {
+                if (dxReply.res.data.unlock)
+                {
+                    order.orderBaseInfo.OrderStatus = OrderStatusEnum.Released;
+                    reply.Status = StatusEnum.Success;
+                }
+                else
+                {
+                    reply.Status = StatusEnum.Failure;
+                }
+            }
+            else
+            {
+                order.orderBaseInfo.OrderStatus = OrderStatusEnum.ReleaseFail;
+                order.orderBaseInfo.ErrorMessage = dxReply.res.errorMessage;
+
+                reply.Status = StatusEnum.Failure;
+            }
+            reply.ErrorCode = dxReply.res.errorCode;
+            reply.ErrorMessage = dxReply.res.errorMessage;
 
             return reply;
         }
@@ -370,7 +482,59 @@ namespace NetSaleSvc.Api.CTMS.DingXin
         {
             CTMSSubmitOrderReply reply = new CTMSSubmitOrderReply();
 
-            //TODO
+            var session = _sessionInfoService.GetSessionInfo(userCinema.CinemaCode, order.orderBaseInfo.SessionCode, userCinema.UserId);
+            SortedDictionary<string, string> paramDic = new SortedDictionary<string, string>
+            {
+                { "format", "json" },
+                { "cid", userCinema.DingXinId.ToString() },
+                { "pid", userCinema.RealUserName },
+                { "play_id", order.orderBaseInfo.SessionCode },
+                { "seat", string.Join(",", order.orderSeatDetails.Select(x =>
+                    string.Join("-", new string[]
+                        {
+                            x.SeatCode,
+                            x.Fee.ToString("0.##"),
+                            x.Price.ToString("0.##")
+                        })))
+                },
+                { "lock_flag", order.orderBaseInfo.SerialNum },
+                { "play_update_time", session.DingXinUpdateTime },
+                { "partner_buy_ticket_id", order.orderBaseInfo.LockOrderCode },
+                { "mobile", order.orderBaseInfo.MobilePhone },
+            };
+
+            string lockBuyResult = HttpHelper.VisitUrl(createVisitUrl(userCinema.Url,
+                "/seat/lock-buy/", userCinema.RealPassword, FormatParam(paramDic)));
+
+            DxLockBuyReply dxReply = lockBuyResult.JsonDeserialize<DxLockBuyReply>();
+
+            if (dxReply.res.status == 1)
+            {
+                //提交订单号默认为锁座订单号
+                order.orderBaseInfo.SubmitOrderCode = order.orderBaseInfo.LockOrderCode;
+                order.orderBaseInfo.PrintNo = dxReply.res.data.ticketFlag1;
+                order.orderBaseInfo.VerifyCode = dxReply.res.data.ticketFlag2;
+                order.orderSeatDetails.ForEach(x =>
+                {
+                    var newSeat = dxReply.res.data.sellInfo.Where(y => y.seatId == x.SeatCode).SingleOrDefault();
+                    if (newSeat != null)
+                    {
+                        x.FilmTicketCode = newSeat.sellId;
+                    }
+                });
+                order.orderBaseInfo.OrderStatus = OrderStatusEnum.Complete;
+                order.orderBaseInfo.SubmitTime = DateTime.Now;
+                reply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                order.orderBaseInfo.OrderStatus = OrderStatusEnum.SubmitFail;
+                order.orderBaseInfo.ErrorMessage = dxReply.res.errorMessage;
+
+                reply.Status = StatusEnum.Failure;
+            }
+            reply.ErrorCode = dxReply.res.errorCode;
+            reply.ErrorMessage = dxReply.res.errorMessage;
 
             return reply;
         }
@@ -402,7 +566,34 @@ namespace NetSaleSvc.Api.CTMS.DingXin
         {
             CTMSRefundTicketReply reply = new CTMSRefundTicketReply();
 
-            //TODO
+            SortedDictionary<string, string> paramDic = new SortedDictionary<string, string>
+            {
+                { "format", "json" },
+                { "cid", userCinema.DingXinId.ToString() },
+                { "pid", userCinema.RealUserName },
+                { "ticket_flag1", order.orderBaseInfo.PrintNo },
+                { "ticket_flag2", order.orderBaseInfo.VerifyCode },
+                { "partner_refund_ticket_id", order.orderBaseInfo.SubmitOrderCode }
+            };
+
+            string ticketRefundResult = HttpHelper.VisitUrl(createVisitUrl(userCinema.Url,
+                "/ticket/refund/", userCinema.RealPassword, FormatParam(paramDic)));
+
+            DxTicketRefundReply dxReply = ticketRefundResult.JsonDeserialize<DxTicketRefundReply>();
+
+            if (dxReply.res.status == 1)
+            {
+                order.orderBaseInfo.OrderStatus = OrderStatusEnum.Refund;
+                order.orderBaseInfo.RefundTime = DateTime.Now;
+
+                reply.Status = StatusEnum.Success;
+            }
+            else
+            {
+                reply.Status = StatusEnum.Failure;
+            }
+            reply.ErrorCode = dxReply.res.errorCode;
+            reply.ErrorMessage = dxReply.res.errorMessage;
 
             return reply;
         }
@@ -544,6 +735,30 @@ namespace NetSaleSvc.Api.CTMS.DingXin
         private string createSign(string pKeyInfo, string queryParams)
         {
             return MD5Helper.MD5Encrypt(MD5Helper.MD5Encrypt(pKeyInfo + queryParams).ToLower() + pKeyInfo).ToLower();
+        }
+
+        /// <summary>
+        /// 鼎新排期座位状态转换
+        /// </summary>
+        /// <param name="seatState"></param>
+        /// <returns></returns>
+        private SessionSeatStatusEnum getSessionSeatStatus(string seatState)
+        {
+            switch (seatState)
+            {
+                case "repair":
+                    return SessionSeatStatusEnum.Unavailable;
+                case "ok":
+                    return SessionSeatStatusEnum.Available;
+                case "selled":
+                    return SessionSeatStatusEnum.Sold;
+                case "booked":
+                    return SessionSeatStatusEnum.Booked;
+                case "locked":
+                    return SessionSeatStatusEnum.Locked;
+                default:
+                    return SessionSeatStatusEnum.Unavailable;
+            }
         }
         #endregion
     }
