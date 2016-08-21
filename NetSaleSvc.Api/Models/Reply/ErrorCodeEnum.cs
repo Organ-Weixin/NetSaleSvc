@@ -87,6 +87,12 @@ namespace NetSaleSvc.Api.Models
         /// 订单不存在或状态不合法
         /// </summary>
         [Description("订单不存在或状态不合法！")]
-        OrderNotExist = 10000012
+        OrderNotExist = 10000012,
+
+        /// <summary>
+        /// 订单不存在或状态不合法
+        /// </summary>
+        [Description("此订单使用会员卡支付，请传入会员卡支付流水号！")]
+        PaySeqNoNotExist = 10000013
     }
 }

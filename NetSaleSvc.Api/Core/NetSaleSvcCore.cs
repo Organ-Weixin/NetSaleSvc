@@ -524,6 +524,15 @@ namespace NetSaleSvc.Api.Core
             //更新订单信息
             order.MapFrom(QueryXmlObj);
 
+            //TODO:满天星的订单属于会员卡支付的话暂时要求传入会员卡交易流水号
+            if (userCinema.CinemaType == CinemaTypeEnum.ManTianXing
+                && order.orderBaseInfo.IsMemberPay 
+                && string.IsNullOrEmpty(order.orderBaseInfo.PaySeqNo))
+            {
+                submitOrderReply.SetMemberPaySeqNoNotExistReply();
+                return submitOrderReply;
+            }
+
             return SubmitOrder(submitOrderReply, userCinema, order);
         }
 

@@ -144,10 +144,12 @@ namespace NetSaleSvc.Api.Models
                 //数据库中会员及非会员支付类型以逗号分隔存于PayType字段中，会员在前
                 if (queryXmlObj.Order.PayType == "1")
                 {
+                    orderBaseInfo.IsMemberPay = true;
                     orderBaseInfo.PayType = userCinema.PayType.Split(',')?.First();
                 }
                 else
                 {
+                    orderBaseInfo.IsMemberPay = false;
                     orderBaseInfo.PayType = userCinema.PayType.Split(',')?.Last();
                 }
             }

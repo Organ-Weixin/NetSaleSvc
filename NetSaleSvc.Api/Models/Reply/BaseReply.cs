@@ -220,6 +220,16 @@ namespace NetSaleSvc.Api.Models
             ErrorCode = ErrorCodeEnum.OrderNotExist.GetValueString();
             ErrorMessage = ErrorCodeEnum.OrderNotExist.GetDescription();
         }
+
+        /// <summary>
+        /// 会员卡支付的订单没有传入会员卡支付流水号
+        /// </summary>
+        public void SetMemberPaySeqNoNotExistReply()
+        {
+            Status = StatusEnum.Failure.GetDescription();
+            ErrorCode = ErrorCodeEnum.PaySeqNoNotExist.GetValueString();
+            ErrorMessage = ErrorCodeEnum.PaySeqNoNotExist.GetDescription();
+        }
         #endregion
 
         /// <summary>
