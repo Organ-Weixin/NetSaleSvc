@@ -82,6 +82,7 @@ namespace NetSaleSvc.Api.CTMS.ManTianXing.Models
             entity.PlaythroughFlag = "No";
             entity.Dimensional = model.CopyType;
             entity.Sequence = 1;
+            entity.FeatureNo = model.FeatureNo;
 
             return entity;
         }

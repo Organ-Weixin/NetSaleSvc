@@ -97,6 +97,7 @@ namespace NetSaleSvc.Api.CTMS.ChenXing.Models
             entity.PlaythroughFlag = model.PlaythroughFlag;
             entity.Dimensional = FilmCodeUtil.GetFilmDimensional(filmInfo.FilmCode);
             entity.Sequence = filmInfo.Sequence;
+            entity.ListingPrice = model.Price.ListingPrice;
 
             return entity;
         }

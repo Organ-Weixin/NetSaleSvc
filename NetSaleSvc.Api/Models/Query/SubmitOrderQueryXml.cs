@@ -46,6 +46,12 @@ namespace NetSaleSvc.Api.Models
         public string MobilePhone { get; set; }
 
         /// <summary>
+        /// 会员卡支付交易流水号
+        /// </summary>
+        [XmlElement]
+        public string PaySeqNo { get; set; }
+
+        /// <summary>
         /// 座位列表
         /// </summary>
         [XmlElement]

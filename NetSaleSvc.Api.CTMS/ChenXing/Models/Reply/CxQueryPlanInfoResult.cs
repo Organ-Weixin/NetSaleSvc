@@ -110,5 +110,11 @@ namespace NetSaleSvc.Api.CTMS.ChenXing.Models
         /// </summary>
         [XmlElement]
         public decimal StandardPrice { get; set; }
+
+        /// <summary>
+        /// 门市价
+        /// </summary>
+        [XmlElement]
+        public decimal ListingPrice { get; set; }
     }
 }

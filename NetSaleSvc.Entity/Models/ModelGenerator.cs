@@ -334,6 +334,10 @@ namespace NetSaleSvc.Entity.Models
         /// 满天星取票密码（虽然现在根本没卵用，但先保存），其他系统一般为空
         /// </summary>
         public virtual string Printpassword { get; set; }
+        /// <summary>
+        /// 程序猿只想做个安静的美男子，不想写注释
+        /// </summary>
+        public virtual string PaySeqNo { get; set; }
     }
 
     /// <summary>
@@ -935,6 +939,14 @@ namespace NetSaleSvc.Entity.Models
         /// 鼎新场次最后更新时间，其他系统忽略
         /// </summary>
         public virtual string DingXinUpdateTime { get; set; }
+        /// <summary>
+        /// 辰星门市价（应用于会员卡接口），其他系统忽略
+        /// </summary>
+        public virtual decimal? ListingPrice { get; set; }
+        /// <summary>
+        /// 满天星排期号（应用于会员卡接口），其他系统忽略
+        /// </summary>
+        public virtual string FeatureNo { get; set; }
     }
 
     /// <summary>

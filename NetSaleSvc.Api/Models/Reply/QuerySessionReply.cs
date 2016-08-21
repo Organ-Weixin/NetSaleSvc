@@ -52,6 +52,12 @@ namespace NetSaleSvc.Api.Models
         public string Code { get; set; }
 
         /// <summary>
+        /// 满天星排期号（应用于会员卡），其他系统忽略
+        /// </summary>
+        [XmlElement]
+        public string FeatureNo { get; set; }
+
+        /// <summary>
         /// 开始时间
         /// </summary>
         [XmlElement]
@@ -145,5 +151,11 @@ namespace NetSaleSvc.Api.Models
         /// </summary>
         [XmlElement]
         public string StandardPrice { get; set; }
+
+        /// <summary>
+        /// 辰星门市价，应用于会员卡，其他系统忽略
+        /// </summary>
+        [XmlElement]
+        public string ListingPrice { get; set; }
     }
 }
