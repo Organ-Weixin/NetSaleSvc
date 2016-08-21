@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PostSharp, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
       <HintPath>..\packages\PostSharp.4.2.29\lib\net35-client\PostSharp.dll</HintPath>
       <Private>True</Private>
@@ -50,6 +54,7 @@
     <Compile Include="EnumExtension.cs" />
     <Compile Include="FilmCodeUtil.cs" />
     <Compile Include="HttpHelper.cs" />
+    <Compile Include="JsonExtension.cs" />
     <Compile Include="LinqExtension.cs" />
     <Compile Include="ListExtension.cs" />
     <Compile Include="Aspect\CheckForNullArgumentsAspect.cs" />

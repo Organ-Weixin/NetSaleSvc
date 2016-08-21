@@ -6,7 +6,6 @@ using NetSaleSvc.Entity.Enum;
 using NetSaleSvc.Entity.Models;
 using NetSaleSvc.Service;
 using NetSaleSvc.Util;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -100,7 +99,7 @@ namespace NetSaleSvc.Api.CTMS.ManTianXing
                 screen.SCode,
                 GenerateVerifyInfo(userCinema.RealUserName, userCinema.CinemaCode, screen.SCode, userCinema.RealPassword));
 
-            mtxGetHallAllSeatResult mtxReply = JsonConvert.DeserializeObject<mtxGetHallAllSeatResult>(getHallAllSeatResult);
+            mtxGetHallAllSeatResult mtxReply = getHallAllSeatResult.JsonDeserialize<mtxGetHallAllSeatResult>();
 
             if (mtxReply.ResultCode == "0")
             {

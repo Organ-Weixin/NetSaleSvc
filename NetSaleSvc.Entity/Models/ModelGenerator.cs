@@ -24,20 +24,19 @@ namespace NetSaleSvc.Entity.Models
     public partial class SysUserEntity : EntityBase
     {
         /// <summary>
-        /// 主键
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
-        [Key]
         public virtual int Id { get; set; }
         /// <summary>
-        /// 登录用户名
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual string UserName { get; set; }
         /// <summary>
-        /// 登录密码
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual string Password { get; set; }
         /// <summary>
-        /// 用户类型(目前只有管理员)
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual int? Type { get; set; }
     }
@@ -50,16 +49,15 @@ namespace NetSaleSvc.Entity.Models
     public partial class MiddlewareEntity : EntityBase
     {
         /// <summary>
-        /// 主键
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
-        [Key]
         public virtual int Id { get; set; }
         /// <summary>
         /// 中间件名称
         /// </summary>
         public virtual string Title { get; set; }
         /// <summary>
-        /// 中间件Url地址
+        /// 中间件Url
         /// </summary>
         public virtual string Url { get; set; }
         /// <summary>
@@ -129,11 +127,11 @@ namespace NetSaleSvc.Entity.Models
         /// </summary>
         public virtual int? IsDel { get; set; }
         /// <summary>
-        /// 开始时间
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual DateTime? BeginDate { get; set; }
         /// <summary>
-        /// 结束时间
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual DateTime? EndDate { get; set; }
     }
@@ -146,20 +144,19 @@ namespace NetSaleSvc.Entity.Models
     public partial class TicketEntity : EntityBase
     {
         /// <summary>
-        /// 主键
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
-        [Key]
         public virtual int Id { get; set; }
         /// <summary>
-        /// 接入商ID
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual int? UserId { get; set; }
         /// <summary>
-        /// 影院编号
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual string CinemaCode { get; set; }
         /// <summary>
-        /// 电影票数
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual int? Count { get; set; }
         /// <summary>
@@ -167,7 +164,7 @@ namespace NetSaleSvc.Entity.Models
         /// </summary>
         public virtual int? Fee { get; set; }
         /// <summary>
-        /// 时间
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual DateTime? Time { get; set; }
     }
@@ -266,7 +263,7 @@ namespace NetSaleSvc.Entity.Models
         /// </summary>
         public virtual OrderStatusEnum OrderStatus { get; set; }
         /// <summary>
-        /// 手机号
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual string MobilePhone { get; set; }
         /// <summary>
@@ -347,24 +344,23 @@ namespace NetSaleSvc.Entity.Models
     public partial class logAdvanceEntity : EntityBase
     {
         /// <summary>
-        /// 主键
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
-        [Key]
         public virtual int Id { get; set; }
         /// <summary>
-        /// 管理平台操作员ID
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual int? SysUserId { get; set; }
         /// <summary>
-        /// 接入商ID
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual int? UserId { get; set; }
         /// <summary>
-        /// 金额
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual int? Amount { get; set; }
         /// <summary>
-        /// 操作时间
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual DateTime? Time { get; set; }
     }
@@ -377,7 +373,7 @@ namespace NetSaleSvc.Entity.Models
     public partial class CinemaEntity : EntityBase
     {
         /// <summary>
-        /// 主键
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         [Key]
         public virtual int Id { get; set; }
@@ -398,7 +394,7 @@ namespace NetSaleSvc.Entity.Models
         /// </summary>
         public virtual string Address { get; set; }
         /// <summary>
-        /// 银幕数量
+        /// 影厅数量
         /// </summary>
         public virtual int? ScreenCount { get; set; }
         /// <summary>
@@ -406,9 +402,13 @@ namespace NetSaleSvc.Entity.Models
         /// </summary>
         public virtual int? IsDel { get; set; }
         /// <summary>
-        /// 是否人工加入的影院,如果是人工加入的影院则自动更新影院时不会被删除
+        /// 是否人工加入的影院
         /// </summary>
         public virtual int? ManualAdd { get; set; }
+        /// <summary>
+        /// 鼎新系统影院Id，其他系统忽略
+        /// </summary>
+        public virtual int? DingXinId { get; set; }
     }
 
     /// <summary>
@@ -419,20 +419,19 @@ namespace NetSaleSvc.Entity.Models
     public partial class OrderSeatEntity : EntityBase
     {
         /// <summary>
-        /// 主键
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
-        [Key]
         public virtual int Id { get; set; }
         /// <summary>
-        /// 订单编号
+        /// 订单ID
         /// </summary>
         public virtual int? OrderID { get; set; }
         /// <summary>
-        /// 座位号
+        /// 座位编号
         /// </summary>
         public virtual string SeatCode { get; set; }
         /// <summary>
-        /// 电影票编码
+        /// 电影票编号
         /// </summary>
         public virtual string FilmTicketCode { get; set; }
     }
@@ -445,7 +444,7 @@ namespace NetSaleSvc.Entity.Models
     public partial class OrderSeatDetailEntity : EntityBase
     {
         /// <summary>
-        /// 主键
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         [Key]
         public virtual int Id { get; set; }
@@ -511,7 +510,7 @@ namespace NetSaleSvc.Entity.Models
     public partial class DXCodeIDEntity : EntityBase
     {
         /// <summary>
-        /// 鼎新系统用的影院ID
+        /// 鼎新影院ID
         /// </summary>
         public virtual string Id { get; set; }
         /// <summary>
@@ -528,9 +527,8 @@ namespace NetSaleSvc.Entity.Models
     public partial class OrderInfoEntity : EntityBase
     {
         /// <summary>
-        /// 主键
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
-        [Key]
         public virtual int Id { get; set; }
         /// <summary>
         /// 接入商ID
@@ -569,11 +567,11 @@ namespace NetSaleSvc.Entity.Models
         /// </summary>
         public virtual DateTime? RefundTime { get; set; }
         /// <summary>
-        /// 提交订单返回信息
+        /// 提交订单返回XML
         /// </summary>
         public virtual string SubmitXml { get; set; }
         /// <summary>
-        /// 退票返回信息
+        /// 退票返回XML
         /// </summary>
         public virtual string RefundXml { get; set; }
         /// <summary>
@@ -581,11 +579,11 @@ namespace NetSaleSvc.Entity.Models
         /// </summary>
         public virtual int? SeatCount { get; set; }
         /// <summary>
-        /// 手续费
+        /// 服务费
         /// </summary>
         public virtual int? Fee { get; set; }
         /// <summary>
-        /// 提交订单xml
+        /// 提交订单XML
         /// </summary>
         public virtual string SubmitQueryXml { get; set; }
         /// <summary>
@@ -601,11 +599,11 @@ namespace NetSaleSvc.Entity.Models
         /// </summary>
         public virtual string FilmName { get; set; }
         /// <summary>
-        /// 查询订单返回xml
+        /// QueryOrder返回结果
         /// </summary>
         public virtual string QueryOrderReplyXml { get; set; }
         /// <summary>
-        /// 查询订单时间
+        /// QueryOrder时间
         /// </summary>
         public virtual DateTime? QueryOrderTime { get; set; }
         /// <summary>
@@ -613,7 +611,7 @@ namespace NetSaleSvc.Entity.Models
         /// </summary>
         public virtual string MobilePhone { get; set; }
         /// <summary>
-        /// 支付交易号
+        /// 交易流水号
         /// </summary>
         public virtual string PaySeqNo { get; set; }
     }
@@ -628,14 +626,13 @@ namespace NetSaleSvc.Entity.Models
         /// <summary>
         /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
-        [Key]
         public virtual int Id { get; set; }
         /// <summary>
         /// 接入商ID
         /// </summary>
         public virtual int? UserId { get; set; }
         /// <summary>
-        /// 影院编号
+        /// 影院编码
         /// </summary>
         public virtual string CinemaCode { get; set; }
         /// <summary>
@@ -651,15 +648,15 @@ namespace NetSaleSvc.Entity.Models
         /// </summary>
         public virtual string SeatXml { get; set; }
         /// <summary>
-        /// 操作时间
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual DateTime? VTime { get; set; }
         /// <summary>
-        /// 是否锁座 1锁座 0解锁
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual int? IsLock { get; set; }
         /// <summary>
-        /// 锁座流水号，满天星专用
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual string SerialNum { get; set; }
         /// <summary>
@@ -676,9 +673,8 @@ namespace NetSaleSvc.Entity.Models
     public partial class ScreenInfoEntity : EntityBase
     {
         /// <summary>
-        /// 主键
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
-        [Key]
         public virtual int Id { get; set; }
         /// <summary>
         /// 影院编码
@@ -697,7 +693,7 @@ namespace NetSaleSvc.Entity.Models
         /// </summary>
         public virtual DateTime? UpdateTime { get; set; }
         /// <summary>
-        /// 影厅座位数
+        /// 座位数
         /// </summary>
         public virtual int? SeatCount { get; set; }
         /// <summary>
@@ -714,16 +710,16 @@ namespace NetSaleSvc.Entity.Models
     public partial class UserCinemaEntity : EntityBase
     {
         /// <summary>
-        /// 主键
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         [Key]
         public virtual int Id { get; set; }
         /// <summary>
-        /// 接入商ID
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual int UserId { get; set; }
         /// <summary>
-        /// 影院编码
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual string CinemaCode { get; set; }
         /// <summary>
@@ -739,11 +735,11 @@ namespace NetSaleSvc.Entity.Models
         /// </summary>
         public virtual int? Fee { get; set; }
         /// <summary>
-        /// 给影院服务费
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual int? CinemaFee { get; set; }
         /// <summary>
-        /// 支付类型
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual string PayType { get; set; }
         /// <summary>
@@ -751,7 +747,7 @@ namespace NetSaleSvc.Entity.Models
         /// </summary>
         public virtual int? RealPrice { get; set; }
         /// <summary>
-        /// 到期时间
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual DateTime? ExpDate { get; set; }
     }
@@ -764,7 +760,7 @@ namespace NetSaleSvc.Entity.Models
     public partial class ComboInfoEntity : EntityBase
     {
         /// <summary>
-        /// ID
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual int? Id { get; set; }
         /// <summary>
@@ -813,9 +809,8 @@ namespace NetSaleSvc.Entity.Models
     public partial class LSOrderCodeEntity : EntityBase
     {
         /// <summary>
-        /// 主键
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
-        [Key]
         public virtual int Id { get; set; }
         /// <summary>
         /// 影院编码
@@ -843,20 +838,19 @@ namespace NetSaleSvc.Entity.Models
     public partial class PrintInfoEntity : EntityBase
     {
         /// <summary>
-        /// 主键
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
-        [Key]
         public virtual int Id { get; set; }
         /// <summary>
-        /// 影院编码
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual string CinemaCode { get; set; }
         /// <summary>
-        /// 取票码
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual string PrintNo { get; set; }
         /// <summary>
-        /// 操作时间
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual DateTime? Tm { get; set; }
     }
@@ -869,74 +863,78 @@ namespace NetSaleSvc.Entity.Models
     public partial class SessionInfoEntity : EntityBase
     {
         /// <summary>
-        /// 主键
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         [Key]
         public virtual int Id { get; set; }
         /// <summary>
-        /// 影院编码
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual string CCode { get; set; }
         /// <summary>
-        /// 排期编码
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual string SCode { get; set; }
         /// <summary>
-        /// 影厅编号
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual string ScreenCode { get; set; }
         /// <summary>
-        /// 放映时间
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual DateTime StartTime { get; set; }
         /// <summary>
-        /// 影片编码
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual string FilmCode { get; set; }
         /// <summary>
-        /// 影片名称
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual string FilmName { get; set; }
         /// <summary>
-        /// 影片时长
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual int? Duration { get; set; }
         /// <summary>
-        /// 影片语言
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual string Language { get; set; }
         /// <summary>
-        /// 排期更新时间
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual DateTime? UpdateTime { get; set; }
         /// <summary>
-        /// 标准价
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual decimal StandardPrice { get; set; }
         /// <summary>
-        /// 最低价
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual decimal LowestPrice { get; set; }
         /// <summary>
-        /// 是否可用
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual bool? IsAvalible { get; set; }
         /// <summary>
-        /// 连场标志，yes连场，no非连场
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual string PlaythroughFlag { get; set; }
         /// <summary>
-        /// 影片维度，2D/3D
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual string Dimensional { get; set; }
         /// <summary>
-        /// 影片在连场中的序号
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual int Sequence { get; set; }
         /// <summary>
-        /// 接入商ID
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual int? UserID { get; set; }
+        /// <summary>
+        /// 鼎新场次最后更新时间，其他系统忽略
+        /// </summary>
+        public virtual string DingXinUpdateTime { get; set; }
     }
 
     /// <summary>
@@ -947,7 +945,7 @@ namespace NetSaleSvc.Entity.Models
     public partial class PricePlanEntity : EntityBase
     {
         /// <summary>
-        /// 主键
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         [Key]
         public virtual int Id { get; set; }
@@ -956,19 +954,19 @@ namespace NetSaleSvc.Entity.Models
         /// </summary>
         public virtual string CinemaCode { get; set; }
         /// <summary>
-        /// 影片编码/排期编号
+        /// 影片编号／排期编号
         /// </summary>
         public virtual string Code { get; set; }
         /// <summary>
-        /// 接入商ID
+        /// 摘入商ID
         /// </summary>
         public virtual int UserID { get; set; }
         /// <summary>
-        /// 价格计划类型，影片Film/排期Session
+        /// 类型，影片／排期
         /// </summary>
         public virtual string Type { get; set; }
         /// <summary>
-        /// 影片价格
+        /// 价格
         /// </summary>
         public virtual decimal Price { get; set; }
     }
@@ -981,16 +979,15 @@ namespace NetSaleSvc.Entity.Models
     public partial class ComboOrderEntity : EntityBase
     {
         /// <summary>
-        /// 主键
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
-        [Key]
         public virtual int Id { get; set; }
         /// <summary>
-        /// CinemaCode
+        /// 影院编号
         /// </summary>
         public virtual string CCode { get; set; }
         /// <summary>
-        /// OrderCode
+        /// 订单编号
         /// </summary>
         public virtual string OCode { get; set; }
         /// <summary>
@@ -1088,7 +1085,7 @@ namespace NetSaleSvc.Entity.Models
     public partial class ScreenSeatInfoEntity : EntityBase
     {
         /// <summary>
-        /// 主键
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         [Key]
         public virtual int Id { get; set; }
@@ -1097,11 +1094,11 @@ namespace NetSaleSvc.Entity.Models
         /// </summary>
         public virtual string CinemaCode { get; set; }
         /// <summary>
-        /// 影厅编码
+        /// 影厅编号
         /// </summary>
         public virtual string ScreenCode { get; set; }
         /// <summary>
-        /// 座位号
+        /// 座位编号
         /// </summary>
         public virtual string SeatCode { get; set; }
         /// <summary>
@@ -1117,19 +1114,19 @@ namespace NetSaleSvc.Entity.Models
         /// </summary>
         public virtual string ColumnNum { get; set; }
         /// <summary>
-        /// x座标
+        /// 座位X坐标
         /// </summary>
         public virtual int XCoord { get; set; }
         /// <summary>
-        /// y座标
+        /// 座位Y坐标
         /// </summary>
         public virtual int YCoord { get; set; }
         /// <summary>
-        /// 座位状态
+        /// 状态
         /// </summary>
         public virtual string Status { get; set; }
         /// <summary>
-        /// 情侣座标志
+        /// 是否情侣座
         /// </summary>
         public virtual string LoveFlag { get; set; }
         /// <summary>
@@ -1146,56 +1143,59 @@ namespace NetSaleSvc.Entity.Models
     public partial class UserCinemaViewEntity : EntityBase
     {
         /// <summary>
-        /// 主键
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
-        [Key]
         public virtual int Id { get; set; }
         /// <summary>
-        /// 接入商ID
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual int UserId { get; set; }
         /// <summary>
-        /// 到期时间
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual DateTime? ExpDate { get; set; }
         /// <summary>
-        /// 用户名
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual string UserName { get; set; }
         /// <summary>
-        /// 密码
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual string Password { get; set; }
         /// <summary>
-        /// 支付类型
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual string PayType { get; set; }
         /// <summary>
-        /// 影院编码
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual string CinemaCode { get; set; }
         /// <summary>
-        /// 影院名称
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual string CinemaName { get; set; }
         /// <summary>
-        /// 影院地址
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual string CinemaAddress { get; set; }
         /// <summary>
-        /// 影院类型
+        /// 程序猿只想做个安静的美男子，不想写注释
+        /// </summary>
+        public virtual int? DingXinId { get; set; }
+        /// <summary>
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual CinemaTypeEnum CinemaType { get; set; }
         /// <summary>
-        /// 影院url
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual string Url { get; set; }
         /// <summary>
-        /// 默认用户名
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual string DefaultUserName { get; set; }
         /// <summary>
-        /// 默认密码
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual string DefaultPassword { get; set; }
     }
@@ -1208,40 +1208,39 @@ namespace NetSaleSvc.Entity.Models
     public partial class CinemaViewEntity : EntityBase
     {
         /// <summary>
-        /// 主键
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
-        [Key]
         public virtual int Id { get; set; }
         /// <summary>
-        /// 中间件ID
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual int? MId { get; set; }
         /// <summary>
-        ///  影院编码
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual string Code { get; set; }
         /// <summary>
-        /// 影院名称
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual string Name { get; set; }
         /// <summary>
-        /// 影院地址
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual string Address { get; set; }
         /// <summary>
-        /// 影厅数量
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual int? ScreenCount { get; set; }
         /// <summary>
-        /// 是否删除
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual int? IsDel { get; set; }
         /// <summary>
-        ///是否为人工加入的影院，如果是人工加入的影院则自动更新影院时不会被删除。
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual int? ManualAdd { get; set; }
         /// <summary>
-        /// 影院类型
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         public virtual CinemaTypeEnum CinemaType { get; set; }
     }
@@ -1308,7 +1307,7 @@ namespace NetSaleSvc.Entity.Models
     public partial class DXSessionUpdateTimeEntity : EntityBase
     {
         /// <summary>
-        /// 主键
+        /// 程序猿只想做个安静的美男子，不想写注释
         /// </summary>
         [Key]
         public virtual int Id { get; set; }
