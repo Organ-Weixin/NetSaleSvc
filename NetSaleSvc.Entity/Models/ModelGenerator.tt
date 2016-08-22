@@ -42,7 +42,6 @@ It is based on the T4 template from the PetaPoco project which in turn is based 
 	var tables = LoadTables();
 
 	//Ingore a Table or a column
-	tables["Exception"].Ignore = true;
 /*
 	// Tweak Schema
 	tables["tablename"].Ignore = true;							// To ignore a table
@@ -78,7 +77,7 @@ foreach(Table tbl in from t in tables where !t.Ignore select t){
 <#foreach(Column col in from c in tbl.Columns where !c.Ignore select c)
 {#>
         /// <summary>
-        /// <#=string.IsNullOrEmpty(col.DESC) ? "程序猿只想做个安静的美男子，不想写注释" : col.DESC.Replace("\r\n", "\r\n        ///")#>
+        /// <#=string.IsNullOrEmpty(col.DESC) ? "日了狗了，注释都不写？" : col.DESC.Replace("\r\n", "\r\n        ///")#>
         /// </summary>
     <# if (tbl.PK!=null && tbl.PK.Name==col.PropertyName) { #>
     [Key]
