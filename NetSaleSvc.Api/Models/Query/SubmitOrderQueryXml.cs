@@ -22,6 +22,12 @@ namespace NetSaleSvc.Api.Models
     public class SubmitOrderQueryXmlOrder
     {
         /// <summary>
+        /// 满天星会员卡支付交易流水号
+        /// </summary>
+        [XmlAttribute]
+        public string PaySeqNo { get; set; }
+
+        /// <summary>
         /// 订单编码
         /// </summary>
         [XmlAttribute]
@@ -44,12 +50,6 @@ namespace NetSaleSvc.Api.Models
         /// </summary>
         [XmlAttribute]
         public string MobilePhone { get; set; }
-
-        /// <summary>
-        /// 会员卡支付交易流水号
-        /// </summary>
-        [XmlElement]
-        public string PaySeqNo { get; set; }
 
         /// <summary>
         /// 座位列表
