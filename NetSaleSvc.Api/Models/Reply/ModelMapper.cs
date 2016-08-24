@@ -178,8 +178,10 @@ namespace NetSaleSvc.Api.Models
             order.orderBaseInfo.TotalSalePrice = queryXmlObj.Order.Seat.Sum(x => x.RealPrice);
             order.orderBaseInfo.TotalFee = queryXmlObj.Order.Seat.Sum(x => x.Fee);
             order.orderBaseInfo.MobilePhone = queryXmlObj.Order.MobilePhone;
-            order.orderBaseInfo.PaySeqNo = queryXmlObj.Order.PaySeqNo;
-
+            if (order.orderBaseInfo.IsMemberPay)
+            {
+                order.orderBaseInfo.PaySeqNo = queryXmlObj.Order.PaySeqNo;
+            }
             order.orderSeatDetails.ForEach(x =>
             {
                 var newInfo = queryXmlObj.Order.Seat.Where(y => y.SeatCode == x.SeatCode).SingleOrDefault();
