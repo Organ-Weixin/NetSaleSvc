@@ -408,7 +408,7 @@ namespace NetSaleSvc.Api.CTMS.ManTianXing
                 BookSign = "0",
                 Payed = (order.orderBaseInfo.TotalPrice + order.orderBaseInfo.TotalFee).ToString("0.##"),
                 SendModeID = string.Empty,    //不知道是啥玩意
-                PaySeqNo = order.orderBaseInfo.PaySeqNo ?? string.Empty,    //TODO: 会员卡交易流水号（后续应该改成不需要接入商传入此值，而是由本平台会员卡接口存入数据库，然后从数据库读取）
+                PaySeqNo = order.orderBaseInfo.IsMemberPay ? order.orderBaseInfo.PaySeqNo : string.Empty,
                 TokenID = TokenId
             };
             //校验信息
