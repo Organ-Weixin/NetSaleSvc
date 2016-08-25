@@ -54,18 +54,25 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
                 userCinema.Url, string.Empty, userCinema.CinemaCode);
             nsOnlineTicketingServiceReply reply = queryCinemaResult.Deserialize<nsOnlineTicketingServiceReply>();
 
-            if (reply.QueryCinemaReply.Status == StatusEnum.Success.GetDescription())
+            if (reply != null)
             {
-                SaveCinemaInfos(userCinema.CinemaCode, reply);
-                queryCinemaReply.Status = StatusEnum.Success;
+                if (reply.QueryCinemaReply.Status == StatusEnum.Success.GetDescription())
+                {
+                    SaveCinemaInfos(userCinema.CinemaCode, reply);
+                    queryCinemaReply.Status = StatusEnum.Success;
+                }
+                else
+                {
+                    queryCinemaReply.Status = StatusEnum.Failure;
+                }
+
+                queryCinemaReply.ErrorCode = reply.QueryCinemaReply.ErrorCode;
+                queryCinemaReply.ErrorMessage = reply.QueryCinemaReply.ErrorMessage;
             }
             else
             {
-                queryCinemaReply.Status = StatusEnum.Failure;
+                queryCinemaReply.GetNsInValidReply();
             }
-
-            queryCinemaReply.ErrorCode = reply.QueryCinemaReply.ErrorCode;
-            queryCinemaReply.ErrorMessage = reply.QueryCinemaReply.ErrorMessage;
 
             return queryCinemaReply;
         }
@@ -86,18 +93,25 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
 
             nsOnlineTicketingServiceReply reply = querySeatResult.Deserialize<nsOnlineTicketingServiceReply>();
 
-            if (reply.QuerySeatReply.Status == StatusEnum.Success.GetDescription())
+            if (reply != null)
             {
-                SaveSeatInfos(userCinema.CinemaCode, screen.SCode, reply);
-                querySeatReply.Status = StatusEnum.Success;
+                if (reply.QuerySeatReply.Status == StatusEnum.Success.GetDescription())
+                {
+                    SaveSeatInfos(userCinema.CinemaCode, screen.SCode, reply);
+                    querySeatReply.Status = StatusEnum.Success;
+                }
+                else
+                {
+                    querySeatReply.Status = StatusEnum.Failure;
+                }
+
+                querySeatReply.ErrorCode = reply.QuerySeatReply.ErrorCode;
+                querySeatReply.ErrorMessage = reply.QuerySeatReply.ErrorMessage;
             }
             else
             {
-                querySeatReply.Status = StatusEnum.Failure;
+                querySeatReply.GetNsInValidReply();
             }
-
-            querySeatReply.ErrorCode = reply.QuerySeatReply.ErrorCode;
-            querySeatReply.ErrorMessage = reply.QuerySeatReply.ErrorMessage;
 
             return querySeatReply;
         }
@@ -119,26 +133,33 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
 
             nsOnlineTicketingServiceReply reply = queryFilmResult.Deserialize<nsOnlineTicketingServiceReply>();
 
-            if (reply.QueryFilmReply.Status == StatusEnum.Success.GetDescription())
+            if (reply != null)
             {
-                var FilmCodes = reply.QueryFilmReply.Films.Film.Select(x => x.Code);
-                var ExitedFilms = _filmInfoService.GetFilmInfosByCodes(FilmCodes);
+                if (reply.QueryFilmReply.Status == StatusEnum.Success.GetDescription())
+                {
+                    var FilmCodes = reply.QueryFilmReply.Films.Film.Select(x => x.Code);
+                    var ExitedFilms = _filmInfoService.GetFilmInfosByCodes(FilmCodes);
 
-                var entities = reply.QueryFilmReply.Films.Film.Select(x => x.MapToEntity(
-                    ExitedFilms.Where(y => y.FilmCode == x.Code).SingleOrDefault() ?? new FilmInfoEntity()));
+                    var entities = reply.QueryFilmReply.Films.Film.Select(x => x.MapToEntity(
+                        ExitedFilms.Where(y => y.FilmCode == x.Code).SingleOrDefault() ?? new FilmInfoEntity()));
 
-                _filmInfoService.BulkMerge(entities, ExitedFilms);
+                    _filmInfoService.BulkMerge(entities, ExitedFilms);
 
-                queryFilmReply.Status = StatusEnum.Success;
-                queryFilmReply.films = entities;
+                    queryFilmReply.Status = StatusEnum.Success;
+                    queryFilmReply.films = entities;
+                }
+                else
+                {
+                    queryFilmReply.Status = StatusEnum.Failure;
+                }
+
+                queryFilmReply.ErrorCode = reply.QueryFilmReply.ErrorCode;
+                queryFilmReply.ErrorMessage = reply.QueryFilmReply.ErrorMessage;
             }
             else
             {
-                queryFilmReply.Status = StatusEnum.Failure;
+                queryFilmReply.GetNsInValidReply();
             }
-
-            queryFilmReply.ErrorCode = reply.QueryFilmReply.ErrorCode;
-            queryFilmReply.ErrorMessage = reply.QueryFilmReply.ErrorMessage;
 
             return queryFilmReply;
         }
@@ -159,19 +180,25 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
                 userCinema.Url, string.Empty, userCinema.CinemaCode, StartDate, EndDate);
 
             nsOnlineTicketingServiceReply reply = querySessionResult.Deserialize<nsOnlineTicketingServiceReply>();
-
-            if (reply.QuerySessionReply.Status == StatusEnum.Success.GetDescription())
+            if (reply != null)
             {
-                SaveSessions(userCinema, StartDate, EndDate, reply);
-                querySessionReply.Status = StatusEnum.Success;
+                if (reply.QuerySessionReply.Status == StatusEnum.Success.GetDescription())
+                {
+                    SaveSessions(userCinema, StartDate, EndDate, reply);
+                    querySessionReply.Status = StatusEnum.Success;
+                }
+                else
+                {
+                    querySessionReply.Status = StatusEnum.Failure;
+                }
+
+                querySessionReply.ErrorCode = reply.QuerySessionReply.ErrorCode;
+                querySessionReply.ErrorMessage = reply.QuerySessionReply.ErrorMessage;
             }
             else
             {
-                querySessionReply.Status = StatusEnum.Failure;
+                querySessionReply.GetNsInValidReply();
             }
-
-            querySessionReply.ErrorCode = reply.QuerySessionReply.ErrorCode;
-            querySessionReply.ErrorMessage = reply.QuerySessionReply.ErrorMessage;
 
             return querySessionReply;
         }
@@ -193,26 +220,33 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
             nsOnlineTicketingServiceReply reply = querySessionSeatResult.Deserialize<nsOnlineTicketingServiceReply>();
 
             CTMSQuerySessionSeatReply querySessionSeatReply = new CTMSQuerySessionSeatReply();
-            if (reply.QuerySessionSeatReply.Status == StatusEnum.Success.GetDescription())
+            if (reply != null)
             {
-                querySessionSeatReply.SessionSeats = reply.QuerySessionSeatReply.SessionSeat.Seat.Select(x =>
-                    new SessionSeatEntity
-                    {
-                        SeatCode = x.Code,
-                        RowNum = x.RowNum,
-                        ColumnNum = x.ColumnNum,
-                        Status = x.Status.CastToEnum<SessionSeatStatusEnum>()
-                    });
+                if (reply.QuerySessionSeatReply.Status == StatusEnum.Success.GetDescription())
+                {
+                    querySessionSeatReply.SessionSeats = reply.QuerySessionSeatReply.SessionSeat.Seat.Select(x =>
+                        new SessionSeatEntity
+                        {
+                            SeatCode = x.Code,
+                            RowNum = x.RowNum,
+                            ColumnNum = x.ColumnNum,
+                            Status = x.Status.CastToEnum<SessionSeatStatusEnum>()
+                        });
 
-                querySessionSeatReply.Status = StatusEnum.Success;
+                    querySessionSeatReply.Status = StatusEnum.Success;
+                }
+                else
+                {
+                    querySessionSeatReply.Status = StatusEnum.Failure;
+                }
+
+                querySessionSeatReply.ErrorCode = reply.QuerySessionSeatReply.ErrorCode;
+                querySessionSeatReply.ErrorMessage = reply.QuerySessionSeatReply.ErrorMessage;
             }
             else
             {
-                querySessionSeatReply.Status = StatusEnum.Failure;
+                querySessionSeatReply.GetNsInValidReply();
             }
-
-            querySessionSeatReply.ErrorCode = reply.QuerySessionSeatReply.ErrorCode;
-            querySessionSeatReply.ErrorMessage = reply.QuerySessionSeatReply.ErrorMessage;
 
             return querySessionSeatReply;
         }
@@ -531,7 +565,7 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
         public CTMSFetchTicketReply FetchTicket(UserCinemaViewEntity userCinema, OrderViewEntity order)
         {
             CTMSFetchTicketReply fetchTicketReply = new CTMSFetchTicketReply();
-            
+
             //先请求出票
             string applyFetchTicketResult = fetchTicketSvc.ApplyFetchTicket(userCinema.FetchTicketIp, userCinema.RealUserName,
                 userCinema.RealPassword, order.orderBaseInfo.PrintNo, order.orderBaseInfo.VerifyCode);
@@ -618,7 +652,7 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
                         })).ToList();
 
             //插入或更新最新座位
-            _seatInfoService.BulkMerge(newSeats, oldSeats);
+            _seatInfoService.BulkMerge(newSeats, CinemaCode, ScreenCode);
         }
 
         /// <summary>
@@ -643,7 +677,7 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
                         })).ToList();
 
             //插入或更新最新放映计划
-            _sessionInfoService.BulkMerge(newSessions, oldSessions);
+            _sessionInfoService.BulkMerge(newSessions, userCinema.CinemaCode, StartDate, EndDate);
         }
         #endregion
     }

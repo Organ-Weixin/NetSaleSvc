@@ -167,7 +167,7 @@ namespace NetSaleSvc.Api.CTMS.DingXin
                 newSeats.ForEach(x => x.GroupCode = "0000000000000001");
 
                 //插入或更新最新座位
-                _seatInfoService.BulkMerge(newSeats, oldSeats);
+                _seatInfoService.BulkMerge(newSeats, userCinema.CinemaCode, screen.SCode);
 
                 reply.Status = StatusEnum.Success;
             }
@@ -295,7 +295,7 @@ namespace NetSaleSvc.Api.CTMS.DingXin
                             })).Where(x => x.StartTime > StartDate && x.StartTime < EndDate.AddDays(1)).ToList();
 
                 //插入或更新最新放映计划
-                _sessionInfoService.BulkMerge(newSessions, oldSessions);
+                _sessionInfoService.BulkMerge(newSessions, userCinema.CinemaCode, StartDate, EndDate);
 
                 reply.Status = StatusEnum.Success;
             }
@@ -330,7 +330,7 @@ namespace NetSaleSvc.Api.CTMS.DingXin
                 { "cid", userCinema.DingXinId.ToString() },
                 { "pid", userCinema.RealUserName },
                 { "play_id", SessionCode },
-                { "play_update_time", session.DingXinUpdateTime }
+                { "play_update_time", session?.DingXinUpdateTime ?? string.Empty }
             };
 
             string querySeatStatusResult = HttpHelper.VisitUrl(createVisitUrl(userCinema.Url,
@@ -388,7 +388,7 @@ namespace NetSaleSvc.Api.CTMS.DingXin
                 { "pid", userCinema.RealUserName },
                 { "play_id", order.orderBaseInfo.SessionCode },
                 { "seat_id", string.Join(",", order.orderSeatDetails.Select(x => x.SeatCode)) },
-                { "play_update_time", session.DingXinUpdateTime }
+                { "play_update_time", session?.DingXinUpdateTime ?? string.Empty }
             };
 
             string lockSeatResult = HttpHelper.VisitUrl(createVisitUrl(userCinema.Url,
@@ -498,7 +498,7 @@ namespace NetSaleSvc.Api.CTMS.DingXin
                         })))
                 },
                 { "lock_flag", order.orderBaseInfo.SerialNum },
-                { "play_update_time", session.DingXinUpdateTime },
+                { "play_update_time", session?.DingXinUpdateTime ?? string.Empty },
                 { "partner_buy_ticket_id", order.orderBaseInfo.LockOrderCode },
                 { "mobile", order.orderBaseInfo.MobilePhone },
             };

@@ -103,11 +103,26 @@ namespace NetSaleSvc.Service
         /// 批量合并
         /// </summary>
         /// <param name="entities"></param>
-        public void BulkMerge(IEnumerable<SessionInfoEntity> NewEntities
-            , IEnumerable<SessionInfoEntity> OldEntities)
+        public void BulkMerge(IEnumerable<SessionInfoEntity> Entities, string CinemaCode,
+            DateTime StartDate, DateTime EndDate)
         {
-            _sessionInfoRepository.BulkMerge(NewEntities, x => x.Id,
-                OldEntities, x => x.Id);
+            if (StartDate < DateTime.Now)
+            {
+                StartDate = DateTime.Now;
+            }
+            EndDate = EndDate.AddDays(1);
+
+            using (var connection = DbConnectionFactory.OpenSqlConnection())
+            {
+                var cmd = connection.CreateCommand();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "dbo.MergeSession";
+                cmd.Parameters.AddWithValue("@sessions", Entities.ToList().ToDataTable());
+                cmd.Parameters.AddWithValue("@CinemaCode", CinemaCode);
+                cmd.Parameters.AddWithValue("@StartTime", StartDate);
+                cmd.Parameters.AddWithValue("@EndTime", EndDate);
+                cmd.ExecuteNonQuery();
+            }
         }
     }
 }

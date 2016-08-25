@@ -83,9 +83,17 @@ namespace NetSaleSvc.Entity.Repository.Impl
 
         public async Task DeleteAsync(T entity)
         {
-            using (var connection = DbConnectionFactory.OpenConnection())
+            using (var connection = await DbConnectionFactory.OpenConnectionAsync())
             {
                 await connection.DeleteAsync(entityToDelete: entity);
+            }
+        }
+
+        public int Execute(string sql, object param = null, CommandType? commandType = default(CommandType?))
+        {
+            using (var connection = DbConnectionFactory.OpenConnection())
+            {
+                return connection.Execute(sql, param: param, commandType: commandType);
             }
         }
 

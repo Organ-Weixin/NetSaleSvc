@@ -117,7 +117,7 @@ namespace NetSaleSvc.Api.CTMS.ManTianXing
 
 
                 //插入或更新最新座位
-                _seatInfoService.BulkMerge(newSeats, oldSeats);
+                _seatInfoService.BulkMerge(newSeats, userCinema.CinemaCode, screen.SCode);
 
                 reply.Status = StatusEnum.Success;
             }
@@ -223,7 +223,7 @@ namespace NetSaleSvc.Api.CTMS.ManTianXing
                             })).Where(x => x.StartTime > StartDate && x.StartTime < EndDate.AddDays(1)).ToList();
 
                 //插入或更新最新放映计划
-                _sessionInfoService.BulkMerge(newSessions, oldSessions);
+                _sessionInfoService.BulkMerge(newSessions, userCinema.CinemaCode, StartDate, EndDate);
 
                 reply.Status = StatusEnum.Success;
             }

@@ -83,7 +83,14 @@ namespace NetSaleSvc.Entity.Repository
         /// <param name="entity"></param>
         /// <returns></returns>
         Task DeleteAsync(T entity);
-
+        /// <summary>
+        /// 执行sql
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <param name="param"></param>
+        /// <param name="commandType"></param>
+        /// <returns></returns>
+        int Execute(string sql, object param = null, CommandType? commandType = default(CommandType?));
         /// <summary>
         /// 执行sql（异步）
         /// </summary>
