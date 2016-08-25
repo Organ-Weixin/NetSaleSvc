@@ -138,7 +138,7 @@ namespace NetSaleSvc
             catch (Exception ex)
             {
                 onlineTicketingServiceReply.QuerySessionReply = new QuerySessionReply();
-                LogHelper.LogException(ex);
+                LogHelper.LogException(ex, $"QuerySession异常：Username:{Username},Password:{Password},CinemaCode:{CinemaCode},StartDate:{StartDate},EndDate:{EndDate}");
             }
 
             return onlineTicketingServiceReply.Serialize();

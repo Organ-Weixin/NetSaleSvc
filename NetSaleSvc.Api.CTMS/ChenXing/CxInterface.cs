@@ -144,7 +144,7 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
                 newSeats.ForEach(x => x.GroupCode = "0000000000000001");
 
                 //插入或更新最新座位
-                _seatInfoService.BulkMerge(newSeats, oldSeats);
+                _seatInfoService.BulkMerge(newSeats, userCinema.CinemaCode, screen.SCode);
 
                 reply.Status = StatusEnum.Success;
             }
@@ -297,7 +297,7 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
                             })).ToList();
 
                 //插入或更新最新放映计划
-                _sessionInfoService.BulkMerge(newSessions, oldSessions);
+                _sessionInfoService.BulkMerge(newSessions, userCinema.CinemaCode, StartDate, EndDate);
 
                 reply.Status = StatusEnum.Success;
                 reply.ErrorCode = "0";

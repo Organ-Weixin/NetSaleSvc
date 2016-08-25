@@ -1,7 +1,10 @@
 ﻿using NetSaleSvc.Entity.Models;
 using NetSaleSvc.Entity.Repository;
 using NetSaleSvc.Entity.Repository.Impl;
+using NetSaleSvc.Util;
 using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 
 namespace NetSaleSvc.Service
 {
@@ -45,38 +48,18 @@ namespace NetSaleSvc.Service
         /// 批量合并
         /// </summary>
         /// <param name="entities"></param>
-        public void BulkMerge(IEnumerable<ScreenSeatInfoEntity> NewEntities
-            , IEnumerable<ScreenSeatInfoEntity> OldEntities)
+        public void BulkMerge(IEnumerable<ScreenSeatInfoEntity> Entities, string CinemaCode, string ScreenCode)
         {
-            _screenSeatInfoRepository.BulkMerge(NewEntities, x => x.Id,
-                OldEntities, x => x.Id);
-        }
-
-        /// <summary>
-        /// 新增影厅座位信息
-        /// </summary>
-        /// <param name="entity"></param>
-        public void InsertScreenSeatInfo(ScreenSeatInfoEntity entity)
-        {
-            _screenSeatInfoRepository.Insert(entity);
-        }
-
-        /// <summary>
-        /// 更新
-        /// </summary>
-        /// <param name="entity"></param>
-        public void UpdateScreenSeatInfo(ScreenSeatInfoEntity entity)
-        {
-            _screenSeatInfoRepository.Update(entity);
-        }
-
-        /// <summary>
-        /// 删除
-        /// </summary>
-        /// <param name="entity"></param>
-        public void DeleteScreenSeatInfo(ScreenSeatInfoEntity entity)
-        {
-            _screenSeatInfoRepository.Delete(entity);
+            using (var connection = DbConnectionFactory.OpenSqlConnection())
+            {
+                var cmd = connection.CreateCommand();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "dbo.MergeScreenSeat";
+                cmd.Parameters.AddWithValue("@seats", Entities.ToList().ToDataTable());
+                cmd.Parameters.AddWithValue("@CinemaCode", CinemaCode);
+                cmd.Parameters.AddWithValue("@ScreenCode", ScreenCode);
+                cmd.ExecuteNonQuery();
+            }
         }
     }
 }

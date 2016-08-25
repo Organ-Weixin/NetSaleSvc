@@ -1,6 +1,7 @@
 ﻿using System.Configuration;
 using System.Data;
 using System.Data.Common;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace NetSaleSvc.Entity.Repository
@@ -10,6 +11,15 @@ namespace NetSaleSvc.Entity.Repository
     /// </summary>
     public class DbConnectionFactory
     {
+        public static SqlConnection OpenSqlConnection()
+        {
+            var connectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+            var conn = new SqlConnection(connectionString);
+            conn.Open();
+
+            return conn;
+        }
+
         /// <summary>
         /// 根据配置文件中的默认配置同步创建数据库连接
         /// </summary>

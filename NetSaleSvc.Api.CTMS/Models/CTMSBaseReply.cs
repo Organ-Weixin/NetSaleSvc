@@ -28,5 +28,15 @@ namespace NetSaleSvc.Api.CTMS.Models
             ErrorCode = "-1";
             ErrorMessage = "鼎新系统不存在该影院或鼎新未对当前合作伙伴开通该影院的权限";
         }
+
+        /// <summary>
+        /// 国标获取信息返回NULL
+        /// </summary>
+        public void GetNsInValidReply()
+        {
+            Status = StatusEnum.Failure;
+            ErrorCode = "-2";
+            ErrorMessage = "获取信息失败，请稍候重试。若重复提示此错误，请检查影院连接是否正常";
+        }
     }
 }
