@@ -48,22 +48,23 @@ namespace NetSaleSvc.Util
                 propertyNameList.AddRange(propertyName);
 
             DataTable result = new DataTable();
+
+            PropertyInfo[] propertys = typeof(T).GetProperties();
+            foreach (PropertyInfo pi in propertys)
+            {
+                if (propertyNameList.Count == 0)
+                {
+                    result.Columns.Add(pi.Name);
+                }
+                else
+                {
+                    if (propertyNameList.Contains(pi.Name))
+                        result.Columns.Add(pi.Name, pi.PropertyType);
+                }
+            }
+
             if (list.Count > 0)
             {
-                PropertyInfo[] propertys = list[0].GetType().GetProperties();
-                foreach (PropertyInfo pi in propertys)
-                {
-                    if (propertyNameList.Count == 0)
-                    {
-                        result.Columns.Add(pi.Name);
-                    }
-                    else
-                    {
-                        if (propertyNameList.Contains(pi.Name))
-                            result.Columns.Add(pi.Name, pi.PropertyType);
-                    }
-                }
-
                 for (int i = 0; i < list.Count; i++)
                 {
                     ArrayList tempList = new ArrayList();
