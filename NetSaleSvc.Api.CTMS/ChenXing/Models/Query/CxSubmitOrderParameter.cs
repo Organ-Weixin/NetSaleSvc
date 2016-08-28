@@ -79,5 +79,11 @@ namespace NetSaleSvc.Api.CTMS.ChenXing.Models
         /// </summary>
         [XmlElement]
         public string Price { get; set; }
+
+        /// <summary>
+        /// 服务费
+        /// </summary>
+        [XmlElement]
+        public string ServiceCharge { get; set; }
     }
 }

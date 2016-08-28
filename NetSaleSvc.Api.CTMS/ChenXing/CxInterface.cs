@@ -487,14 +487,15 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
                     SeatInfo = order.orderSeatDetails.Select(x => new CxSubmitOrderParameterSeatInfo
                     {
                         SeatCode = x.SeatCode,
-                        Price = (x.Price + x.Fee).ToString("0.00")
+                        Price = (x.Price + x.Fee).ToString("0.00"),
+                        ServiceCharge = x.Fee.ToString("0.00")
                     }).ToList()
                 },
                 Compress = pCompress,
                 VerifyInfo = GenerateVerifyInfo(userCinema.RealUserName,
                     userCinema.CinemaCode, order.orderBaseInfo.LockOrderCode,
                     order.orderBaseInfo.SessionCode, order.orderBaseInfo.MobilePhone,
-                    string.Join("", order.orderSeatDetails.Select(x => (x.SeatCode + (x.Price + x.Fee).ToString("0.00"))).ToArray()),
+                    string.Join("", order.orderSeatDetails.Select(x => (x.SeatCode + (x.Price + x.Fee).ToString("0.00") + x.Fee.ToString("0.00"))).ToArray()),
                     pCompress,
                     userCinema.RealPassword)
             };
