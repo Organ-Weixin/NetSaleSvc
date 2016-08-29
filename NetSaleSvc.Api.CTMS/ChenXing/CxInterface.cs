@@ -680,7 +680,7 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
                     }
                 },
                 Compress = pCompress,
-                VerifyInfo = GenerateVerifyInfo(userCinema.RealUserName, userCinema.CinemaCode+"d",
+                VerifyInfo = GenerateVerifyInfo(userCinema.RealUserName, userCinema.CinemaCode,
                     order.orderBaseInfo.PrintNo, pCompress, userCinema.RealPassword)
             };
 
