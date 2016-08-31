@@ -298,17 +298,11 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
 
                 //插入或更新最新放映计划
                 _sessionInfoService.BulkMerge(newSessions, userCinema.CinemaCode, StartDate, EndDate);
+            }
 
-                reply.Status = StatusEnum.Success;
-                reply.ErrorCode = "0";
-                reply.ErrorMessage = "成功";
-            }
-            else
-            {
-                reply.Status = StatusEnum.Failure;
-                reply.ErrorCode = "-1";
-                reply.ErrorMessage = "放映计划查询失败";
-            }
+            reply.Status = StatusEnum.Success;
+            reply.ErrorCode = "0";
+            reply.ErrorMessage = "成功";
 
             return reply;
         }
@@ -737,7 +731,7 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
             {
                 AppCode = userCinema.RealUserName,
                 CinemaCode = userCinema.CinemaCode,
-                Tickets=new CxApplyFetchTicketParameterTickets
+                Tickets = new CxApplyFetchTicketParameterTickets
                 {
                     Ticket = new List<CxApplyFetchTicketParameterTicket>
                     {
@@ -760,7 +754,7 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
 
             if (cxApplyReply.ResultCode == "0")
             {
-                if (cxApplyReply.Tickets!=null&& cxApplyReply.Tickets.Ticket != null 
+                if (cxApplyReply.Tickets != null && cxApplyReply.Tickets.Ticket != null
                     && cxApplyReply.Tickets.Ticket.Count > 0)
                 {
                     var Ticket = cxApplyReply.Tickets.Ticket.First();
@@ -816,7 +810,7 @@ namespace NetSaleSvc.Api.CTMS.ChenXing
                         reply.ErrorMessage = "未知错误";
                     }
                 }
-                
+
             }
             else
             {
