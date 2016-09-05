@@ -1,4 +1,6 @@
-﻿using NetSaleSvc.Entity.Models;
+﻿using NetSaleSvc.Entity.Enum;
+using NetSaleSvc.Entity.Models;
+using NetSaleSvc.Entity.Models.PageList;
 using NetSaleSvc.Entity.Repository;
 using NetSaleSvc.Entity.Repository.Impl;
 using System;
@@ -15,12 +17,14 @@ namespace NetSaleSvc.Service
         #region ctor
         private readonly IRepository<OrderEntity> _orderRepository;
         private readonly IRepository<OrderSeatDetailEntity> _orderSeatRepository;
+        private readonly IRepository<AdminOrderViewEntity> _adminOrderRepository;
 
         public OrderService()
         {
             //TODO: 移除内部依赖
             _orderRepository = new Repository<OrderEntity>();
             _orderSeatRepository = new Repository<OrderSeatDetailEntity>();
+            _adminOrderRepository =new Repository<AdminOrderViewEntity>();
         }
         #endregion
 
@@ -91,6 +95,63 @@ namespace NetSaleSvc.Service
                 orderBaseInfo = order,
                 orderSeatDetails = orderSeats.ToList()
             };
+        }
+
+        /// <summary>
+        /// 后台分页获取订单
+        /// </summary>
+        /// <param name="cinemaCode"></param>
+        /// <param name="offset"></param>
+        /// <param name="perPage"></param>
+        /// <param name="keyword"></param>
+        /// <param name="thirdUserId"></param>
+        /// <param name="orderStatus"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns></returns>
+        public async Task<IPageList<AdminOrderViewEntity>> GetOrdersPagedAsync(string cinemaCode,
+            int offset, int perPage, string keyword, int? thirdUserId, OrderStatusEnum? orderStatus,
+            DateTime? startDate, DateTime? endDate)
+        {
+            var query = _adminOrderRepository.Query
+                .OrderByDescending(x => x.Created)
+                .Skip(offset)
+                .Take(perPage);
+
+            if (!string.IsNullOrEmpty(cinemaCode))
+            {
+                query.Where(x => x.CinemaCode == cinemaCode);
+            }
+
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                query.Where(x => x.CinemaName.Contains(keyword) || x.LockOrderCode.Contains(keyword)
+                    || x.SubmitOrderCode.Contains(keyword) || x.FilmName.Contains(keyword) 
+                    || x.MobilePhone.Contains(keyword));
+            }
+
+            if (thirdUserId.HasValue)
+            {
+                query.Where(x => x.UserId == thirdUserId.Value);
+            }
+
+            if (orderStatus.HasValue)
+            {
+                query.Where(x => x.OrderStatus == orderStatus.Value);
+            }
+
+            if (startDate.HasValue)
+            {
+                query.Where(x => x.Created > startDate.Value);
+            }
+
+            if (endDate.HasValue)
+            {
+                DateTime deadline = endDate.Value.AddDays(1);
+                query.Where(x => x.Created < deadline);
+            }
+
+            return await query.ToPageListAsync();
         }
 
         /// <summary>

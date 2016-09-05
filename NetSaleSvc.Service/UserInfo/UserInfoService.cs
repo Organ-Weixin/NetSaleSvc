@@ -2,6 +2,7 @@
 using NetSaleSvc.Entity.Models;
 using System.Threading.Tasks;
 using NetSaleSvc.Entity.Repository.Impl;
+using System.Collections.Generic;
 
 namespace NetSaleSvc.Service
 {
@@ -26,7 +27,7 @@ namespace NetSaleSvc.Service
         public UserInfoEntity GetUserInfoByUserCredential(string Username, string Password)
         {
             return _userInfoRepository.Query.Where(
-                x => x.UserName == Username && x.Password == Password && x.IsDel == 0).SingleOrDefault();
+                x => x.UserName == Username && x.Password == Password && !x.IsDel).SingleOrDefault();
         }
 
         /// <summary>
@@ -38,7 +39,16 @@ namespace NetSaleSvc.Service
         public async Task<UserInfoEntity> GetUserInfoByUserCredentialAsync(string Username, string Password)
         {
             return await _userInfoRepository.Query.Where(
-                x => x.UserName == Username && x.Password == Password && x.IsDel == 0).SingleOrDefaultAsync();
+                x => x.UserName == Username && x.Password == Password && !x.IsDel).SingleOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// 获取所有接入商列表
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IList<UserInfoEntity>> GetAllUserInfosAsync()
+        {
+            return await _userInfoRepository.Query.Where(x => !x.IsDel).ToListAsync();
         }
     }
 }

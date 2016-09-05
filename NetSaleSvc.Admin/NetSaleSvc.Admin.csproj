@@ -766,6 +766,7 @@
     <Content Include="Content\plugins\fontAwesome\css\font-awesome.css" />
     <Content Include="Content\plugins\fontAwesome\css\font-awesome.min.css" />
     <Content Include="Content\plugins\fontAwesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Fonts\fontawesome-webfont.svg" />
     <Content Include="Content\plugins\fullcalendar\fullcalendar.css" />
     <Content Include="Content\plugins\fullcalendar\fullcalendar.js" />
     <Content Include="Content\plugins\fullcalendar\fullcalendar.min.css" />
@@ -979,6 +980,7 @@
     <Content Include="Content\plugins\timepicker\bootstrap-timepicker.js" />
     <Content Include="Content\plugins\timepicker\bootstrap-timepicker.min.css" />
     <Content Include="Content\plugins\timepicker\bootstrap-timepicker.min.js" />
+    <Content Include="bundles\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\js\jquery.unobtrusive-ajax.js" />
     <Content Include="Content\js\jquery.unobtrusive-ajax.min.js" />
@@ -1014,6 +1016,8 @@
     <Compile Include="Models\DynatablePageModel.cs" />
     <Compile Include="Models\DynatableResultModel.cs" />
     <Compile Include="Models\Login\SysUserLoginViewModel.cs" />
+    <Compile Include="Models\Order\ModelMapper.cs" />
+    <Compile Include="Models\Order\OrderPageQueryModel.cs" />
     <Compile Include="Models\Role\CreateOrUpdateRoleViewModel.cs" />
     <Compile Include="Models\Role\ModelMapper.cs" />
     <Compile Include="Models\User\ChangePasswordViewModel.cs" />
@@ -1082,11 +1086,11 @@
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_SideBar.cshtml" />
-    <Content Include="Content\plugins\fontAwesome\fonts\fontawesome-webfont.eot" />
-    <Content Include="Content\plugins\fontAwesome\fonts\fontawesome-webfont.ttf" />
-    <Content Include="Content\plugins\fontAwesome\fonts\fontawesome-webfont.woff" />
-    <Content Include="Content\plugins\fontAwesome\fonts\fontawesome-webfont.woff2" />
-    <Content Include="Content\plugins\fontAwesome\fonts\FontAwesome.otf" />
+    <Content Include="Fonts\fontawesome-webfont.eot" />
+    <Content Include="Fonts\fontawesome-webfont.ttf" />
+    <Content Include="Fonts\fontawesome-webfont.woff" />
+    <Content Include="Fonts\fontawesome-webfont.woff2" />
+    <Content Include="Fonts\FontAwesome.otf" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Role\Index.cshtml" />
     <Content Include="Views\User\ChangePassword.cshtml" />
@@ -1098,6 +1102,16 @@
     <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\User\Update.cshtml" />
     <Content Include="Views\User\ModifyPassword.cshtml" />
+    <Content Include="Content\plugins\fontAwesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\plugins\fontAwesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\plugins\fontAwesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\plugins\fontAwesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\plugins\fontAwesome\fonts\FontAwesome.otf" />
+    <Content Include="bundles\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="bundles\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="bundles\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="bundles\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="Properties\PublishProfiles\NetSaleSvcAdminWeb.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,8 +1,4 @@
 ﻿using NetSaleSvc.Admin.Controllers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace NetSaleSvc.Admin
 {
@@ -63,6 +59,7 @@ namespace NetSaleSvc.Admin
         {
             public static string Name { get { return nameof(Order); } }
             public static string Index { get { return nameof(OrderController.Index); } }
+            public static string List { get { return nameof(OrderController.List); } }
         }
     }
 }

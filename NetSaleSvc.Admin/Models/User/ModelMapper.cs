@@ -1,9 +1,5 @@
 ﻿using NetSaleSvc.Entity.Models;
 using NetSaleSvc.Util;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace NetSaleSvc.Admin.Models.User
 {

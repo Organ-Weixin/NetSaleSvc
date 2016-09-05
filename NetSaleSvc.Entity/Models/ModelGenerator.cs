@@ -409,7 +409,7 @@ namespace NetSaleSvc.Entity.Models
         /// <summary>
         /// 0有效；1已删除
         /// </summary>
-        public virtual int? IsDel { get; set; }
+        public virtual bool IsDel { get; set; }
         /// <summary>
         /// 日了狗了，注释都不写？
         /// </summary>
@@ -826,6 +826,155 @@ namespace NetSaleSvc.Entity.Models
         /// 是否删除
         /// </summary>
         public virtual bool Deleted { get; set; }
+    }
+
+    /// <summary>
+    /// A class which represents the AdminOrderView view.
+    /// </summary>
+    [Table("AdminOrderView")]
+    [SqlLamTable(Name = "AdminOrderView")]
+    public partial class AdminOrderViewEntity : EntityBase
+    {
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual int Id { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual string CinemaCode { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual int UserId { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual string SessionCode { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual string ScreenCode { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual DateTime SessionTime { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual string FilmCode { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual string FilmName { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual int TicketCount { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual decimal TotalPrice { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual decimal TotalFee { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual decimal TotalSalePrice { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual OrderStatusEnum OrderStatus { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual string MobilePhone { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual DateTime? LockTime { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual DateTime? AutoUnlockDatetime { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual string LockOrderCode { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual DateTime? SubmitTime { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual string SubmitOrderCode { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual string PrintNo { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual string VerifyCode { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual byte? PrintStatus { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual DateTime? PrintTime { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual DateTime? RefundTime { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual DateTime Created { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual DateTime? Updated { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual bool Deleted { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual string ErrorMessage { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual string SerialNum { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual bool IsMemberPay { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual string PayType { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual string Printpassword { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual string PaySeqNo { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual string CinemaName { get; set; }
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        public virtual string ThirdUserName { get; set; }
     }
 
     /// <summary>
