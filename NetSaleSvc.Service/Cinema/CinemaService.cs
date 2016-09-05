@@ -34,6 +34,15 @@ namespace NetSaleSvc.Service
         }
 
         /// <summary>
+        /// 获取所有影院列表
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IList<CinemaEntity>> GetAllCinemasAsync()
+        {
+            return await _cinemaRepository.Query.Where(x => !x.IsDel).ToListAsync();
+        }
+
+        /// <summary>
         /// 获取Cinema实体
         /// </summary>
         /// <param name="CinemaCode"></param>
@@ -41,6 +50,16 @@ namespace NetSaleSvc.Service
         public CinemaEntity GetCinemaByCinemaCode(string CinemaCode)
         {
             return _cinemaRepository.Query.Where(x => x.Code == CinemaCode).SingleOrDefault();
+        }
+
+        /// <summary>
+        /// 获取Cinema实体
+        /// </summary>
+        /// <param name="CinemaCode"></param>
+        /// <returns></returns>
+        public async Task<CinemaEntity> GetCinemaByCinemaCodeAsync(string CinemaCode)
+        {
+            return await _cinemaRepository.Query.Where(x => x.Code == CinemaCode).SingleOrDefaultAsync();
         }
 
         /// <summary>

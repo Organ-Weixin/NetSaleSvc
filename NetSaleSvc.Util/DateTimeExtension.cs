@@ -15,6 +15,17 @@ namespace NetSaleSvc.Util
         }
 
         /// <summary>
+        /// 格式化日期字符串
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <param name="format"></param>
+        /// <returns></returns>
+        public static string ToFormatString(this DateTime dateTime, string format = "yyyy-MM-dd HH:mm:ss")
+        {
+            return dateTime.ToString(format);
+        }
+
+        /// <summary>
         /// 标准日期字符串
         /// </summary>
         /// <param name="dateTime"></param>

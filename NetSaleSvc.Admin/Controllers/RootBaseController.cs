@@ -1,4 +1,6 @@
-﻿using NetSaleSvc.Admin.Utils;
+﻿using NetSaleSvc.Admin.Models;
+using NetSaleSvc.Admin.Utils;
+using Newtonsoft.Json;
 using System;
 using System.Net;
 using System.Web.Mvc;
@@ -103,6 +105,11 @@ namespace NetSaleSvc.Admin.Controllers
             ViewBag.Error = userFriendlymessage;
 
             return View(viewName);
+        }
+
+        protected ActionResult DynatableResult(DynatableResultModel model)
+        {
+            return Content(JsonConvert.SerializeObject(model), "application/json");
         }
         #endregion
     }

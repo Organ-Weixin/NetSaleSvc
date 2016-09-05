@@ -234,6 +234,7 @@ namespace NetSaleSvc.Entity.Models
         /// <summary>
         /// 日了狗了，注释都不写？
         /// </summary>
+        [Key]
         public virtual int Id { get; set; }
         /// <summary>
         /// 中间件名称
@@ -358,7 +359,7 @@ namespace NetSaleSvc.Entity.Models
         /// <summary>
         /// 是否删除
         /// </summary>
-        public virtual int? IsDel { get; set; }
+        public virtual bool IsDel { get; set; }
         /// <summary>
         /// 是否人工加入的影院
         /// </summary>
@@ -691,6 +692,7 @@ namespace NetSaleSvc.Entity.Models
         /// <summary>
         /// 日了狗了，注释都不写？
         /// </summary>
+        [Key]
         public virtual int Id { get; set; }
         /// <summary>
         /// 影院编码
@@ -716,6 +718,114 @@ namespace NetSaleSvc.Entity.Models
         /// 影厅类型
         /// </summary>
         public virtual string Type { get; set; }
+    }
+
+    /// <summary>
+    /// A class which represents the Roles table.
+    /// </summary>
+    [Table("Roles")]
+    [SqlLamTable(Name = "Roles")]
+    public partial class RoleEntity : EntityBase
+    {
+        /// <summary>
+        /// Key
+        /// </summary>
+        [Key]
+        public virtual int Id { get; set; }
+        /// <summary>
+        /// 角色名称
+        /// </summary>
+        public virtual string Name { get; set; }
+        /// <summary>
+        /// 描述
+        /// </summary>
+        public virtual string Description { get; set; }
+        /// <summary>
+        /// 角色类型（系统管理员/影院管理员/自定义）
+        /// </summary>
+        public virtual RoleTypeEnum Type { get; set; }
+        /// <summary>
+        /// 权限列表
+        /// </summary>
+        public virtual string Permissions { get; set; }
+        /// <summary>
+        /// 创建者Id
+        /// </summary>
+        public virtual int CreateUserId { get; set; }
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public virtual DateTime Created { get; set; }
+        /// <summary>
+        /// 修改时间
+        /// </summary>
+        public virtual DateTime? Updated { get; set; }
+        /// <summary>
+        /// 是否删除
+        /// </summary>
+        public virtual bool Deleted { get; set; }
+    }
+
+    /// <summary>
+    /// A class which represents the SystemUsers table.
+    /// </summary>
+    [Table("SystemUsers")]
+    [SqlLamTable(Name = "SystemUsers")]
+    public partial class SystemUserEntity : EntityBase
+    {
+        /// <summary>
+        /// 日了狗了，注释都不写？
+        /// </summary>
+        [Key]
+        public virtual int Id { get; set; }
+        /// <summary>
+        /// 用户名
+        /// </summary>
+        public virtual string Username { get; set; }
+        /// <summary>
+        /// 密码
+        /// </summary>
+        public virtual string Password { get; set; }
+        /// <summary>
+        /// 影院编码（内部账号默认1）
+        /// </summary>
+        public virtual string CinemaCode { get; set; }
+        /// <summary>
+        /// 所属影院名称
+        /// </summary>
+        public virtual string CinemaName { get; set; }
+        /// <summary>
+        /// 真实姓名
+        /// </summary>
+        public virtual string RealName { get; set; }
+        /// <summary>
+        /// 所属角色Id
+        /// </summary>
+        public virtual int RoleId { get; set; }
+        /// <summary>
+        /// 角色名称
+        /// </summary>
+        public virtual string RoleName { get; set; }
+        /// <summary>
+        /// 创建者
+        /// </summary>
+        public virtual int CreateUserId { get; set; }
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public virtual DateTime CreateTime { get; set; }
+        /// <summary>
+        /// 修改人
+        /// </summary>
+        public virtual string Modifier { get; set; }
+        /// <summary>
+        /// 修改时间
+        /// </summary>
+        public virtual DateTime? UpdateTime { get; set; }
+        /// <summary>
+        /// 是否删除
+        /// </summary>
+        public virtual bool Deleted { get; set; }
     }
 
     /// <summary>

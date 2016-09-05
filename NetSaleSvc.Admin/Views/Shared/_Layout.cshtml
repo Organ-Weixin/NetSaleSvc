@@ -1,40 +1,143 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <script src="~/Scripts/modernizr-2.6.2.js"></script>
-</head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                </ul>
-            </div>
-        </div>
-    </div>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewBag.Title</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.6 -->
+    @Styles.Render(Resources.BOOTSTRAP_STYLE)
+    <!-- Font Awesome -->
+    @Styles.Render(Resources.FONT_AWESOME)
+    <!-- iCheck -->
+    @Styles.Render(Resources.ICHECK_STYLE)
+    <!-- Morris chart -->
+    @Styles.Render(Resources.MORRIS_STYLE)
+    <!-- Date Picker -->
+    @Styles.Render(Resources.DATEPICKER_STYLE)
+    <!-- Daterange picker -->
+    @Styles.Render(Resources.DATERANGEPICKER_STYLE)
+    <!-- dynatable -->
+    @Styles.Render(Resources.DYNATABLE_STYLE)
+    <!-- notify -->
+    @Styles.Render(Resources.NOTIFY_STYLE)
+    <!-- select2 -->
+    @Styles.Render(Resources.SELECT2_STYLE)
 
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+    <!--  注意：添加其他插件的Css请在此之前添加 -->
+
+    <!-- Theme style -->
+    @Styles.Render(Resources.ADMINLTE_STYLE)
+    <!-- 后台公共css -->
+    @Styles.Render(Resources.ADMIN_STYLE)
+    
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    @RenderSection("styles", false)
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="@Url.Action(MvcNames.Home.Index, MvcNames.Home.Name)" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini"><b>80</b>票</span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><b>普照电商</b>云平台</span>
+            </a>
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <!-- User Account: style can be found in dropdown.less -->
+                        <li class="user user-menu">
+                            <a href="javascript:;" class="dropdown-toggle">
+                                <span class="hidden-xs">@ViewBag.SysUserName，欢迎您</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action(MvcNames.User.ChangePassword, MvcNames.User.Name)" data-toggle="modal-form">
+                                <i class="fa fa-user-secret"></i>
+                                修改密码
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action(MvcNames.Login.LogOut, MvcNames.Login.Name)">
+                                <i class="fa fa-sign-out"></i>
+                                登出
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- Left side column. contains the logo and sidebar -->
+        @Html.Partial("_SideBar")
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            @RenderBody()
+        </div>
+        <!-- /.content-wrapper -->
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+                <b></b>
+            </div>
+            <strong>Copyright &copy; 2016 <a href="javascript:;">衢州普照网络科技有限公司</a></strong>
         </footer>
     </div>
+    <!-- ./wrapper -->
+    <!-- jQuery 2.2.3 -->
+    @Scripts.Render(Resources.JQUERY)
+    <!-- Bootstrap 3.3.6 -->
+    @Scripts.Render(Resources.BOOTSTRAP_SCRIPT)
+    <!-- Morris.js charts -->
+    @Scripts.Render(Resources.MORRIS_SCRIPT)
+    <!-- daterangepicker -->
+    @Scripts.Render(Resources.DATERANGEPICKER_SCRIPT)
+    <!-- datepicker -->
+    @Scripts.Render(Resources.DATEPICKER_SCRIPT)
+    <!-- iCheck -->
+    @Scripts.Render(Resources.ICHECK_SCRIPT)
+    <!-- notify -->
+    @Scripts.Render(Resources.NOTIFY_SCRIPT)
+    <!-- dynatable -->
+    @Scripts.Render(Resources.DYNATABLE_SCRIPT)
+    <!-- handlebars -->
+    @Scripts.Render(Resources.HANDLEBARS)
+    <!-- select2 -->
+    @Scripts.Render(Resources.SELECT2_SCRIPT)
 
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
+    <!--  注意：添加其他插件的Js请在此之前添加 -->
+
+    <!-- AdminLTE App -->
+    @Scripts.Render(Resources.ADMINLTE_SCRIPT)
+    <!-- 后台公共Js -->
+    @Scripts.Render(Resources.ADMIN_SCRIPT)
+
+    <script type="text/x-handlebars-template" id="delete-confirm-template">
+        <div style="padding: 10px 0px;">
+            <p style="color: #333; padding-bottom: 10px;">{{message}}</p>
+
+            <a style="margin-right: 10px;" data-ajax="true" data-ajax-success="{{ajaxsuccess}}" data-ajax-method="POST" href="{{href}}" class="btn btn-primary">
+                确定
+            </a>
+
+            <button type="button" class="btn btn-default cancel" onclick="$(body).click()">
+                取消
+            </button>
+        </div>
+    </script>
+
+    @RenderSection("scripts", false)
 </body>
 </html>

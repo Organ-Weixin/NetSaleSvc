@@ -1,0 +1,26 @@
+﻿using NetSaleSvc.Util;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+
+namespace NetSaleSvc.Admin.Utils
+{
+    public static class SelectListExtensions
+    {
+        /// <summary>
+        /// 根据枚举列表获得
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="enums"></param>
+        /// <returns></returns>
+        public static IEnumerable<SelectListItem> ToEnumSelectList<T>(this IEnumerable<T> enums)
+            where T : struct
+        {
+            return enums.Select(x => new SelectListItem
+            {
+                Text = x.GetDescription(),
+                Value = x.GetValueString()
+            });
+        }
+    }
+}

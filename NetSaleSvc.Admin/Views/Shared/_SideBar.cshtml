@@ -1,0 +1,49 @@
+﻿@{
+    bool IsAdmin = ViewBag.IsAdmin;
+    List<SystemPermissionEnum> CurrentPermissions = ViewBag.CurrentPermissions;
+}
+
+<!-- 添加新菜单时请注意权限控制：在SystemPermissionEnum中添加新权限，然后在此处进行控制即可 -->
+
+<aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu">
+            <li class="header">首页</li>
+            <li class="@ViewBag.Home"><a href="@Url.Action(MvcNames.Home.Index, MvcNames.Home.Name)"><i class="fa fa-home"></i> <span>首页</span></a></li>
+
+            @if (IsAdmin 
+                || CurrentPermissions.Contains(SystemPermissionEnum.User)
+                || CurrentPermissions.Contains(SystemPermissionEnum.Role))
+            {
+                <li class="header">系统管理</li>
+                <li class="@ViewBag.System treeview">
+                    <a href="javascript:;">
+                        <i class="fa fa-cog"></i> <span>系统管理</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        @if (IsAdmin || CurrentPermissions.Contains(SystemPermissionEnum.User))
+                        {
+                            <li class="@ViewBag.User"><a href="@Url.Action(MvcNames.User.Index, MvcNames.User.Name)"><i class="fa fa-user"></i>用户管理</a></li>
+                        }
+                        @if (IsAdmin || CurrentPermissions.Contains(SystemPermissionEnum.Role))
+                        {
+                            <li class="@ViewBag.Role"><a href="@Url.Action(MvcNames.Role.Index, MvcNames.Role.Name)"><i class="fa fa-group"></i>角色管理</a></li>
+                        }
+                    </ul>
+                </li>
+            }
+
+            @if (IsAdmin || CurrentPermissions.Contains(SystemPermissionEnum.Order))
+            {
+                <li class="header">订单</li>
+                <li class="@ViewBag.Order"><a href="@Url.Action(MvcNames.Order.Index, MvcNames.Order.Name)"><i class="fa fa-file-text-o"></i> <span>订单管理</span></a></li>
+            }
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>

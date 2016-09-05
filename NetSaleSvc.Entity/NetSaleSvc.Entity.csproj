@@ -65,8 +65,10 @@
     <Compile Include="Enum\OrderStatusEnum.cs" />
     <Compile Include="Enum\PricePlanTypeEnum.cs" />
     <Compile Include="Enum\PrintStatusEnum.cs" />
+    <Compile Include="Enum\RoleTypeEnum.cs" />
     <Compile Include="Enum\SessionSeatStatusEnum.cs" />
     <Compile Include="Enum\StatusEnum.cs" />
+    <Compile Include="Enum\SystemPermissionEnum.cs" />
     <Compile Include="Models\EntityBase.cs" />
     <Compile Include="Models\Order\OrderViewEntity.cs" />
     <Compile Include="Models\PageList\Impl\PageList.cs" />

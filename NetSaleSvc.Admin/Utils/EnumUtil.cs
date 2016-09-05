@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+
+namespace NetSaleSvc.Admin.Utils
+{
+    public static class EnumUtil
+    {
+        public static IEnumerable<SelectListItem> GetSelectList<T>()
+            where T : struct
+        {
+            return Enum.GetValues(typeof(T)).Cast<T>().ToEnumSelectList();
+        }
+    }
+}

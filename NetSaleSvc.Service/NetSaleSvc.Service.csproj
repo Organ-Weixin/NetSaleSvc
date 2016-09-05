@@ -51,9 +51,11 @@
     <Compile Include="FilmInfo\FilmInfoService.cs" />
     <Compile Include="Order\OrderService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Role\RoleService.cs" />
     <Compile Include="ScreenInfo\ScreenInfoService.cs" />
     <Compile Include="SeatInfo\SeatInfoService.cs" />
     <Compile Include="SessionInfo\SessionInfoService.cs" />
+    <Compile Include="SystemUser\SystemUserService.cs" />
     <Compile Include="UserCinema\UserCinemaService.cs" />
     <Compile Include="UserInfo\UserInfoService.cs" />
   </ItemGroup>

@@ -54,6 +54,7 @@ It is based on the T4 template from the PetaPoco project which in turn is based 
 	tables["CinemaView"]["CinemaType"].PropertyType="CinemaTypeEnum";
 	tables["Orders"]["OrderStatus"].PropertyType="OrderStatusEnum";
 	tables["Orders"]["PrintStatus"].PropertyType="YesOrNoEnum";
+	tables["Roles"]["Type"].PropertyType="RoleTypeEnum";
 #>
 using System;
 using System.ComponentModel.DataAnnotations;
