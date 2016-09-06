@@ -67,18 +67,14 @@ WriteLiteral(" content=\"width=device-width, initial-scale=1, maximum-scale=1, u
 
 WriteLiteral(" name=\"viewport\"");
 
-WriteLiteral(">\r\n    <!-- Bootstrap 3.3.6 -->\r\n");
+WriteLiteral(">\r\n    <!-- Bootstrap 3.3.6 -->\r\n    <link");
 
-WriteLiteral("    ");
+WriteLiteral(" href=\"https://staticfile.qnssl.com/twitter-bootstrap/3.3.5/css/bootstrap.min.css" +
+"\"");
 
-            
-            #line 15 "..\..\Views\Login\Index.cshtml"
-Write(Styles.Render(Resources.BOOTSTRAP_STYLE));
+WriteLiteral(" rel=\"stylesheet\"");
 
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n    <!-- Theme style -->\r\n");
+WriteLiteral(" />\r\n    <!-- Theme style -->\r\n");
 
 WriteLiteral("    ");
 
@@ -91,9 +87,9 @@ Write(Styles.Render(Resources.ADMINLTE_STYLE));
             #line hidden
 WriteLiteral("\r\n\r\n    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 540), Tuple.Create("\"", 570)
-, Tuple.Create(Tuple.Create("", 547), Tuple.Create<System.Object, System.Int32>(Href("~/Content/css/login.css")
-, 547), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 606), Tuple.Create("\"", 636)
+, Tuple.Create(Tuple.Create("", 613), Tuple.Create<System.Object, System.Int32>(Href("~/Content/css/login.css")
+, 613), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
@@ -116,9 +112,9 @@ WriteLiteral(" class=\"login-box-msg\"");
 
 WriteLiteral(">\r\n                <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 832), Tuple.Create("\"", 862)
-, Tuple.Create(Tuple.Create("", 838), Tuple.Create<System.Object, System.Int32>(Href("~/Content/img/Avator.png")
-, 838), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 898), Tuple.Create("\"", 928)
+, Tuple.Create(Tuple.Create("", 904), Tuple.Create<System.Object, System.Int32>(Href("~/Content/img/Avator.png")
+, 904), false)
 );
 
 WriteLiteral(" class=\"enter_img\"");
