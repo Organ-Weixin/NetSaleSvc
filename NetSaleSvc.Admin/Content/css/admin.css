@@ -119,3 +119,7 @@
     margin-left: 0;
     margin-right: 0;
 }
+
+.select2-container{
+    vertical-align:top;
+}

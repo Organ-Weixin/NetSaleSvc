@@ -12,5 +12,11 @@ namespace NetSaleSvc.Admin.Utils
         {
             return Enum.GetValues(typeof(T)).Cast<T>().ToEnumSelectList();
         }
+
+        public static IEnumerable<SelectListItem> GetSelectList<T>(T selectedItem)
+            where T : struct
+        {
+            return Enum.GetValues(typeof(T)).Cast<T>().ToEnumSelectList(selectedItem);
+        }
     }
 }

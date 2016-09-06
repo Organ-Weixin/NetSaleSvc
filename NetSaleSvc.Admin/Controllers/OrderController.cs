@@ -4,6 +4,7 @@ using NetSaleSvc.Admin.Properties;
 using NetSaleSvc.Admin.Utils;
 using NetSaleSvc.Entity.Enum;
 using NetSaleSvc.Service;
+using NetSaleSvc.Util;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -53,7 +54,7 @@ namespace NetSaleSvc.Admin.Controllers
                  pageModel.PerPage,
                  pageModel.Query.Search,
                  pageModel.Query.ThirdUserId,
-                 pageModel.Query.OrderStatus,
+                 pageModel.Query.OrderStatus ?? OrderStatusEnum.Complete,
                  startDate,
                  endDate);
 
@@ -72,7 +73,7 @@ namespace NetSaleSvc.Admin.Controllers
             var allThirdUsers = await _userInfoService.GetAllUserInfosAsync();
             ViewBag.ThirdUserId = allThirdUsers.Select(x => new SelectListItem { Text = x.Company, Value = x.Id.ToString() });
 
-            ViewBag.OrderStatus = EnumUtil.GetSelectList<OrderStatusEnum>();
+            ViewBag.OrderStatus = EnumUtil.GetSelectList<OrderStatusEnum>(OrderStatusEnum.Complete);
         }
     }
 }

@@ -80,6 +80,10 @@
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="RazorGenerator.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorGenerator.Mvc.2.4.7\lib\net40\RazorGenerator.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -100,6 +104,10 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.0.3\lib\net40\WebActivatorEx.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
       <Private>True</Private>
@@ -766,7 +774,6 @@
     <Content Include="Content\plugins\fontAwesome\css\font-awesome.css" />
     <Content Include="Content\plugins\fontAwesome\css\font-awesome.min.css" />
     <Content Include="Content\plugins\fontAwesome\fonts\fontawesome-webfont.svg" />
-    <Content Include="Fonts\fontawesome-webfont.svg" />
     <Content Include="Content\plugins\fullcalendar\fullcalendar.css" />
     <Content Include="Content\plugins\fullcalendar\fullcalendar.js" />
     <Content Include="Content\plugins\fullcalendar\fullcalendar.min.css" />
@@ -980,7 +987,6 @@
     <Content Include="Content\plugins\timepicker\bootstrap-timepicker.js" />
     <Content Include="Content\plugins\timepicker\bootstrap-timepicker.min.css" />
     <Content Include="Content\plugins\timepicker\bootstrap-timepicker.min.js" />
-    <Content Include="bundles\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\js\jquery.unobtrusive-ajax.js" />
     <Content Include="Content\js\jquery.unobtrusive-ajax.min.js" />
@@ -992,10 +998,14 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Login\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Index.generated.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Attributes\Authorize\AdminAuthorizeAttribute.cs" />
     <Compile Include="Attributes\UI\ListBoxAttribute.cs" />
@@ -1036,17 +1046,132 @@
     <Compile Include="Utils\EnumUtil.cs" />
     <Compile Include="Utils\LogHelper.cs" />
     <Compile Include="Utils\SelectListExtensions.cs" />
+    <Compile Include="Views\Error\Error404.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Error404.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Error\Error500.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Error500.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Error\ErrorDefault.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ErrorDefault.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Home\Index.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Index.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Login\Index.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Index.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Order\Index.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Index.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Role\CreateOrUpdate.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreateOrUpdate.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Role\Index.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Index.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\EditorTemplates\ListBox.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ListBox.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\EditorTemplates\Password.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Password.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\EditorTemplates\String.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>String.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\EditorTemplates\TextArea.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TextArea.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\_Layout.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_Layout.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\_SideBar.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_SideBar.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\User\ChangePassword.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ChangePassword.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\User\Create.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Create.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\User\Index.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Index.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\User\ModifyPassword.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModifyPassword.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\User\Update.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Update.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\_ViewStart.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_ViewStart.cshtml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="packages.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Error\ErrorDefault.cshtml" />
-    <Content Include="Views\Error\Error404.cshtml" />
-    <Content Include="Views\Error\Error500.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_ViewStart.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\_Layout.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_Layout.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Error\ErrorDefault.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ErrorDefault.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Error\Error404.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Error404.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Error\Error500.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Error500.generated.cs</LastGenOutput>
+    </Content>
     <Content Include="Content\plugins\ckeditor\CHANGES.md" />
     <Content Include="Content\plugins\ckeditor\LICENSE.md" />
     <Content Include="Content\plugins\ckeditor\plugins\scayt\CHANGELOG.md" />
@@ -1083,34 +1208,67 @@
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="Views\Order\Index.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\_SideBar.cshtml" />
-    <Content Include="Fonts\fontawesome-webfont.eot" />
-    <Content Include="Fonts\fontawesome-webfont.ttf" />
-    <Content Include="Fonts\fontawesome-webfont.woff" />
-    <Content Include="Fonts\fontawesome-webfont.woff2" />
-    <Content Include="Fonts\FontAwesome.otf" />
-    <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\Role\Index.cshtml" />
-    <Content Include="Views\User\ChangePassword.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\ListBox.cshtml" />
-    <Content Include="Views\Role\CreateOrUpdate.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\TextArea.cshtml" />
-    <Content Include="Views\User\Create.cshtml" />
-    <Content Include="Views\User\Update.cshtml" />
-    <Content Include="Views\User\ModifyPassword.cshtml" />
+    <Content Include="Views\Order\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Index.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Home\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Index.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\_SideBar.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_SideBar.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\User\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Index.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Role\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Index.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\User\ChangePassword.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ChangePassword.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\EditorTemplates\String.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>String.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\EditorTemplates\Password.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Password.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\EditorTemplates\ListBox.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ListBox.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Role\CreateOrUpdate.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>CreateOrUpdate.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\EditorTemplates\TextArea.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>TextArea.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\User\Create.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Create.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\User\Update.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Update.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\User\ModifyPassword.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ModifyPassword.generated.cs</LastGenOutput>
+    </Content>
     <Content Include="Content\plugins\fontAwesome\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\plugins\fontAwesome\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\plugins\fontAwesome\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\plugins\fontAwesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\plugins\fontAwesome\fonts\FontAwesome.otf" />
-    <Content Include="bundles\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="bundles\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="bundles\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="bundles\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Properties\PublishProfiles\NetSaleSvcAdminWeb.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

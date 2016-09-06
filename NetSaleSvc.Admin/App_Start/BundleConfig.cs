@@ -83,8 +83,34 @@ namespace NetSaleSvc.Admin
 
             //后台公共
             bundles.Add(new ScriptBundle(Resources.ADMIN_SCRIPT).Include(
+                    "~/Content/plugins/dynatable/jquery.dynatable.js",
+                    "~/Content/plugins/morris/morris.min.js",
+                    "~/Content/plugins/daterangepicker/moment.min.js",
+                    "~/Content/plugins/daterangepicker/daterangepicker.js",
+                    "~/Content/plugins/datepicker/bootstrap-datepicker.js",
+                    "~/Content/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js",
+                    "~/Content/plugins/iCheck/icheck.min.js",
+                    "~/Content/plugins/notify/notify.min.js",
+                    "~/Content/plugins/notify/notify.admin.js",
+                    "~/Content/plugins/handlebars/handlebars-v4.0.5.js",
+                    "~/Content/plugins/select2/select2.full.min.js",
+                    "~/Content/plugins/slimScroll/jquery.slimscroll.min.js",
+
+                    //后台添加公共Js插件请在此行以上添加
+                    "~/Content/js/AdminLTE/app.js",
                     "~/Content/js/admin.js"));
             bundles.Add(new StyleBundle(Resources.ADMIN_STYLE).Include(
+                    "~/Content/plugins/dynatable/jquery.dynatable.css",
+                    "~/Content/plugins/iCheck/flat/blue.css",
+                    "~/Content/plugins/morris/morris.css",
+                    "~/Content/plugins/datepicker/datepicker3.css",
+                    "~/Content/plugins/daterangepicker/daterangepicker.css",
+                    "~/Content/plugins/notify/notify.admin.css",
+                    "~/Content/plugins/select2/select2.min.css",
+
+                    //后台添加公共Css请在此行以上添加
+                    "~/Content/css/AdminLTE/AdminLTE.css",
+                    "~/Content/css/AdminLTE/skins/skin-blue.css",
                     "~/Content/css/admin.css"));
         }
     }
