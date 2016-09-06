@@ -382,7 +382,7 @@ namespace NetSaleSvc.Api.Core
             //将请求参数转为订单
             OrderViewEntity order = new OrderViewEntity();
             order.MapFrom(userCinema, QueryXmlObj, sessionInfo);
-            var seatInfos = _seatInfoService.GetSeats(userCinema.CinemaCode, order.orderSeatDetails.Select(x => x.SeatCode));
+            var seatInfos = _seatInfoService.GetSeats(userCinema.CinemaCode, order.orderSeatDetails.Select(x => x.SeatCode), sessionInfo.ScreenCode);
             order.orderSeatDetails.ForEach(x =>
             {
                 var seatInfo = seatInfos.Where(y => y.SeatCode == x.SeatCode).SingleOrDefault();

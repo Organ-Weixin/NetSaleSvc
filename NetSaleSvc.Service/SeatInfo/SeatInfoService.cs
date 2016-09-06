@@ -38,10 +38,18 @@ namespace NetSaleSvc.Service
         /// <param name="CinemaCode"></param>
         /// <param name="SeatCodes"></param>
         /// <returns></returns>
-        public IList<ScreenSeatInfoEntity> GetSeats(string CinemaCode, IEnumerable<string> SeatCodes)
+        public IList<ScreenSeatInfoEntity> GetSeats(string CinemaCode, IEnumerable<string> SeatCodes, string ScreenCode = null)
         {
-            return _screenSeatInfoRepository.Query.Where(x => x.CinemaCode == CinemaCode)
-                .WhereIsIn(x => x.SeatCode, SeatCodes).ToList();
+            if (!string.IsNullOrEmpty(ScreenCode))
+            {
+                return _screenSeatInfoRepository.Query.Where(x => x.CinemaCode == CinemaCode && x.ScreenCode == ScreenCode)
+                    .WhereIsIn(x => x.SeatCode, SeatCodes).ToList();
+            }
+            else
+            {
+                return _screenSeatInfoRepository.Query.Where(x => x.CinemaCode == CinemaCode)
+                    .WhereIsIn(x => x.SeatCode, SeatCodes).ToList();
+            }
         }
 
         /// <summary>
