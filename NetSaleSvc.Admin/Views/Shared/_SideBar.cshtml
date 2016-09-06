@@ -41,7 +41,7 @@
             @if (IsAdmin || CurrentPermissions.Contains(SystemPermissionEnum.Order))
             {
                 <li class="header">订单</li>
-                <li class="@ViewBag.Order"><a href="@Url.Action(MvcNames.Order.Index, MvcNames.Order.Name)"><i class="fa fa-file-text-o"></i> <span>订单管理</span></a></li>
+                <li class="@ViewBag.Order"><a href="@Url.Action(MvcNames.Order.Index, MvcNames.Order.Name)?queries[OrderStatus]=8"><i class="fa fa-file-text-o"></i> <span>订单管理</span></a></li>
             }
         </ul>
     </section>

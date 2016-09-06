@@ -54,7 +54,7 @@ namespace NetSaleSvc.Admin.Controllers
                  pageModel.PerPage,
                  pageModel.Query.Search,
                  pageModel.Query.ThirdUserId,
-                 pageModel.Query.OrderStatus ?? OrderStatusEnum.Complete,
+                 pageModel.Query.OrderStatus,
                  startDate,
                  endDate);
 

@@ -298,7 +298,7 @@ WriteAttribute("class", Tuple.Create(" class=\"", 2111), Tuple.Create("\"", 2133
 
 WriteLiteral("><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2137), Tuple.Create("\"", 2198)
+WriteAttribute("href", Tuple.Create(" href=\"", 2137), Tuple.Create("\"", 2221)
             
             #line 44 "..\..\Views\Shared\_SideBar.cshtml"
 , Tuple.Create(Tuple.Create("", 2144), Tuple.Create<System.Object, System.Int32>(Url.Action(MvcNames.Order.Index, MvcNames.Order.Name)
@@ -306,6 +306,7 @@ WriteAttribute("href", Tuple.Create(" href=\"", 2137), Tuple.Create("\"", 2198)
             #line default
             #line hidden
 , 2144), false)
+, Tuple.Create(Tuple.Create("", 2198), Tuple.Create("?queries[OrderStatus]=8", 2198), true)
 );
 
 WriteLiteral("><i");
