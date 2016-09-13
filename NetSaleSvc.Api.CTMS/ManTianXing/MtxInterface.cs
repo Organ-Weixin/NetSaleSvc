@@ -223,7 +223,7 @@ namespace NetSaleSvc.Api.CTMS.ManTianXing
                             })).Where(x => x.StartTime > StartDate && x.StartTime < EndDate.AddDays(1)).ToList();
 
                 //插入或更新最新放映计划
-                _sessionInfoService.BulkMerge(newSessions, userCinema.CinemaCode, StartDate, EndDate);
+                _sessionInfoService.BulkMerge(newSessions, userCinema.CinemaCode, StartDate, EndDate, userCinema.UserId);
 
                 reply.Status = StatusEnum.Success;
             }

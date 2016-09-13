@@ -677,7 +677,7 @@ namespace NetSaleSvc.Api.CTMS.NationalStandard
                         })).ToList();
 
             //插入或更新最新放映计划
-            _sessionInfoService.BulkMerge(newSessions, userCinema.CinemaCode, StartDate, EndDate);
+            _sessionInfoService.BulkMerge(newSessions, userCinema.CinemaCode, StartDate, EndDate, userCinema.UserId);
         }
         #endregion
     }

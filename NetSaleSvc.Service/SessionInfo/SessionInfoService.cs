@@ -104,7 +104,7 @@ namespace NetSaleSvc.Service
         /// </summary>
         /// <param name="entities"></param>
         public void BulkMerge(IEnumerable<SessionInfoEntity> Entities, string CinemaCode,
-            DateTime StartDate, DateTime EndDate)
+            DateTime StartDate, DateTime EndDate, int UserId)
         {
             if (StartDate < DateTime.Now)
             {
@@ -121,6 +121,7 @@ namespace NetSaleSvc.Service
                 cmd.Parameters.AddWithValue("@CinemaCode", CinemaCode);
                 cmd.Parameters.AddWithValue("@StartTime", StartDate);
                 cmd.Parameters.AddWithValue("@EndTime", EndDate);
+                cmd.Parameters.AddWithValue("@UserId", UserId);
                 cmd.ExecuteNonQuery();
             }
         }
